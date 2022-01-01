@@ -4,7 +4,8 @@ import Logo from './logo'
 
 const SidebarPanel = styled.div`
   width: 16rem;
-  box-shadow: -5px 0px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  clip-path: inset(0px -10px 0px 0px);
 `
 
 const Sidebar = () => {

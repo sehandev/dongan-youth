@@ -11,7 +11,7 @@ const Container = ({ children }) => {
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <main className='flex max-w-screen-xl min-h-screen w-full bg-indigo-50'>
+      <main className='flex max-w-screen-xl min-h-screen w-full shadow-md'>
         <Sidebar />
         <Header>{children}</Header>
       </main>
