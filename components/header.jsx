@@ -10,7 +10,7 @@ const Header = ({ children }) => {
   return (
     <div className='w-full'>
       <HeaderPanel />
-      <div className='pt-4 pl-4'>{children}</div>
+      <div className='px-4 py-4'>{children}</div>
     </div>
   )
 }
