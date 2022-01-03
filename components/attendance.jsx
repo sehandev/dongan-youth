@@ -1,4 +1,6 @@
 import styled from 'styled-components'
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import Container from './container'
 import {
@@ -8,7 +10,6 @@ import {
   DescriptionStrong,
   Checkbox,
 } from './common'
-import { useEffect, useState } from 'react'
 
 const Column = styled.th`
   width: 80px;
@@ -21,8 +22,13 @@ const LongColumn = styled.th`
 `
 
 const Attendance = () => {
-  const [count, set_count] = useState(0)
+  const [toggle, set_toggle] = useState(true)
+  useEffect(() => {}, [toggle])
+
   const [user_info_array, set_user_info_array] = useState([])
+
+  const current_grade = useSelector((state) => state.class_checker.grade)
+  const current_class = useSelector((state) => state.class_checker.class)
 
   useEffect(() => {
     set_user_info_array([
@@ -65,16 +71,12 @@ const Attendance = () => {
     ])
   }, [])
 
-  useEffect(() => {}, [count])
-
   const check_attendance = (index) => {
     set_user_info_array((prev_array) => {
-      console.log(prev_array[index])
       prev_array[index].check_1 = !prev_array[index].check_1
-      console.log(prev_array[index])
       return prev_array
     })
-    set_count((prev_state) => prev_state + 1)
+    set_toggle((prev_state) => !prev_state)
   }
 
   const Table = () => (
@@ -121,6 +123,8 @@ const Attendance = () => {
         <DescriptionStrong>반모임 출석</DescriptionStrong>을 따로 확인해주세요.
       </Description>
       <Table />
+      {/* TEST */}
+      {current_grade}학년 {current_class}반
     </Container>
   )
 }
