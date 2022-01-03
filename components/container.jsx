@@ -5,7 +5,7 @@ import Header from './header'
 
 const Container = ({ children }) => {
   return (
-    <div className='flex flex-col items-center justify-center'>
+    <div className='flex flex-col items-center justify-center select-none'>
       <Head>
         <title>AGGA</title>
         <link rel='icon' href='/favicon.ico' />
