@@ -65,6 +65,7 @@ const Sidebar = () => {
         onClick={() =>
           dispatch(change_class({ grade: button_grade, class: button_class }))
         }
+        className='hover:bg-purple-100'
       >
         <img
           className='inline-block mr-2 w-8 h-8'
