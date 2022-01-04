@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import Container from './container'
+import Sidebar from './sidebar'
+import Header from './header'
 import {
   Headline,
   SubHeadline,
@@ -117,19 +119,28 @@ const Attendance = () => {
   )
 
   if (current_grade == -1 || current_class == -1) {
-    return <Container />
+    return (
+      <Container>
+        <Sidebar />
+        <Header></Header>
+      </Container>
+    )
   }
 
   return (
     <Container>
-      <Headline className='mb-2'>출석부</Headline>
-      <Description>
-        <DescriptionStrong>예배 출석</DescriptionStrong>과{' '}
-        <DescriptionStrong>반모임 출석</DescriptionStrong>을 따로 확인해주세요.
-      </Description>
-      <Table />
-      {/* TEST */}
-      {current_grade}학년 {current_class}반
+      <Sidebar />
+      <Header>
+        <Headline className='mb-2'>출석부</Headline>
+        <Description>
+          <DescriptionStrong>예배 출석</DescriptionStrong>과{' '}
+          <DescriptionStrong>반모임 출석</DescriptionStrong>을 따로
+          확인해주세요.
+        </Description>
+        <Table />
+        {/* TEST */}
+        {current_grade}학년 {current_class}반
+      </Header>
     </Container>
   )
 }
