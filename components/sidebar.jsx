@@ -93,6 +93,7 @@ const Sidebar = () => {
         return [1, 2].map((class_index) => {
           return (
             <ClassButton
+              key={class_index}
               button_grade={grade_index}
               button_class={class_index}
             />
