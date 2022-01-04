@@ -6,9 +6,9 @@ const LogoText = styled.div`
   font-size: 30px;
 `
 
-const Logo = () => {
+const Logo = ({ className }) => {
   return (
-    <span className='flex items-center'>
+    <span className={`flex items-center ${className}`}>
       <Image src='/img/dongan.png' alt='dongan' width={40} height={40}></Image>
       <LogoText className='ml-2'>AGGA</LogoText>
     </span>
