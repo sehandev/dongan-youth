@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import Container from './container'
-import Sidebar from './sidebar'
+import Sidebar from './attendance_sidebar'
 import Header from './header'
 import {
   Headline,
