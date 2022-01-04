@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import Logo from './logo'
 import { change_class } from '../reducers/class_checker'
+import { close_sidebar } from '../reducers/sidebar_toggler'
 
 const SidebarPanel = styled.div`
   width: 220px;
@@ -28,7 +29,7 @@ const CurrentButton = styled.button`
 
 const Sidebar = () => {
   const dispatch = useDispatch()
-
+  const is_opened = useSelector((state) => state.sidebar_toggler.is_opened)
   const current_grade = useSelector((state) => state.class_checker.grade)
   const current_class = useSelector((state) => state.class_checker.class)
 
@@ -38,9 +39,10 @@ const Sidebar = () => {
         <CurrentButton
           button_grade={button_grade}
           button_class={button_class}
-          onClick={() =>
+          onClick={() => {
             dispatch(change_class({ grade: button_grade, class: button_class }))
-          }
+            dispatch(close_sidebar())
+          }}
         >
           <img
             className='inline-block mr-2 w-8 h-8'
@@ -62,9 +64,10 @@ const Sidebar = () => {
       <NormalButton
         button_grade={button_grade}
         button_class={button_class}
-        onClick={() =>
+        onClick={() => {
           dispatch(change_class({ grade: button_grade, class: button_class }))
-        }
+          dispatch(close_sidebar())
+        }}
         className='hover:bg-purple-100'
       >
         <img
@@ -84,8 +87,15 @@ const Sidebar = () => {
     )
   }
 
+  const get_mobile_class = () => {
+    if (is_opened) {
+      return 'block'
+    }
+    return 'hidden'
+  }
+
   return (
-    <SidebarPanel>
+    <SidebarPanel className={`${get_mobile_class()} md:block`}>
       <div className='mb-4 pt-4 pl-4'>
         <Logo />
       </div>
