@@ -115,6 +115,11 @@ const Attendance = () => {
       </tbody>
     </table>
   )
+
+  if (current_grade == -1 || current_class == -1) {
+    return <Container />
+  }
+
   return (
     <Container>
       <Headline className='mb-2'>출석부</Headline>
