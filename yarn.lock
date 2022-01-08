@@ -2910,6 +2910,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"oracledb@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "oracledb@npm:5.3.0"
+  checksum: c15f6416c2e8e828caf1580611427cb45f9442ea8c2919ed872778508252fd06633f96ed533b0a9206be5972326aaacc76d69979787b3c5d45c13dae3d5d82ca
+  languageName: node
+  linkType: hard
+
 "os-browserify@npm:0.3.0":
   version: 0.3.0
   resolution: "os-browserify@npm:0.3.0"
@@ -3483,6 +3490,7 @@ __metadata:
     babel-plugin-styled-components: ^2.0.2
     next: latest
     next-redux-wrapper: ^7.0.5
+    oracledb: ^5.3.0
     postcss: ^8.4.4
     react: ^17.0.2
     react-dom: ^17.0.2

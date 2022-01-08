@@ -1,0 +1,14 @@
+version: '3.9'
+
+services:
+  dev:
+    image: sehandev/dongan-youth
+    ports:
+      - 3001:3000
+    volumes:
+      - .:/workspace
+    working_dir: /workspace
+    command: sh -c "
+      yarn set version stable &&
+      yarn &&
+      yarn dev"
