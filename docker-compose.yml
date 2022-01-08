@@ -7,8 +7,12 @@ services:
       - 3001:3000
     volumes:
       - .:/workspace
+      - /etc/ORACLE/WALLETS/affiliation:/etc/ORACLE/WALLETS/affiliation
     working_dir: /workspace
     command: sh -c "
       yarn set version stable &&
       yarn &&
       yarn dev"
+    environment:
+      - TNS_ADMIN=/etc/ORACLE/WALLETS/affiliation
+      - NODE_PATH=`npm root -g`
