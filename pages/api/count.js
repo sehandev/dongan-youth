@@ -1,4 +1,4 @@
-import { getConnection } from 'oracledb'
+import { getConnection } from "oracledb"
 
 function make_metaData(metaData) {
   let list_metadata = []
@@ -9,7 +9,7 @@ function make_metaData(metaData) {
 }
 
 function result_query(query_result, num, request_item_list) {
-  //배열 길이 : request_item_list.length
+  // input = [부서, 학년, 반, 성별, 기간]
   const num_data = query_result.rows[num]
   const list_metadata = make_metaData(query_result.metaData)
   let return_query_result = []
@@ -23,18 +23,23 @@ function result_query(query_result, num, request_item_list) {
   return return_query_result
 }
 
-async function all_select(connection) {
-  let query = 'SELECT * FROM STUDENTS'
+async function attendance_gender(connection) {
+  //   let query = "SELECT * FROM STUDENTS"
+  let start_date = "2022-01-22"
+  let last_date = "2022-01-23"
+  let query = `SELECT COUNT(*) FROM BELONG_TO B \
+		WHERE B.my_group = '2' and B.grade = '1' and B.my_class = '2' and B.sex = 'F' \
+		and B.student_id IN ( \
+			SELECT student_id \
+ 			FROM attendance \
+			WHERE attendance_date BETWEEN TO_DATE(${start_date}, 'YYYY-MM-DD') \
+							   AND TO_DATE('${last_date}', 'YYYY-MM-DD')\
+		);`
+
   const query_result = await connection.execute(query, [])
+  const result = result_query(query_result)
 
-  // TEST
-  return query_result
-
-  // const compiled_result = result_query(query_result, 0, [
-  //   'STUDENT_NAME',
-  //   'STUDENT_ID',
-  // ])
-  // return compiled_result
+  return result
 }
 
 let connection
@@ -51,5 +56,3 @@ export default async function helloAPI(req, res) {
   const compiled_result = await all_select(connection)
   res.status(200).json(compiled_result)
 }
-//학년, 반도 있어야 하지만 실제로 필요한 건 부서별(남), 부서별(여)
-// [4, 2]
