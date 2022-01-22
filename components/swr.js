@@ -12,8 +12,11 @@ export function useHello() {
   }
 }
 
-export function useCount(group_id) {
-  const { data, error } = useSWR(`/api/count?group=${group_id}`, fetcher)
+export function useCount(group_id, start_date, end_date) {
+  const { data, error } = useSWR(
+    `/api/count/${group_id}/${start_date}/${end_date}`,
+    fetcher
+  )
 
   return {
     count_array: data,

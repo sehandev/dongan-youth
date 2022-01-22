@@ -19,10 +19,13 @@ const LongColumn = styled.th`
 const Attendance = () => {
   // TEST
   const start_date = '2022-01-23'
-  const last_date = '2022-01-30'
-  const count_array = [1, 2, 3]
+  const end_date = '2022-01-30'
 
-  // const { count_array, is_loading, is_error } = useCount(1, start_date, last_date)
+  const { count_array, is_loading, is_error } = useCount(
+    1,
+    start_date,
+    end_date
+  )
 
   const class_array = ['남', '여', '교사']
 
@@ -49,14 +52,14 @@ const Attendance = () => {
     </table>
   )
 
-  // if (is_loading) {
-  //   return (
-  //     <Container>
-  //       <Sidebar />
-  //       <Header></Header>
-  //     </Container>
-  //   )
-  // }
+  if (is_loading) {
+    return (
+      <Container>
+        <Sidebar />
+        <Header></Header>
+      </Container>
+    )
+  }
 
   return (
     <Container>

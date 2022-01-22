@@ -1,4 +1,4 @@
-import { getConnection } from "oracledb"
+import { getConnection } from 'oracledb'
 
 function make_metaData(metaData) {
   let list_metadata = []
@@ -23,10 +23,10 @@ function result_query(query_result, num, request_item_list) {
   return return_query_result
 }
 
-async function attendance_gender(connection) {
+async function attendance_gender(connection, group_id, start_date, end_date) {
   //   let query = "SELECT * FROM STUDENTS"
-  let start_date = "2022-01-22"
-  let last_date = "2022-01-23"
+  let start_date = '2022-01-22'
+  let last_date = '2022-01-23'
   let query = `SELECT COUNT(*) FROM BELONG_TO B \
 		WHERE B.my_group = '2' and B.grade = '1' and B.my_class = '2' and B.sex = 'F' \
 		and B.student_id IN ( \
@@ -53,6 +53,9 @@ export default async function helloAPI(req, res) {
     })
   }
 
-  const compiled_result = await all_select(connection)
+  const { params } = req.query
+  // params: [group_id, start_date, end_date]
+
+  const compiled_result = await attendance_gender(connection, ...params)
   res.status(200).json(compiled_result)
 }
