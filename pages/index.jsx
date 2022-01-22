@@ -1,5 +1,5 @@
 import Attendance from '../components/attendance'
 
-export default function Home() {
+export default function IndexPage() {
   return <Attendance />
 }
