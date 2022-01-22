@@ -46,47 +46,9 @@ const Attendance = () => {
           check_1: row[3] == 1,
         })
       })
-      console.log(new_user_info_array)
+      new_user_info_array.sort((a, b) => a.name.localeCompare(b.name))
       set_user_info_array(new_user_info_array)
     }
-    // set_user_info_array([
-    //   {
-    //     id: '1234',
-    //     name: '이름순',
-    //     sex: '남',
-    //     check_1: false,
-    //   },
-    //   {
-    //     id: '2307',
-    //     name: '김다연',
-    //     sex: '여',
-    //     check_1: true,
-    //   },
-    //   {
-    //     id: '2307',
-    //     name: '김성돈',
-    //     sex: '남',
-    //     check_1: false,
-    //   },
-    //   {
-    //     id: '2584',
-    //     name: '박세연',
-    //     sex: '여',
-    //     check_1: false,
-    //   },
-    //   {
-    //     id: '9018',
-    //     name: '복영빈',
-    //     sex: '여',
-    //     check_1: true,
-    //   },
-    //   {
-    //     id: '6195',
-    //     name: '이도연',
-    //     sex: '여',
-    //     check_1: true,
-    //   },
-    // ])
   }, [is_loading])
 
   const check_attendance = (index) => {
