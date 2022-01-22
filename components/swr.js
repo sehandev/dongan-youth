@@ -11,3 +11,13 @@ export function useHello() {
     is_error: error,
   }
 }
+
+export function useCount(group_id) {
+  const { data, error } = useSWR(`/api/count?group=${group_id}`, fetcher)
+
+  return {
+    count_array: data,
+    is_loading: !error && !data,
+    is_error: error,
+  }
+}
