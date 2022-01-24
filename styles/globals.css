@@ -10,3 +10,11 @@ html {
     'Malgun Gothic', sans-serif;
   font-size: 16px;
 }
+
+html {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+html::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera*/
+}
