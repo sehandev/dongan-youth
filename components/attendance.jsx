@@ -37,7 +37,6 @@ const Attendance = () => {
 
   useEffect(() => {
     if (hello_data) {
-      console.log(hello_data.rows)
       const new_user_info_array = Array.from(hello_data.rows, (row) => {
         return Object({
           id: row[0].trim(),
