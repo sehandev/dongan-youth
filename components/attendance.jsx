@@ -12,7 +12,7 @@ import {
 import Container from './container'
 import Sidebar from './attendance_sidebar'
 import Header from './header'
-import { useHello } from './swr'
+import { useAttendance } from './swr'
 
 const Column = styled.th`
   width: 80px;
@@ -25,7 +25,7 @@ const LongColumn = styled.th`
 `
 
 const Attendance = () => {
-  const { hello_data, is_loading, is_error } = useHello()
+  const { attendance_data, is_loading, is_error } = useAttendance()
 
   const [toggle, set_toggle] = useState(true)
   useEffect(() => {}, [toggle])
@@ -36,8 +36,8 @@ const Attendance = () => {
   const current_class = useSelector((state) => state.class_checker.class)
 
   useEffect(() => {
-    if (hello_data) {
-      const new_user_info_array = Array.from(hello_data.rows, (row) => {
+    if (!is_loading && !is_error) {
+      const new_user_info_array = Array.from(attendance_data.rows, (row) => {
         return Object({
           id: row[0].trim(),
           name: row[1].trim(),
