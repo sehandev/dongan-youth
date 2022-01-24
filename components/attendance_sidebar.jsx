@@ -1,7 +1,9 @@
 import styled from 'styled-components'
 import { useDispatch, useSelector } from 'react-redux'
+import Link from 'next/link'
 
 import Logo from './logo'
+import SecondaryButton from './assets/secondary_button'
 import { change_class } from '../reducers/class_checker'
 import { close_sidebar } from '../reducers/sidebar_toggler'
 
@@ -89,16 +91,21 @@ const Sidebar = () => {
 
   const get_mobile_class = () => {
     if (is_opened) {
-      return 'block'
+      return 'flex'
     }
     return 'hidden'
   }
 
   return (
-    <SidebarPanel className={`${get_mobile_class()} md:block`}>
-      <div className='mb-4 pt-4 pl-4'>
-        <Logo />
-      </div>
+    <SidebarPanel
+      className={`${get_mobile_class()} md:flex flex-col items-center`}
+    >
+      <Logo
+        className='w-full my-4 px-4'
+        onClick={() => {
+          dispatch(change_class({ grade: -1, class: -1 }))
+        }}
+      />
       {[1, 2, 3].map((grade_index) => {
         return [1, 2].map((class_index) => {
           return (
@@ -111,6 +118,11 @@ const Sidebar = () => {
         })
       })}
       <ClassButton button_grade={0} button_class={0} />
+      <Link href='/statistics'>
+        <SecondaryButton className='mt-4' width={100} height={40}>
+          출석 통계
+        </SecondaryButton>
+      </Link>
     </SidebarPanel>
   )
 }
