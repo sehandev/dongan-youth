@@ -25,21 +25,22 @@ function result_query(query_result, num, request_item_list) {
 
 async function attendance_gender(connection, group_id, start_date, end_date) {
   //   let query = "SELECT * FROM STUDENTS"
-  let start_date = '2022-01-22'
-  let last_date = '2022-01-23'
-  let query = `SELECT COUNT(*) FROM BELONG_TO B \
-		WHERE B.my_group = '2' and B.grade = '1' and B.my_class = '2' and B.sex = 'F' \
-		and B.student_id IN ( \
-			SELECT student_id \
- 			FROM attendance \
-			WHERE attendance_date BETWEEN TO_DATE(${start_date}, 'YYYY-MM-DD') \
-							   AND TO_DATE('${last_date}', 'YYYY-MM-DD')\
-		);`
+  // let start_date = '2022-01-22'
+  // let last_date = '2022-01-23'
+  // let query = `SELECT COUNT(*) FROM BELONG_TO B \
+  // 	WHERE B.my_group = '2' and B.grade = '1' and B.my_class = '2' and B.sex = 'F' \
+  // 	and B.student_id IN ( \
+  // 		SELECT student_id \
+  // 		FROM attendance \
+  // 		WHERE attendance_date BETWEEN TO_DATE(${start_date}, 'YYYY-MM-DD') \
+  // 						   AND TO_DATE('${last_date}', 'YYYY-MM-DD')\
+  // 	);`
 
-  const query_result = await connection.execute(query, [])
-  const result = result_query(query_result)
+  // const query_result = await connection.execute(query, [])
+  // const result = result_query(query_result)
 
-  return result
+  // return result
+  return [4, 2]
 }
 
 let connection

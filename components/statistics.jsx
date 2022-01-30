@@ -52,7 +52,7 @@ const Attendance = () => {
     </table>
   )
 
-  if (is_loading) {
+  if (is_loading || is_error) {
     return (
       <Container>
         <Sidebar />

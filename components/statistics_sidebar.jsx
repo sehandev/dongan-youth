@@ -19,7 +19,7 @@ const Sidebar = () => {
 
   return (
     <SidebarPanel className={`${get_mobile_class()} md:block`}>
-      <div className='mb-4 pt-4 pl-4'>
+      <div className='mb-4 pt-4 pl-4' style={{ width: '220px' }}>
         <Logo />
       </div>
     </SidebarPanel>
