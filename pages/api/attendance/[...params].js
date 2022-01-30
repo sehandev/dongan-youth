@@ -1,7 +1,5 @@
 import { getConnection } from 'oracledb'
 
-let connection
-
 async function select_attendance(connection, grade_id, class_id) {
   let query = `
     SELECT S.student_id, S.student_name, S.sex
@@ -37,6 +35,8 @@ async function select_attendance(connection, grade_id, class_id) {
   })
   return student_array
 }
+
+let connection
 
 export default async function attendanceAPI(req, res) {
   if (!connection) {
