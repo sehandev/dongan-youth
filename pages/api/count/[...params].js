@@ -43,20 +43,22 @@ async function attendance_gender(connection, group_id, start_date, end_date) {
   return [4, 2]
 }
 
-let connection
-
 export default async function helloAPI(req, res) {
-  if (!connection) {
-    connection = await getConnection({
-      user: process.env.ORACLEDB_USER,
-      password: process.env.ORACLEDB_PASSWORD,
-      connectString: process.env.ORACLEDB_CONNECT_STRING,
-    })
-  }
+  const connection = await getConnection({
+    user: process.env.ORACLEDB_USER,
+    password: process.env.ORACLEDB_PASSWORD,
+    connectString: process.env.ORACLEDB_CONNECT_STRING,
+  })
 
   const { params } = req.query
   // params: [group_id, start_date, end_date]
 
   const compiled_result = await attendance_gender(connection, ...params)
   res.status(200).json(compiled_result)
+
+  try {
+    await connection.close()
+  } catch (error) {
+    console.log(error)
+  }
 }

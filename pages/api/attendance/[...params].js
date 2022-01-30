@@ -36,20 +36,22 @@ async function select_attendance(connection, grade_id, class_id) {
   return student_array
 }
 
-let connection
-
 export default async function attendanceAPI(req, res) {
-  if (!connection) {
-    connection = await getConnection({
-      user: process.env.ORACLEDB_USER,
-      password: process.env.ORACLEDB_PASSWORD,
-      connectString: process.env.ORACLEDB_CONNECT_STRING,
-    })
-  }
+  const connection = await getConnection({
+    user: process.env.ORACLEDB_USER,
+    password: process.env.ORACLEDB_PASSWORD,
+    connectString: process.env.ORACLEDB_CONNECT_STRING,
+  })
 
   const { params } = req.query
   // params: [grade_id, class_id]
 
   const attendance_data = await select_attendance(connection, ...params)
   res.status(200).json(attendance_data)
+
+  try {
+    await connection.close()
+  } catch (error) {
+    console.log(error)
+  }
 }

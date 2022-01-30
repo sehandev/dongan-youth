@@ -27,16 +27,12 @@ async function delete_attendance(connection, student_id, current_date) {
   return delete_result
 }
 
-let connection
-
 export default async function update_attendance_api(req, res) {
-  if (!connection) {
-    connection = await getConnection({
-      user: process.env.ORACLEDB_USER,
-      password: process.env.ORACLEDB_PASSWORD,
-      connectString: process.env.ORACLEDB_CONNECT_STRING,
-    })
-  }
+  const connection = await getConnection({
+    user: process.env.ORACLEDB_USER,
+    password: process.env.ORACLEDB_PASSWORD,
+    connectString: process.env.ORACLEDB_CONNECT_STRING,
+  })
 
   const {
     query: { params },
