@@ -9,9 +9,6 @@ import {
   DescriptionStrong,
   Checkbox,
 } from './common'
-import Container from './container'
-import Sidebar from './attendance_sidebar'
-import Header from './header'
 import { useAttendance } from './swr'
 
 const Column = styled.th`
@@ -25,34 +22,50 @@ const LongColumn = styled.th`
 `
 
 const Attendance = () => {
-  const { attendance_data, is_loading, is_error } = useAttendance()
+  const current_grade = useSelector((state) => state.class_checker.grade)
+  const current_class = useSelector((state) => state.class_checker.class)
+  const { attendance_data, is_loading, is_error } = useAttendance(
+    current_grade,
+    current_class
+  )
 
   const [toggle, set_toggle] = useState(true)
   useEffect(() => {}, [toggle])
 
   const [user_info_array, set_user_info_array] = useState([])
 
-  const current_grade = useSelector((state) => state.class_checker.grade)
-  const current_class = useSelector((state) => state.class_checker.class)
-
   useEffect(() => {
-    if (!is_loading && !is_error) {
-      const new_user_info_array = Array.from(attendance_data.rows, (row) => {
+    if (attendance_data) {
+      const new_user_info_array = Array.from(attendance_data, (row) => {
         return Object({
           id: row[0].trim(),
           name: row[1].trim(),
           sex: row[2] == 'F' ? '여' : '남',
-          check_1: row[3] == 1,
+          is_attended: row[3] == 1,
         })
       })
       new_user_info_array.sort((a, b) => a.name.localeCompare(b.name))
       set_user_info_array(new_user_info_array)
     }
-  }, [is_loading])
+  }, [attendance_data])
 
   const check_attendance = (index) => {
+    const user_info = user_info_array[index]
+    // TEST
+    const current_date = '2022-01-23'
+
+    if (user_info.is_attended) {
+      fetch(`/api/update_attendance/${user_info.id}/${current_date}`, {
+        method: 'DELETE',
+      }).then((response) => console.log(response))
+    } else {
+      fetch(`/api/update_attendance/${user_info.id}/${current_date}`, {
+        method: 'POST',
+      }).then((response) => console.log(response))
+    }
+
     set_user_info_array((prev_array) => {
-      prev_array[index].check_1 = !prev_array[index].check_1
+      prev_array[index].is_attended = !prev_array[index].is_attended
       return prev_array
     })
     set_toggle((prev_state) => !prev_state)
@@ -87,7 +100,7 @@ const Attendance = () => {
             <td className='border'>{user_info.name}</td>
             <td className='border'>{user_info.sex}</td>
             <td className='border'>
-              <Checkbox check={user_info.check_1} />
+              <Checkbox check={user_info.is_attended} />
             </td>
           </tr>
         ))}
@@ -95,30 +108,29 @@ const Attendance = () => {
     </table>
   )
 
+  if (is_loading) {
+    return <div>불러오는 중</div>
+  }
+
+  if (is_error) {
+    return <div>오류 발생</div>
+  }
+
   if (current_grade == -1 || current_class == -1) {
-    return (
-      <Container>
-        <Sidebar />
-        <Header></Header>
-      </Container>
-    )
+    return <></>
   }
 
   return (
-    <Container>
-      <Sidebar />
-      <Header>
-        <Headline className='mb-2'>출석부</Headline>
-        <Description>
-          <DescriptionStrong>예배 출석</DescriptionStrong>과{' '}
-          <DescriptionStrong>반모임 출석</DescriptionStrong>을 따로
-          확인해주세요.
-        </Description>
-        <Table />
-        {/* TEST */}
-        {current_grade}학년 {current_class}반
-      </Header>
-    </Container>
+    <>
+      <Headline className='mb-2'>출석부</Headline>
+      <Description>
+        <DescriptionStrong>예배 출석</DescriptionStrong>과{' '}
+        <DescriptionStrong>반모임 출석</DescriptionStrong>을 따로 확인해주세요.
+      </Description>
+      <Table />
+      {/* TEST */}
+      {current_grade}학년 {current_class}반
+    </>
   )
 }
 
