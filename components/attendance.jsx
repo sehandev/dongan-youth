@@ -128,8 +128,6 @@ const Attendance = () => {
         <DescriptionStrong>반모임 출석</DescriptionStrong>을 따로 확인해주세요.
       </Description>
       <Table />
-      {/* TEST */}
-      {current_grade}학년 {current_class}반
     </>
   )
 }
