@@ -22,7 +22,7 @@ export function useCount(group_id, start_date, end_date) {
   )
 
   return {
-    count_array: data,
+    statistics_array: data,
     is_loading: !error && !data,
     is_error: error,
   }
