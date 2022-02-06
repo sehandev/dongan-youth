@@ -4,7 +4,7 @@ const Container = ({ children }) => {
   return (
     <div className='flex flex-col items-center justify-center select-none'>
       <Head>
-        <title>AGGA</title>
+        <title>출석하는동안</title>
         <link rel='icon' href='/favicon.ico' />
       </Head>
 
