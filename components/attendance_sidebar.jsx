@@ -36,6 +36,16 @@ const Sidebar = () => {
   const current_class = useSelector((state) => state.class_checker.class)
 
   const ClassButton = ({ button_grade, button_class }) => {
+    const get_button_name = (button_grade, button_class) => {
+      if (button_grade == 0 && button_class == 0) {
+        return '선생님'
+      }
+      if (button_class == 0) {
+        return `${button_grade}학년`
+      }
+      return `${button_grade}학년 ${button_class}반`
+    }
+
     if (button_grade == current_grade && button_class == current_class) {
       return (
         <CurrentButton
@@ -51,13 +61,7 @@ const Sidebar = () => {
             src='https://img.icons8.com/pastel-glyph/512/ffffff/person-male--v1.png'
           />
           <span className='align-middle'>
-            {button_grade == 0 && button_class == 0 ? (
-              <span>선생님</span>
-            ) : (
-              <span>
-                {button_grade}학년 {button_class}반
-              </span>
-            )}
+            {get_button_name(button_grade, button_class)}
           </span>
         </CurrentButton>
       )
@@ -77,13 +81,7 @@ const Sidebar = () => {
           src='https://img.icons8.com/pastel-glyph/512/000000/person-male--v1.png'
         />
         <span className='align-middle'>
-          {button_grade == 0 && button_class == 0 ? (
-            <span>선생님</span>
-          ) : (
-            <span>
-              {button_grade}학년 {button_class}반
-            </span>
-          )}
+          {get_button_name(button_grade, button_class)}
         </span>
       </NormalButton>
     )
@@ -106,17 +104,18 @@ const Sidebar = () => {
           dispatch(change_class({ grade: -1, class: -1 }))
         }}
       />
-      {[1, 2, 3].map((grade_index) => {
-        return [1, 2].map((class_index) => {
-          return (
-            <ClassButton
-              key={class_index}
-              button_grade={grade_index}
-              button_class={class_index}
-            />
-          )
-        })
-      })}
+      <ClassButton button_grade={1} button_class={0} />
+      <ClassButton button_grade={1} button_class={1} />
+      <ClassButton button_grade={1} button_class={2} />
+      <ClassButton button_grade={1} button_class={3} />
+      <ClassButton button_grade={2} button_class={0} />
+      <ClassButton button_grade={2} button_class={1} />
+      <ClassButton button_grade={2} button_class={2} />
+      <ClassButton button_grade={2} button_class={3} />
+      <ClassButton button_grade={3} button_class={0} />
+      <ClassButton button_grade={3} button_class={1} />
+      <ClassButton button_grade={3} button_class={2} />
+      <ClassButton button_grade={3} button_class={3} />
       <ClassButton button_grade={0} button_class={0} />
       <Link href='/statistics'>
         <SecondaryButton className='mt-4' width={100} height={40}>
