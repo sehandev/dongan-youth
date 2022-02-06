@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 const LogoText = styled.div`
   font-weight: 900;
-  font-size: 30px;
+  font-size: 20px;
 `
 
 const Logo = ({ className, onClick }) => {
@@ -17,7 +17,7 @@ const Logo = ({ className, onClick }) => {
           width={40}
           height={40}
         ></Image>
-        <LogoText className='ml-2'>AGGA</LogoText>
+        <LogoText className='ml-2'>출석하는 동안</LogoText>
       </a>
     </Link>
   )
