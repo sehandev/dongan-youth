@@ -9,7 +9,7 @@ const SecondaryButton = React.forwardRef(
         style={{
           width: width,
           height: height,
-          backgroundColor: '#34CFF8',
+          backgroundColor: '#8756bd',
           color: '#ffffff',
         }}
         href={href}
