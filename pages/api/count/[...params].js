@@ -1,46 +1,83 @@
 import { getConnection } from 'oracledb'
 
-function make_metaData(metaData) {
-  let list_metadata = []
-  for (let i = 0; i < metaData.length; i++) {
-    list_metadata.push(Object.values(metaData[i]).toString())
-  }
-  return list_metadata
-}
+function make_attendance_query(
+  group_id,
+  grade,
+  class_id,
+  start_date,
+  end_date
+) {
+  const male_query = `
+    SELECT count(*) 
+    FROM ATTENDANCE A
+    WHERE A.student_id IN(
+      SELECT student_id
+      FROM BELONG_TO B
+      WHERE 
+        B.my_group = '${group_id}' 
+        AND B.grade = '${grade}' 
+        AND B.my_class = '${class_id}' 
+        AND B.sex = 'M'
+        AND attendance_date BETWEEN TO_DATE('${start_date}', 'YYYY-MM-DD') 
+                            AND TO_DATE('${end_date}', 'YYYY-MM-DD')
+    )
+  `
 
-function result_query(query_result, num, request_item_list) {
-  // input = [부서, 학년, 반, 성별, 기간]
-  const num_data = query_result.rows[num]
-  const list_metadata = make_metaData(query_result.metaData)
-  let return_query_result = []
-  let information_index
-
-  for (let i = 0; i < request_item_list.length; i++) {
-    information_index = list_metadata.indexOf(request_item_list[i])
-    if (information_index != -1)
-      return_query_result.push(num_data[information_index])
-  }
-  return return_query_result
+  const female_query = `
+    SELECT count(*) 
+    FROM ATTENDANCE A
+    WHERE A.student_id IN(
+      SELECT student_id
+      FROM BELONG_TO B
+      WHERE 
+        B.my_group = '${group_id}' 
+        AND B.grade = '${grade}' 
+        AND B.my_class = '${class_id}' 
+        AND B.sex = 'F'
+        AND attendance_date BETWEEN TO_DATE('${start_date}', 'YYYY-MM-DD') 
+                            AND TO_DATE('${end_date}', 'YYYY-MM-DD')
+    )
+  `
+  return [male_query, female_query]
 }
 
 async function attendance_gender(connection, group_id, start_date, end_date) {
-  //   let query = "SELECT * FROM STUDENTS"
-  // let start_date = '2022-01-22'
-  // let last_date = '2022-01-23'
-  // let query = `SELECT COUNT(*) FROM BELONG_TO B \
-  // 	WHERE B.my_group = '2' and B.grade = '1' and B.my_class = '2' and B.sex = 'F' \
-  // 	and B.student_id IN ( \
-  // 		SELECT student_id \
-  // 		FROM attendance \
-  // 		WHERE attendance_date BETWEEN TO_DATE(${start_date}, 'YYYY-MM-DD') \
-  // 						   AND TO_DATE('${last_date}', 'YYYY-MM-DD')\
-  // 	);`
+  // 1학년 : 0123, 2학년 : 0123, 3학년 : 0123, 교사(0학년 0반)
+  // 전체 남, 여, 교사 출석
 
-  // const query_result = await connection.execute(query, [])
-  // const result = result_query(query_result)
+  const class_arr = [0, 3, 3, 3]
+  let attendance_statistics_result = [] // [학년][반]{성별}
+  let total_male = 0
+  let total_female = 0
 
-  // return result
-  return [4, 2]
+  for (let grade = 0; grade < 4; grade++) {
+    // 0학년(교사), 1학년, 2학년, 3학년 [0~3][]{}
+    let grade_result = []
+    for (let class_id = 0; class_id < class_arr[grade] + 1; class_id++) {
+      // 반 수 : [0~3][0~max_class_id]{}
+      let [male_query, female_query] = make_attendance_query(
+        group_id,
+        grade,
+        class_id,
+        start_date,
+        end_date
+      )
+      let male_query_result = await connection.execute(male_query, [])
+      let female_query_result = await connection.execute(female_query, [])
+
+      // 성별 : [0~3][0~max_class_id]{'M' or 'F'}
+      let class_result = {}
+      class_result['M'] = male_query_result.rows[0][0]
+      class_result['F'] = female_query_result.rows[0][0]
+
+      grade_result[class_id] = class_result
+      total_male += class_result['M']
+      total_female += class_result['F']
+    }
+    attendance_statistics_result[grade] = grade_result
+  }
+
+  return [total_male, total_female, attendance_statistics_result]
 }
 
 export default async function helloAPI(req, res) {
