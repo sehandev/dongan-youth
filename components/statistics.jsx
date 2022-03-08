@@ -1,10 +1,12 @@
 import styled from 'styled-components'
+import { useSelector } from 'react-redux'
 
-import { Headline, SubHeadline, Description, DescriptionStrong } from './common'
+import { Headline, SubHeadline, Description } from './common'
 import Container from './container'
 import Sidebar from './statistics_sidebar'
 import Header from './header'
 import { useStatistics } from './swr'
+import { DateSelectBox } from './date_select'
 
 const Column = styled.th`
   width: 80px;
@@ -17,10 +19,8 @@ const LongColumn = styled.th`
 `
 
 const Statistics = () => {
-  // TEST
-  const start_date = '2022-03-06'
-  const end_date = '2022-03-12'
-
+  const start_date = useSelector((state) => state.date_checker.start_date)
+  const end_date = useSelector((state) => state.date_checker.end_date)
   const { statistics_array, is_loading, is_error } = useStatistics(
     1,
     start_date,
@@ -124,11 +124,8 @@ const Statistics = () => {
       <Sidebar />
       <Header>
         <Headline className='mb-2'>이번 주 통계</Headline>
-        <Description>
-          <DescriptionStrong>{start_date.slice(0, 4)}</DescriptionStrong>년{' '}
-          <DescriptionStrong>{start_date.slice(5, 7)}</DescriptionStrong>월{' '}
-          <DescriptionStrong>{start_date.slice(8)}</DescriptionStrong>일
-        </Description>
+        <DateSelectBox />
+        <Description></Description>
         <div className='flex mt-8'>
           <ClassTable />
           <GroupTable />

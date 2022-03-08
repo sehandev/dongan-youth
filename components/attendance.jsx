@@ -6,10 +6,10 @@ import {
   Headline,
   SubHeadline,
   Description,
-  DescriptionStrong,
   Checkbox,
 } from './common'
 import { useAttendance } from './swr'
+import { DateSelectBox } from './date_select'
 
 const Column = styled.th`
   width: 80px;
@@ -22,11 +22,15 @@ const LongColumn = styled.th`
 `
 
 const Attendance = () => {
+  const start_date = useSelector((state) => state.date_checker.start_date)
+  const end_date = useSelector((state) => state.date_checker.end_date)
   const current_grade = useSelector((state) => state.class_checker.grade)
   const current_class = useSelector((state) => state.class_checker.class)
   const { attendance_data, is_loading, is_error } = useAttendance(
     current_grade,
-    current_class
+    current_class,
+    start_date,
+    end_date
   )
 
   const [toggle, set_toggle] = useState(true)
@@ -51,15 +55,13 @@ const Attendance = () => {
 
   const check_attendance = (index) => {
     const user_info = user_info_array[index]
-    // TEST
-    const current_date = '2022-01-23'
 
     if (user_info.is_attended) {
-      fetch(`/api/update_attendance/${user_info.id}/${current_date}`, {
+      fetch(`/api/update_attendance/${user_info.id}/${start_date}`, {
         method: 'DELETE',
       }).then((response) => console.log(response))
     } else {
-      fetch(`/api/update_attendance/${user_info.id}/${current_date}`, {
+      fetch(`/api/update_attendance/${user_info.id}/${start_date}`, {
         method: 'POST',
       }).then((response) => console.log(response))
     }
@@ -123,10 +125,8 @@ const Attendance = () => {
   return (
     <>
       <Headline className='mb-2'>출석부</Headline>
-      <Description>
-        <DescriptionStrong>예배 출석</DescriptionStrong>과{' '}
-        <DescriptionStrong>반모임 출석</DescriptionStrong>을 따로 확인해주세요.
-      </Description>
+      <DateSelectBox />
+      <Description></Description>
       <Table />
     </>
   )

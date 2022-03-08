@@ -1,6 +1,12 @@
 import { getConnection } from 'oracledb'
 
-async function select_attendance(connection, grade_id, class_id) {
+async function select_attendance(
+  connection,
+  grade_id,
+  class_id,
+  start_date,
+  end_date
+) {
   let query = `
     SELECT S.student_id, S.student_name, S.sex
     FROM belong_to B, students S
@@ -20,8 +26,8 @@ async function select_attendance(connection, grade_id, class_id) {
     WHERE
       student_id IN('${id_array.join("','")}')
       AND attendance_date BETWEEN
-        TO_DATE('2022-01-22', 'YYYY-MM-DD') 
-        AND TO_DATE('2022-01-24', 'YYYY-MM-DD')
+        TO_DATE('${start_date}', 'YYYY-MM-DD') 
+        AND TO_DATE('${end_date}', 'YYYY-MM-DD')
   `
   const attendance_result = await connection.execute(query, [])
   const attended_id_array = Array.from(attendance_result.rows, (x) => x[0])
@@ -44,7 +50,7 @@ export default async function attendanceAPI(req, res) {
   })
 
   const { params } = req.query
-  // params: [grade_id, class_id]
+  // params: [grade_id, class_id, start_date, end_date]
 
   const attendance_data = await select_attendance(connection, ...params)
   res.status(200).json(attendance_data)
