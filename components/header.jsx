@@ -20,7 +20,13 @@ const Header = ({ children }) => {
       <HeaderPanel className='flex items-center justify-between px-4'>
         {!is_opened && (
           <>
-            <Logo className='block md:hidden' />
+            <Logo
+              className='block md:hidden'
+              onClick={() => {
+                dispatch(open_sidebar())
+                dispatch(initialize_class())
+              }}
+            />
             <button
               className='block md:hidden border border-purple-400 w-10 h-10 text-2xl font-bold'
               onClick={() => {

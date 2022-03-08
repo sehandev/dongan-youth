@@ -1,9 +1,7 @@
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
-import Link from 'next/link'
 
 import Logo from './logo'
-import SecondaryButton from './assets/secondary_button'
 
 const SidebarPanel = styled.div`
   width: 220px;
@@ -27,11 +25,6 @@ const Sidebar = () => {
       <div className='mb-4 pt-4 pl-4' style={{ width: '220px' }}>
         <Logo />
       </div>
-      <Link href='/'>
-        <SecondaryButton className='mt-4' width={100} height={40}>
-          돌아가기
-        </SecondaryButton>
-      </Link>
     </SidebarPanel>
   )
 }
