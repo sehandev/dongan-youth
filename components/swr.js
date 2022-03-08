@@ -15,9 +15,9 @@ export function useAttendance(grade_id, class_id) {
   }
 }
 
-export function useCount(group_id, start_date, end_date) {
+export function useStatistics(group_id, start_date, end_date) {
   const { data, error } = useSWR(
-    `/api/count/${group_id}/${start_date}/${end_date}`,
+    `/api/statistics/${group_id}/${start_date}/${end_date}`,
     fetcher
   )
 

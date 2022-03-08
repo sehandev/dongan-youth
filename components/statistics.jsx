@@ -4,7 +4,7 @@ import { Headline, SubHeadline, Description, DescriptionStrong } from './common'
 import Container from './container'
 import Sidebar from './statistics_sidebar'
 import Header from './header'
-import { useCount } from './swr'
+import { useStatistics } from './swr'
 
 const Column = styled.th`
   width: 80px;
@@ -18,10 +18,10 @@ const LongColumn = styled.th`
 
 const Statistics = () => {
   // TEST
-  const start_date = '2022-02-06'
-  const end_date = '2022-02-12'
+  const start_date = '2022-03-06'
+  const end_date = '2022-03-12'
 
-  const { statistics_array, is_loading, is_error } = useCount(
+  const { statistics_array, is_loading, is_error } = useStatistics(
     1,
     start_date,
     end_date
@@ -68,11 +68,11 @@ const Statistics = () => {
         <ClassRow grade_id={1} class_id={2} />
         <ClassRow grade_id={1} class_id={3} />
         <ClassRow grade_id={2} class_id={0} />
-        <ClassRow grade_id={2} class_id={2} />
+        <ClassRow grade_id={2} class_id={1} />
         <ClassRow grade_id={2} class_id={2} />
         <ClassRow grade_id={2} class_id={3} />
         <ClassRow grade_id={3} class_id={0} />
-        <ClassRow grade_id={3} class_id={3} />
+        <ClassRow grade_id={3} class_id={1} />
         <ClassRow grade_id={3} class_id={2} />
         <ClassRow grade_id={3} class_id={3} />
       </tbody>
@@ -93,11 +93,11 @@ const Statistics = () => {
       </thead>
       <tbody className='text-center'>
         <tr className='h-20'>
-          <td className='border'>남자</td>
+          <td className='border'>남학생</td>
           <td className='border'>{statistics_array[0]}</td>
         </tr>
         <tr className='h-20'>
-          <td className='border'>여자</td>
+          <td className='border'>여학생</td>
           <td className='border'>{statistics_array[1]}</td>
         </tr>
         <tr className='h-20'>
