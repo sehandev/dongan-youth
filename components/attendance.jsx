@@ -2,12 +2,7 @@ import styled from 'styled-components'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import {
-  Headline,
-  SubHeadline,
-  Description,
-  Checkbox,
-} from './common'
+import { Headline, SubHeadline, Description, Checkbox } from './common'
 import { useAttendance } from './swr'
 import { DateSelectBox } from './date_select'
 
@@ -110,16 +105,16 @@ const Attendance = () => {
     </table>
   )
 
+  if (current_grade == -1 || current_class == -1) {
+    return <></>
+  }
+
   if (is_loading) {
     return <div>불러오는 중</div>
   }
 
   if (is_error) {
     return <div>오류 발생</div>
-  }
-
-  if (current_grade == -1 || current_class == -1) {
-    return <></>
   }
 
   return (
