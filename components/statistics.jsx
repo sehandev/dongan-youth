@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 import { Headline, SubHeadline, Description } from './common'
 import Container from './container'
-import Sidebar from './statistics_sidebar'
+import Sidebar from './sidebar'
 import Header from './header'
 import { useStatistics } from './swr'
 import { DateSelectBox } from './date_select'

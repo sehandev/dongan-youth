@@ -48,42 +48,48 @@ const Sidebar = () => {
 
     if (button_grade == current_grade && button_class == current_class) {
       return (
-        <CurrentButton
+        <Link href='/'>
+          <CurrentButton
+            button_grade={button_grade}
+            button_class={button_class}
+            onClick={() => {
+              dispatch(
+                change_class({ grade: button_grade, class: button_class })
+              )
+              dispatch(close_sidebar())
+            }}
+          >
+            <img
+              className='inline-block mr-2 w-8 h-8'
+              src='https://img.icons8.com/pastel-glyph/512/ffffff/person-male--v1.png'
+            />
+            <span className='align-middle'>
+              {get_button_name(button_grade, button_class)}
+            </span>
+          </CurrentButton>
+        </Link>
+      )
+    }
+    return (
+      <Link href='/'>
+        <NormalButton
           button_grade={button_grade}
           button_class={button_class}
           onClick={() => {
             dispatch(change_class({ grade: button_grade, class: button_class }))
             dispatch(close_sidebar())
           }}
+          className='hover:bg-purple-100'
         >
           <img
             className='inline-block mr-2 w-8 h-8'
-            src='https://img.icons8.com/pastel-glyph/512/ffffff/person-male--v1.png'
+            src='https://img.icons8.com/pastel-glyph/512/000000/person-male--v1.png'
           />
           <span className='align-middle'>
             {get_button_name(button_grade, button_class)}
           </span>
-        </CurrentButton>
-      )
-    }
-    return (
-      <NormalButton
-        button_grade={button_grade}
-        button_class={button_class}
-        onClick={() => {
-          dispatch(change_class({ grade: button_grade, class: button_class }))
-          dispatch(close_sidebar())
-        }}
-        className='hover:bg-purple-100'
-      >
-        <img
-          className='inline-block mr-2 w-8 h-8'
-          src='https://img.icons8.com/pastel-glyph/512/000000/person-male--v1.png'
-        />
-        <span className='align-middle'>
-          {get_button_name(button_grade, button_class)}
-        </span>
-      </NormalButton>
+        </NormalButton>
+      </Link>
     )
   }
 
