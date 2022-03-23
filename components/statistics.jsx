@@ -123,10 +123,10 @@ const Statistics = () => {
     <Container>
       <Sidebar />
       <Header>
-        <Headline className='mb-2'>이번 주 통계</Headline>
+        <Headline className='mb-4'>이번 주 통계</Headline>
         <DateSelectBox />
         <Description></Description>
-        <div className='flex mt-8'>
+        <div className='flex mt-4'>
           <ClassTable />
           <GroupTable />
         </div>

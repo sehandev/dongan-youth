@@ -119,7 +119,7 @@ const Attendance = () => {
 
   return (
     <>
-      <Headline className='mb-2'>출석부</Headline>
+      <Headline className='mb-4'>출석부</Headline>
       <DateSelectBox />
       <Description></Description>
       <Table />
