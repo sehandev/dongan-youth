@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import Link from 'next/link'
 
 import Logo from './logo'
-import SecondaryButton from './assets/secondary_button'
 import { change_class } from '../reducers/class_checker'
 import { close_sidebar } from '../reducers/sidebar_toggler'
 
@@ -123,18 +122,6 @@ const Sidebar = () => {
       <ClassButton button_grade={3} button_class={2} />
       <ClassButton button_grade={3} button_class={3} />
       <ClassButton button_grade={0} button_class={0} />
-      <Link href='/statistics'>
-        <SecondaryButton
-          className='mt-4'
-          width={100}
-          height={40}
-          onClick={() => {
-            dispatch(close_sidebar())
-          }}
-        >
-          출석 통계
-        </SecondaryButton>
-      </Link>
     </SidebarPanel>
   )
 }

@@ -22,6 +22,9 @@ const Header = ({ children }) => {
         <Link href='/register'>
           <button className='px-4 h-full cursor-pointer'>신규 등록</button>
         </Link>
+        <Link href='/statistics'>
+          <button className='px-4 h-full cursor-pointer'>출석 통계</button>
+        </Link>
       </ul>
     </HeaderPanel>
   )
