@@ -8,23 +8,26 @@ function make_attendance_query(
   end_date
 ) {
   const query = `
-  SELECT TMP.sex, COUNT(*)
+  SELECT G.sex, NVL(TMP.cnt, 0)
+  FROM GENDER G
+  LEFT JOIN
+  (SELECT CUR_GROUP.sex, COUNT(*) AS cnt
   FROM ATTENDANCE A, 
   (SELECT student_id, sex
-    FROM BELONG_TO B
-    WHERE B.my_group = '${group_id}' AND B.grade = '${grade}' AND B.my_class = '${class_id}'
-  ) TMP
-  WHERE A.attendance_date BETWEEN TO_DATE('${start_date}', 'YYYY-MM-DD') 
-        AND TO_DATE('${end_date}', 'YYYY-MM-DD')
-        AND A.student_id = TMP.student_id
-  GROUP BY TMP.sex
+    FROM STUDENT_LIST S
+    WHERE S.my_group = '${group_id}' AND S.grade = '${grade}' AND S.my_class = '${class_id}' AND S.student_state > 0
+  ) CUR_GROUP
+  WHERE A.student_id = CUR_GROUP.student_id
+  AND A.attendance_date BETWEEN TO_DATE('${start_date}', 'YYYY-MM-DD') 
+                            AND TO_DATE('${end_date}', 'YYYY-MM-DD')
+  GROUP BY CUR_GROUP.sex) TMP
+  ON G.sex=TMP.sex
   `
   return query
 }
 
 async function attendance_teacher(connection, group_id, start_date, end_date) {
   let teacher_result = { M: 0, F: 0 }
-
   let attendance_query = make_attendance_query(
     group_id,
     0,
@@ -32,14 +35,10 @@ async function attendance_teacher(connection, group_id, start_date, end_date) {
     start_date,
     end_date
   )
+
   let query_result = await connection.execute(attendance_query, [])
-  if (query_result.rows.length == 0) {
-  } else if (query_result.rows.length == 1) {
-    teacher_result[query_result.rows[0][0]] += query_result.rows[0][1]
-  } else {
-    for (let i = 0; i < 2; i++) {
-      teacher_result[query_result.rows[i][0]] += query_result.rows[i][1]
-    }
+  for (let i = 0; i < 2; i++) {
+    teacher_result[query_result.rows[i][0]] += query_result.rows[i][1]
   }
   return teacher_result
 }
@@ -72,18 +71,10 @@ async function attendance_gender(connection, group_id, start_date, end_date) {
       let query_result = await connection.execute(attendance_query, [])
       const query_rows = query_result.rows
       let class_result = { M: 0, F: 0 }
-      //no-one attendance
-      if (query_rows.length == 0) grade_result[class_id] = class_result
-      else if (query_rows.length == 1) {
-        //only male or only female
-        class_result[query_rows[0][0]] = query_rows[0][1]
-        total_student[query_rows[0][0]] += query_rows[0][1]
-      } else {
-        for (let i = 0; i < 2; i++) {
-          //0:male, 1:female
-          class_result[query_rows[i][0]] = query_rows[i][1]
-          total_student[query_rows[i][0]] += query_rows[i][1]
-        }
+      for (let i = 0; i < 2; i++) {
+        //0:male, 1:female
+        class_result[query_rows[i][0]] = query_rows[i][1]
+        total_student[query_rows[i][0]] += query_rows[i][1]
       }
       grade_result[class_id] = class_result
     }
@@ -101,7 +92,6 @@ export default async function statisticsAPI(req, res) {
 
   const { params } = req.query
   // params: [group_id, start_date, end_date]
-
   const compiled_result = await attendance_gender(connection, ...params)
   res.status(200).json(compiled_result)
 
