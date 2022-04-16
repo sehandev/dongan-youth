@@ -7,4 +7,3 @@ CREATE TABLE STUDENTS(
     CONSTRAINT students_pk PRIMARY KEY (student_id)
 );
 
-/*테이블 전체 삭제*/
