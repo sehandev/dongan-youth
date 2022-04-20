@@ -30,6 +30,7 @@ export const DateSelectBox = ({}) => {
 
   return (
     <select
+      className='focus-visible:outline-none'
       onChange={(e) => {
         dispatch(change_date({ start_date: e.target.value }))
       }}
