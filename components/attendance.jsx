@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import { Headline, SubHeadline, Description, Checkbox } from './common'
-import { useAttendance } from './swr'
+import { useAttendance, useStatistics } from './swr'
 import { DateSelectBox } from './date_select'
 
 const Column = styled.th`
@@ -21,17 +21,20 @@ const Attendance = () => {
   const end_date = useSelector((state) => state.date_checker.end_date)
   const current_grade = useSelector((state) => state.class_checker.grade)
   const current_class = useSelector((state) => state.class_checker.class)
-  const { attendance_data, is_loading, is_error } = useAttendance(
-    current_grade,
-    current_class,
-    start_date,
-    end_date
-  )
+  const {
+    attendance_data,
+    is_loading: is_loading_1,
+    is_error: is_error_1,
+  } = useAttendance(current_grade, current_class, start_date, end_date)
+  const {
+    statistics_array,
+    is_loading: is_loading_2,
+    is_error: is_error_2,
+  } = useStatistics(1, start_date, end_date)
 
   const [toggle, set_toggle] = useState(true)
-  useEffect(() => {}, [toggle])
-
   const [user_info_array, set_user_info_array] = useState([])
+  useEffect(() => {}, [toggle])
 
   useEffect(() => {
     if (attendance_data) {
@@ -69,7 +72,7 @@ const Attendance = () => {
   }
 
   const Table = () => (
-    <table className='mt-8 table-fixed border-collapse border'>
+    <table className='table-fixed border-collapse border'>
       <thead className='bg-gray-50'>
         <tr className='h-20'>
           <Column className='border'>
@@ -105,16 +108,47 @@ const Attendance = () => {
     </table>
   )
 
+  const StatisticsTable = () => {
+    return (
+      <table className='mt-8 table-fixed border-collapse border'>
+        <tbody className='text-center'>
+          <tr className='h-12'>
+            <Column className='border'>남</Column>
+            <LongColumn className='border'>
+              {statistics_array[2][current_grade][current_class]['M']}
+            </LongColumn>
+            <Column className='border'>여</Column>
+            <LongColumn className='border'>
+              {statistics_array[2][current_grade][current_class]['F']}
+            </LongColumn>
+          </tr>
+        </tbody>
+      </table>
+    )
+  }
+
   if (current_grade == -1 || current_class == -1) {
     return <></>
   }
 
-  if (is_loading) {
-    return <div>불러오는 중</div>
+  if (is_loading_1 || is_loading_2) {
+    return (
+      <>
+        <Headline className='mb-4'>출석부</Headline>
+        <DateSelectBox />
+        <Description>불러오는 중</Description>
+      </>
+    )
   }
 
-  if (is_error) {
-    return <div>오류 발생</div>
+  if (is_error_1 || is_error_2) {
+    return (
+      <>
+        <Headline className='mb-4'>출석부</Headline>
+        <DateSelectBox />
+        <Description>오류 발생</Description>
+      </>
+    )
   }
 
   return (
@@ -122,6 +156,7 @@ const Attendance = () => {
       <Headline className='mb-4'>출석부</Headline>
       <DateSelectBox />
       <Description></Description>
+      <StatisticsTable />
       <Table />
     </>
   )

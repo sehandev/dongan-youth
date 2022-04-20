@@ -114,7 +114,12 @@ const Statistics = () => {
     return (
       <Container>
         <Sidebar />
-        <Header></Header>
+        <Header>
+          <Headline className='mb-4'>이번 주 통계</Headline>
+          <DateSelectBox />
+          <Description></Description>
+          <div className='flex mt-4'></div>
+        </Header>
       </Container>
     )
   }

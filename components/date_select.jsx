@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { change_date } from '../reducers/date_checker'
@@ -21,9 +22,11 @@ export const DateSelectBox = ({}) => {
   ]
 
   // Initialize date
-  if (start_date == '1970-01-01') {
-    dispatch(change_date({ start_date: date_option_array[0].value }))
-  }
+  useEffect(() => {
+    if (start_date == '1970-01-01') {
+      dispatch(change_date({ start_date: date_option_array[0].value }))
+    }
+  }, [start_date])
 
   return (
     <select
