@@ -1,9 +1,20 @@
 /*새로운 학생 insert*/
+--학생 번호, 이름, 생일, 주소, 성별, 집번호, 폰번호, 이메일, 신급
 INSERT INTO STUDENTS
 --(ssid, sname, bday, addr, sex, home_no, phone_no, email, sstate)
 VALUES
 (5626, '이도연', TO_TIMESTAMP('1998-12-29'), '서울시 양천구 목동서로 삐삐아파트',
 'F', NULL, '010-5162-5626', 'dyl1229@naver.com', '1');
+
+--학생 번호, 부서, 학년, 반, 이수 년도
+--현재로서는 이수년도 데이터가 없기 때문에 첫 줄과 둘째 줄의 academy_year 부분을 빼주시면 됩니다.
+insert into belong_to(student_id, my_group, grade, my_class, academy_year, idx)
+values(${student_id}, ${my_group}, ${grade}, ${my_class}, ${academy_year},
+(
+  SELECT MAX(idx)+1
+  FROM belong_to
+)
+);
 
 /*학생 정보 update(2개 쿼리문 실행 필요)*/
 --1. null값 상관 없이 무조건 update
