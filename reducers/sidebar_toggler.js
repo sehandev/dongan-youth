@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const sidebar_toggler_slice = createSlice({
   name: 'sidebar_toggler',
-  initialState: { is_opened: true },
+  initialState: { is_opened: false },
   reducers: {
     open_sidebar(state) {
       state = Object.assign(state, {
