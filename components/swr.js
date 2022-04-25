@@ -35,9 +35,13 @@ export function useStatistics(group_id, start_date, end_date) {
 }
 
 export function useStudent(student_id) {
-  const { data, error } = useSWR(`/api/students/${student_id}`, fetcher, {
-    refreshInterval: 3000,
-  })
+  const { data, error } = useSWR(
+    student_id ? `/api/students/${student_id}` : null,
+    fetcher,
+    {
+      refreshInterval: 3000,
+    }
+  )
 
   return {
     student_info: data,
