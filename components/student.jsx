@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Headline, Description } from './common'
 import { useStudent } from './swr'
@@ -7,6 +7,14 @@ import { useStudent } from './swr'
 const Student = ({ student_id }) => {
   const { student_info, is_loading, is_error } = useStudent(student_id)
   const [is_fullscreen_image, set_is_fullscreen_image] = useState(false)
+  const [student_image_src, set_student_image_src] = useState(
+    '/img/default_student.png'
+  )
+  useEffect(() => {
+    if (student_id) {
+      set_student_image_src(`/students/${student_id}/sample.jpg`)
+    }
+  }, [student_id])
 
   if (is_loading) {
     return (
@@ -36,23 +44,24 @@ const Student = ({ student_id }) => {
   const ListValue = ({ children }) => (
     <p className='pl-2 w-3/4 text-left'>{children}</p>
   )
-  const StudentImage = () => (
+  const StudentImage = ({ quality }) => (
     <Image
-      src={`/students/${student_id}/sample.jpg`}
+      src={student_image_src}
       layout='fill'
       objectFit='contain'
+      quality={quality}
     />
   )
 
   const Info = () => (
-    <div className='mr-0 mb-4 lg:mr-4 lg:mb-0 rounded-2xl p-4 w-full lg:w-1/3 bg-purple-50'>
+    <div className='mr-0 mb-4 lg:mr-4 lg:mb-0 rounded-2xl p-8 w-full lg:w-1/3 bg-purple-50'>
       <div
         className='relative mb-4 h-48'
         onClick={() => {
           set_is_fullscreen_image(true)
         }}
       >
-        <StudentImage />
+        <StudentImage quality={75} />
       </div>
       <div className='mb-4 text-center'>
         <p className='font-semibold text-2xl tracking-widest'>
@@ -64,10 +73,7 @@ const Student = ({ student_id }) => {
         <Pill>{student_info.sex === 'M' ? '남' : '여'}</Pill>
         <Pill>{student_info.state === 1 ? 'O' : 'X'}</Pill>
       </div>
-      <ul
-        className='border rounded-2xl shadow p-4'
-        style={{ wordBreak: 'keep-all' }}
-      >
+      <ul className='border rounded-2xl shadow p-4'>
         <List>
           <ListKey>생일 :</ListKey>
           <ListValue>{student_info.birthday}</ListValue>
@@ -101,7 +107,7 @@ const Student = ({ student_id }) => {
         }}
       >
         <div className='relative w-full h-full'>
-          <StudentImage />
+          <StudentImage quality={100} />
         </div>
       </div>
     )
@@ -111,9 +117,12 @@ const Student = ({ student_id }) => {
     <>
       <Headline className='mb-4'>학생 정보</Headline>
       <Description></Description>
-      <div className='flex flex-col lg:flex-row'>
+      <div
+        className='flex flex-col lg:flex-row'
+        style={{ wordBreak: 'keep-all' }}
+      >
         <Info />
-        <div className='rounded-2xl p-4 w-full lg:w-2/3 bg-purple-50'></div>
+        <div className='rounded-2xl p-8 w-full lg:w-2/3 bg-purple-50'></div>
       </div>
       {is_fullscreen_image && <FullScreenImage />}
     </>
