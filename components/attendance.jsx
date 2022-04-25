@@ -1,6 +1,7 @@
-import styled from 'styled-components'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import styled from 'styled-components'
 
 import { Headline, SubHeadline, Description, Checkbox } from './common'
 import { useAttendance, useStatistics } from './swr'
@@ -91,15 +92,18 @@ const Attendance = () => {
       </thead>
       <tbody className='text-center'>
         {user_info_array.map((user_info, index) => (
-          <tr
-            key={index}
-            className='h-20 hover:bg-violet-50 cursor-pointer'
-            onClick={() => check_attendance(index)}
-          >
+          <tr key={index} className='h-20'>
             <td className='border'>{user_info.id}</td>
-            <td className='border'>{user_info.name}</td>
+            <Link href={`/student/${user_info.id}`}>
+              <td className='border hover:bg-violet-200 cursor-pointer'>
+                {user_info.name}
+              </td>
+            </Link>
             <td className='border'>{user_info.sex}</td>
-            <td className='border'>
+            <td
+              className='border hover:bg-violet-50 cursor-pointer'
+              onClick={() => check_attendance(index)}
+            >
               <Checkbox check={user_info.is_attended} />
             </td>
           </tr>
