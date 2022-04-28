@@ -9,11 +9,10 @@ import { useStatistics } from './swr'
 import { DateSelectBox } from './date_select'
 
 const Column = styled.th`
-  width: 80px;
+  width: 60px;
   font-weight: 600;
   font-size: 18px;
 `
-
 const LongColumn = styled.th`
   width: 120px;
 `
@@ -36,12 +35,12 @@ const Statistics = () => {
       class_name += `${class_id}반`
     }
     return (
-      <tr className='h-20'>
-        <td className='border'>{class_name}</td>
-        <td className='border'>
+      <tr className='h-20' style={{ wordBreak: 'keep-all' }}>
+        <td className='p-2 border'>{class_name}</td>
+        <td className='p-2 border'>
           {statistics_array[2][grade_id][class_id]['M']}
         </td>
-        <td className='border'>
+        <td className='p-2 border'>
           {statistics_array[2][grade_id][class_id]['F']}
         </td>
       </tr>
@@ -52,13 +51,13 @@ const Statistics = () => {
     <table className='mr-8 table-fixed border-collapse border'>
       <thead className='bg-gray-50'>
         <tr className='h-20'>
-          <LongColumn className='border'>
+          <LongColumn className='p-2 border'>
             <SubHeadline>반</SubHeadline>
           </LongColumn>
-          <Column className='border'>
+          <Column className='p-2 border'>
             <SubHeadline>남</SubHeadline>
           </Column>
-          <Column className='border'>
+          <Column className='p-2 border'>
             <SubHeadline>여</SubHeadline>
           </Column>
         </tr>
@@ -81,29 +80,32 @@ const Statistics = () => {
   )
 
   const GroupTable = () => (
-    <table className='table-fixed border-collapse border h-fit'>
+    <table
+      className='table-fixed border-collapse border h-fit'
+      style={{ wordBreak: 'keep-all' }}
+    >
       <thead className='bg-gray-50'>
         <tr className='h-20'>
-          <LongColumn className='border'>
+          <LongColumn className='p-2 border'>
             <SubHeadline>전체</SubHeadline>
           </LongColumn>
-          <Column className='border'>
+          <Column className='p-2 border'>
             <SubHeadline>출석</SubHeadline>
           </Column>
         </tr>
       </thead>
       <tbody className='text-center'>
         <tr className='h-20'>
-          <td className='border'>남학생</td>
-          <td className='border'>{statistics_array[0]}</td>
+          <td className='p-2 border'>남학생</td>
+          <td className='p-2 border'>{statistics_array[0]}</td>
         </tr>
         <tr className='h-20'>
-          <td className='border'>여학생</td>
-          <td className='border'>{statistics_array[1]}</td>
+          <td className='p-2 border'>여학생</td>
+          <td className='p-2 border'>{statistics_array[1]}</td>
         </tr>
         <tr className='h-20'>
-          <td className='border'>교사</td>
-          <td className='border'>
+          <td className='p-2 border'>교사</td>
+          <td className='p-2 border'>
             {statistics_array[2][0][0]['M'] + statistics_array[2][0][0]['F']}
           </td>
         </tr>
