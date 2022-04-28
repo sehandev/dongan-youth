@@ -1,16 +1,25 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
+import { useCookie } from 'next-cookie'
 import { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+
+import { change_class } from '../reducers/class_checker'
 
 const Container = ({ children }) => {
+  const cookie = useCookie()
+  const cookie_department = cookie.get('department')
+  const dispatch = useDispatch()
   const router = useRouter()
-  const department_id = useSelector((state) => state.class_checker.department)
   useEffect(() => {
-    if (department_id === -1) {
+    if (!cookie_department) {
       router.push('/department')
+    } else {
+      dispatch(
+        change_class({ department: cookie_department, grade: -1, class: -1 })
+      )
     }
-  }, [department_id])
+  }, [cookie_department])
 
   return (
     <div className='flex flex-col items-center justify-center select-none'>

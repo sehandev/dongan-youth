@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 
+import { get_department_name } from './assets/department'
 import Logo from './logo'
 import { initialize_class } from '../reducers/class_checker'
 import { open_sidebar } from '../reducers/sidebar_toggler'
@@ -14,6 +15,7 @@ const HeaderPanel = styled.div`
 
 const Header = ({ children }) => {
   const dispatch = useDispatch()
+  const department_id = useSelector((state) => state.class_checker.department)
   const is_opened = useSelector((state) => state.sidebar_toggler.is_opened)
 
   const NavigationBar = () => (
@@ -25,10 +27,12 @@ const Header = ({ children }) => {
         <Link href='/statistics'>
           <button className='px-4 h-full cursor-pointer'>출석 통계</button>
         </Link>
-        <Link href='/department'>
-          <button className='px-4 h-full cursor-pointer'>부서 변경</button>
-        </Link>
       </ul>
+      <Link href='/department'>
+        <button className='px-4 h-full cursor-pointer'>
+          {get_department_name(department_id)}
+        </button>
+      </Link>
     </HeaderPanel>
   )
 
