@@ -10,18 +10,14 @@ import SecondaryButton from './assets/secondary_button'
 const Group = () => {
   const cookie = useCookie()
   const cookie_group = cookie.get('group')
-  const current_group = useSelector(
-    (state) => state.class_checker.group
-  )
+  const current_group = useSelector((state) => state.class_checker.group)
   const dispatch = useDispatch()
 
   useEffect(() => {
     if (!cookie_group) {
       cookie.set('group', -1)
     } else {
-      dispatch(
-        change_class({ group: cookie_group, grade: -1, class: -1 })
-      )
+      dispatch(change_class({ group: cookie_group, grade: -1, class: -1 }))
     }
   }, [cookie_group])
 
@@ -32,9 +28,7 @@ const Group = () => {
         (current_group === group_id ? 'bg-purple-200' : '')
       }
       onClick={() => {
-        dispatch(
-          change_class({ group: group_id, grade: -1, class: -1 })
-        )
+        dispatch(change_class({ group: group_id, grade: -1, class: -1 }))
         cookie.set('group', group_id)
       }}
     >
@@ -59,7 +53,7 @@ const Group = () => {
       </div>
 
       {/* 부서 목록 */}
-      <ul className='flex mb-4 gap-4'>
+      <ul className='grid mb-4 grid-cols-2 md:grid-cols-4 gap-4'>
         <li>
           <GroupButton group_id={'1'}>1부</GroupButton>
         </li>
