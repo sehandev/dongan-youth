@@ -1,15 +1,29 @@
 import Image from 'next/image'
 import Link from 'next/link'
+import { useCookie } from 'next-cookie'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { change_class } from '../reducers/class_checker'
 import SecondaryButton from './assets/secondary_button'
 
 const Department = () => {
+  const cookie = useCookie()
+  const cookie_department = cookie.get('department')
   const current_department_id = useSelector(
     (state) => state.class_checker.department
   )
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (!cookie_department) {
+      cookie.set('department', -1)
+    } else {
+      dispatch(
+        change_class({ department: cookie_department, grade: -1, class: -1 })
+      )
+    }
+  }, [cookie_department])
 
   const DepartmentButton = ({ children, department_id }) => (
     <button
@@ -21,6 +35,7 @@ const Department = () => {
         dispatch(
           change_class({ department: department_id, grade: -1, class: -1 })
         )
+        cookie.set('department', department_id)
       }}
     >
       {children}
@@ -46,16 +61,16 @@ const Department = () => {
       {/* 부서 목록 */}
       <ul className='flex mb-4 gap-4'>
         <li>
-          <DepartmentButton department_id={1}>1부</DepartmentButton>
+          <DepartmentButton department_id={'1'}>1부</DepartmentButton>
         </li>
         <li>
-          <DepartmentButton department_id={2}>1부+</DepartmentButton>
+          <DepartmentButton department_id={'2'}>1부+</DepartmentButton>
         </li>
         <li>
-          <DepartmentButton department_id={3}>2부</DepartmentButton>
+          <DepartmentButton department_id={'3'}>2부</DepartmentButton>
         </li>
         <li>
-          <DepartmentButton department_id={4}>3부</DepartmentButton>
+          <DepartmentButton department_id={'4'}>3부</DepartmentButton>
         </li>
       </ul>
       {current_department_id !== -1 && (
