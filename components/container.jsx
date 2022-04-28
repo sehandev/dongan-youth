@@ -1,6 +1,17 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 const Container = ({ children }) => {
+  const router = useRouter()
+  const department_id = useSelector((state) => state.class_checker.department)
+  useEffect(() => {
+    if (department_id === -1) {
+      router.push('/department')
+    }
+  }, [department_id])
+
   return (
     <div className='flex flex-col items-center justify-center select-none'>
       <Head>
