@@ -2,6 +2,7 @@ import { getConnection } from 'oracledb'
 
 async function select_attendance(
   connection,
+  group_id,
   grade_id,
   class_id,
   start_date,
@@ -13,7 +14,7 @@ async function select_attendance(
     WHERE
       B.student_id = S.student_id
       AND S.student_state=1
-      AND B.my_group=1
+      AND B.my_group=${group_id}
       AND B.grade=${grade_id}
       AND B.my_class=${class_id}
   `
@@ -50,7 +51,7 @@ export default async function attendanceAPI(req, res) {
   })
 
   const { params } = req.query
-  // params: [grade_id, class_id, start_date, end_date]
+  // params: [group_id, grade_id, class_id, start_date, end_date]
 
   const attendance_data = await select_attendance(connection, ...params)
   res.status(200).json(attendance_data)
