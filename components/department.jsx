@@ -37,6 +37,7 @@ const Department = () => {
             layout='fill'
             objectFit='contain'
             quality={100}
+            priority
           />
         </div>
         <div className='mb-4 font-black text-xl'>출석하는 동안</div>
