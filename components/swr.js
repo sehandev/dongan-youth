@@ -49,3 +49,15 @@ export function useStudent(student_id) {
     is_error: error,
   }
 }
+
+export function useStudentImage(student_id) {
+  const { data, error } = useSWR(
+    student_id ? `/api/student_image/${student_id}` : null,
+    fetcher
+  )
+  return {
+    image_info: data,
+    is_loading: !error && !data,
+    is_error: error,
+  }
+}

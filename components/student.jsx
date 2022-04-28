@@ -1,20 +1,17 @@
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { Headline, Description } from './common'
-import { useStudent } from './swr'
+import { useStudent, useStudentImage } from './swr'
 
 const Student = ({ student_id }) => {
   const { student_info, is_loading, is_error } = useStudent(student_id)
+  const {
+    image_info,
+    is_loading: is_image_loading,
+    is_error: is_image_error,
+  } = useStudentImage(student_id)
   const [is_fullscreen_image, set_is_fullscreen_image] = useState(false)
-  const [student_image_src, set_student_image_src] = useState(
-    '/img/default_student.png'
-  )
-  useEffect(() => {
-    if (student_id) {
-      set_student_image_src(`/students/${student_id}/sample.jpg`)
-    }
-  }, [student_id])
 
   if (is_loading) {
     return (
@@ -44,14 +41,27 @@ const Student = ({ student_id }) => {
   const ListValue = ({ children }) => (
     <p className='pl-2 w-3/4 text-left'>{children}</p>
   )
-  const StudentImage = ({ quality }) => (
-    <Image
-      src={student_image_src}
-      layout='fill'
-      objectFit='contain'
-      quality={quality}
-    />
-  )
+  const StudentImage = ({ quality }) => {
+    if (is_image_loading || is_image_error) {
+      // Default image
+      return (
+        <Image
+          src={'/img/default_student.png'}
+          layout='fill'
+          objectFit='contain'
+          quality={quality}
+        />
+      )
+    }
+    return (
+      <Image
+        src={image_info.path}
+        layout='fill'
+        objectFit='contain'
+        quality={quality}
+      />
+    )
+  }
 
   const Info = () => (
     <div className='mr-0 mb-4 lg:mr-4 lg:mb-0 rounded-2xl p-8 w-full lg:w-1/3 bg-purple-50'>
