@@ -8,18 +8,18 @@ import { change_class } from '../reducers/class_checker'
 
 const Container = ({ children }) => {
   const cookie = useCookie()
-  const cookie_department = cookie.get('department')
+  const cookie_group = cookie.get('group')
   const dispatch = useDispatch()
   const router = useRouter()
   useEffect(() => {
-    if (!cookie_department) {
-      router.push('/department')
+    if (!cookie_group) {
+      router.push('/group')
     } else {
       dispatch(
-        change_class({ department: cookie_department, grade: -1, class: -1 })
+        change_class({ group: cookie_group, grade: -1, class: -1 })
       )
     }
-  }, [cookie_department])
+  }, [cookie_group])
 
   return (
     <div className='flex flex-col items-center justify-center select-none'>

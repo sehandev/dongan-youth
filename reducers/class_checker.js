@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const class_checker_slice = createSlice({
   name: 'class_checker',
-  initialState: { department: -1, grade: -1, class: -1 },
+  initialState: { group: -1, grade: -1, class: -1 },
   reducers: {
     change_class(state, action) {
       state = Object.assign(state, action.payload)

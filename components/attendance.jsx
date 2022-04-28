@@ -20,19 +20,19 @@ const LongColumn = styled.th`
 const Attendance = () => {
   const start_date = useSelector((state) => state.date_checker.start_date)
   const end_date = useSelector((state) => state.date_checker.end_date)
-  const current_department = useSelector((state) => state.class_checker.department)
+  const current_group = useSelector((state) => state.class_checker.group)
   const current_grade = useSelector((state) => state.class_checker.grade)
   const current_class = useSelector((state) => state.class_checker.class)
   const {
     attendance_data,
     is_loading: is_loading_1,
     is_error: is_error_1,
-  } = useAttendance(current_department, current_grade, current_class, start_date, end_date)
+  } = useAttendance(current_group, current_grade, current_class, start_date, end_date)
   const {
     statistics_array,
     is_loading: is_loading_2,
     is_error: is_error_2,
-  } = useStatistics(current_department, start_date, end_date)
+  } = useStatistics(current_group, start_date, end_date)
 
   const [toggle, set_toggle] = useState(true)
   const [user_info_array, set_user_info_array] = useState([])

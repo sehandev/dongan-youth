@@ -19,11 +19,11 @@ const LongColumn = styled.th`
 `
 
 const Statistics = () => {
-  const department_id = useSelector((state) => state.class_checker.department)
+  const current_group = useSelector((state) => state.class_checker.group)
   const start_date = useSelector((state) => state.date_checker.start_date)
   const end_date = useSelector((state) => state.date_checker.end_date)
   const { statistics_array, is_loading, is_error } = useStatistics(
-    department_id,
+    current_group,
     start_date,
     end_date
   )
