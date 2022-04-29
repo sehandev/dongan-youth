@@ -5,7 +5,7 @@ import styled from 'styled-components'
 import { get_group_name } from './assets/group'
 import Logo from './logo'
 import { initialize_class } from '../reducers/class_checker'
-import { open_sidebar } from '../reducers/sidebar_toggler'
+import { close_sidebar, open_sidebar } from '../reducers/sidebar_toggler'
 
 const HeaderPanel = styled.div`
   height: 60px;
@@ -19,15 +19,36 @@ const Header = ({ children }) => {
   const is_opened = useSelector((state) => state.sidebar_toggler.is_opened)
 
   const NavigationBar = () => (
-    <HeaderPanel className='flex items-center justify-between px-4'>
-      <ul className='h-full'>
-        <Link href='/register'>
-          <button className='px-4 h-full cursor-pointer'>신규 등록</button>
-        </Link>
-        <Link href='/statistics'>
-          <button className='px-4 h-full cursor-pointer'>출석 통계</button>
-        </Link>
-      </ul>
+    <HeaderPanel
+      className='flex items-center justify-between px-4'
+      style={{ wordBreak: 'keep-all' }}
+    >
+      {!is_opened ? (
+        <ul className='h-full'>
+          <Link href='/register'>
+            <button
+              className='px-4 h-full cursor-pointer'
+              onClick={() => {
+                dispatch(close_sidebar())
+              }}
+            >
+              신규 등록
+            </button>
+          </Link>
+          <Link href='/statistics'>
+            <button
+              className='px-4 h-full cursor-pointer'
+              onClick={() => {
+                dispatch(close_sidebar())
+              }}
+            >
+              출석 통계
+            </button>
+          </Link>
+        </ul>
+      ) : (
+        <p />
+      )}
       <Link href='/group'>
         <button className='px-4 h-full cursor-pointer'>
           {get_group_name(group_id)}
@@ -40,19 +61,20 @@ const Header = ({ children }) => {
     <HeaderPanel className='flex md:hidden items-center justify-between px-4'>
       <Logo
         onClick={() => {
-          dispatch(open_sidebar())
           dispatch(initialize_class())
         }}
       />
-      <button
-        className='border border-purple-400 w-10 h-10 text-2xl font-bold'
-        onClick={() => {
-          dispatch(open_sidebar())
-          dispatch(initialize_class())
-        }}
-      >
-        &equiv;
-      </button>
+      <Link href='/'>
+        <button
+          className='border border-purple-400 w-10 h-10 text-2xl font-bold'
+          onClick={() => {
+            dispatch(open_sidebar())
+            dispatch(initialize_class())
+          }}
+        >
+          &equiv;
+        </button>
+      </Link>
     </HeaderPanel>
   )
 

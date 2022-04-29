@@ -1,17 +1,30 @@
 import { useState } from 'react'
+import { useSelector } from 'react-redux'
 
-import { Headline, Description } from './common'
 import SecondaryButton from './assets/secondary_button'
+import { Headline, Description } from './common'
 
 const Register = () => {
+  const current_group = useSelector((state) => state.class_checker.group)
   const [user_info, set_user_info] = useState({
     id: null,
     name: '',
     sex: null,
-    group: null,
     grade: null,
     class: null,
   })
+
+  const submit_register = async () => {
+    const response = await fetch(`/api/register`, {
+      method: 'POST',
+      body: JSON.stringify({ ...user_info, group: current_group }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const data = await response.json()
+    console.log(data)
+  }
 
   return (
     <>
@@ -84,67 +97,6 @@ const Register = () => {
           </div>
         </div>
         <div className='flex mb-4'>
-          <label className='mr-4 w-24 py-4 leading-6 text-center'>부서</label>
-          <div className='grid grid-cols-4 gap-4'>
-            <button
-              className={
-                'border p-4 w-20 hover:bg-purple-100 leading-6 ' +
-                (user_info.group === 1 ? 'bg-purple-200' : '')
-              }
-              onClick={() =>
-                set_user_info((prev_info) => ({
-                  ...prev_info,
-                  group: 1,
-                }))
-              }
-            >
-              1부
-            </button>
-            <button
-              className={
-                'border p-4 w-20 hover:bg-purple-100 leading-6 ' +
-                (user_info.group === 2 ? 'bg-purple-200' : '')
-              }
-              onClick={() =>
-                set_user_info((prev_info) => ({
-                  ...prev_info,
-                  group: 2,
-                }))
-              }
-            >
-              1부+
-            </button>
-            <button
-              className={
-                'border p-4 w-20 hover:bg-purple-100 leading-6 ' +
-                (user_info.group === 3 ? 'bg-purple-200' : '')
-              }
-              onClick={() =>
-                set_user_info((prev_info) => ({
-                  ...prev_info,
-                  group: 3,
-                }))
-              }
-            >
-              2부
-            </button>
-            <button
-              className={
-                'border p-4 w-20 hover:bg-purple-100 leading-6 ' +
-                (user_info.group === 4 ? 'bg-purple-200' : '')
-              }
-              onClick={() =>
-                set_user_info((prev_info) => ({
-                  ...prev_info,
-                  group: 4,
-                }))
-              }
-            >
-              3부
-            </button>
-          </div>
-        </div>
-        <div className='flex mb-4'>
           <label className='mr-4 w-24 py-4 leading-6 text-center'>학년</label>
           <input
             type='tel'
@@ -178,7 +130,14 @@ const Register = () => {
         </div>
       </form>
       <div className='w-24 py-4 text-center'>
-        <SecondaryButton className='p-4 leading-6'>등록하기</SecondaryButton>
+        <SecondaryButton
+          className='p-4 leading-6'
+          onClick={() => {
+            submit_register()
+          }}
+        >
+          등록하기
+        </SecondaryButton>
       </div>
     </>
   )

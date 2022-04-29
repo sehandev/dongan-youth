@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Link from 'next/link'
 
 import Logo from './logo'
-import { change_class } from '../reducers/class_checker'
+import { change_class, initialize_class } from '../reducers/class_checker'
 import { close_sidebar } from '../reducers/sidebar_toggler'
 
 const SidebarPanel = styled.div`
@@ -100,15 +100,16 @@ const Sidebar = () => {
   }
 
   return (
-    <SidebarPanel
-      className={`${get_mobile_class()} md:flex flex-col items-center`}
-    >
-      <Logo
-        className='w-full my-4 px-4'
-        onClick={() => {
-          dispatch(change_class({ grade: -1, class: -1 }))
-        }}
-      />
+    <SidebarPanel className={`${get_mobile_class()} md:flex flex-col`}>
+      <div className='flex' style={{ height: '60px' }}>
+        <Logo
+          className='px-4'
+          onClick={() => {
+            dispatch(initialize_class())
+            dispatch(close_sidebar())
+          }}
+        />
+      </div>
       <ClassButton button_grade={1} button_class={0} />
       <ClassButton button_grade={1} button_class={1} />
       <ClassButton button_grade={1} button_class={2} />
