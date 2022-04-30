@@ -30,7 +30,7 @@ ALTER TABLE [변경전 테이블명] RENAME TO [변경후 테이블명];
 ALTER TABLE [TABLE명] ADD [칼럼명] NUMBER(2) DEFAULT [디폴트값] NOT NULL;
 
 --칼럼 삭제
-ALTER TABLE [TABLE명] DROP [칼럼명] phone_number;
+ALTER TABLE [TABLE명] DROP COLUMN [칼럼명];
 ALTER TABLE [TABLE명] DROP ([칼럼1], [칼럼2], [칼럼3], ...);
 ```
 
