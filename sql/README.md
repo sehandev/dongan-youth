@@ -7,11 +7,22 @@
 
 <br>
 
----
+## 기본 SQL 문법
 
 <br>
 
-## 기본 SQL 문법
+### 테이블 생성
+
+```SQL
+create table [테이블명]
+(
+  [칼럼명] [데이터 타입] NOT NULL,
+  ...
+
+  constraint [기본키 이름] PRIMARY KEY([칼럼1], [칼럼2]),
+  constraint [외래키 이름] FOREIGN KEY([칼럼명]) references [참조할 테이블] ([참조할 칼럼])
+);
+```
 
 <br>
 
@@ -70,10 +81,22 @@ DELETE FROM [TABLE명] WHERE [칼럼명] = [변경할값];
 SELECT * FROM ALL_TRIGGERS;
 
 DROP TRIGGER UPDATE_ID;
+```
 
-PK_UPDATE_TEST
-TEST_ID
-UPDATE_ID
+<br>
+
+### 트리거 생성
+
+```SQL
+create or replace trigger idx_increment
+before insert on belong_to
+for each row
+when (new.idx IS NULL)
+begin
+    SELECT idx_seq.NEXTVAL
+    INTO :new.idx
+    from dual;
+end;
 ```
 
 <br>
@@ -86,4 +109,26 @@ SELECT * FROM USER_OBJECTS WHERE OBJECT_TYPE='TABLE';
 
 --모든 칼럼 조회
 SELECT * FROM USER_TAB_COLUMNS;
+```
+
+<br>
+
+### sequence 생성
+
+```SQL
+CREATE SEQUENCE idx_seq
+  START WITH 1
+  INCREMENT BY 1
+  MAXVALUE 1000;
+
+  UPDATE belong_to
+   SET idx = idx_seq.nextval;
+```
+
+<br>
+
+### sequence 값 설정
+
+```SQL
+alter sequence [sequence명] increment by [설정할 값];
 ```
