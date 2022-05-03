@@ -15,7 +15,7 @@ const Group = () => {
 
   useEffect(() => {
     if (!cookie_group) {
-      cookie.set('group', -1)
+      document.cookie = `group=-1; Max-Age=${60 * 60 * 24 * 365}; path=/;`
     } else {
       dispatch(change_class({ group: cookie_group, grade: -1, class: -1 }))
     }
@@ -29,7 +29,9 @@ const Group = () => {
       }
       onClick={() => {
         dispatch(change_class({ group: group_id, grade: -1, class: -1 }))
-        cookie.set('group', group_id)
+        document.cookie = `group=${group_id}; Max-Age=${
+          60 * 60 * 24 * 365
+        }; path=/;`
       }}
     >
       {children}
