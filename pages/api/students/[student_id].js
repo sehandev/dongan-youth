@@ -10,7 +10,8 @@ async function select_student(connection, student_id) {
   return result
 }
 
-const convert_birthday = (birthday) => {
+const convert_birthday = (birthday_string) => {
+  const birthday = new Date(birthday_string)
   const year = birthday.getFullYear()
   const month = birthday.getMonth() + 1
   const date = birthday.getDate()
