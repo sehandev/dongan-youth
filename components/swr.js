@@ -1,8 +1,8 @@
-import useSWR from 'swr'
+import useSWR from "swr"
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
-export function useAttendance(
+export function useAttendanceAll(
   group_id,
   grade_id,
   class_id,
@@ -10,7 +10,23 @@ export function useAttendance(
   end_date
 ) {
   const { data, error } = useSWR(
-    `/api/attendance/${group_id}/${grade_id}/${class_id}/${start_date}/${end_date}`,
+    `/api/attendance/all/${group_id}/${grade_id}/${class_id}/${start_date}/${end_date}`,
+    fetcher,
+    {
+      refreshInterval: 3000,
+    }
+  )
+
+  return {
+    attendance_data: data,
+    is_loading: !error && !data,
+    is_error: error,
+  }
+}
+
+export function useAttendanceByID(student_id) {
+  const { data, error } = useSWR(
+    `/api/attendance/student_id/${student_id}`,
     fetcher,
     {
       refreshInterval: 3000,

@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 
 import { Headline, SubHeadline, Description, Checkbox } from './common'
-import { useAttendance, useStatistics } from './swr'
+import { useAttendanceAll, useStatistics } from './swr'
 import { DateSelectBox } from './date_select'
 
 const Column = styled.th`
@@ -27,7 +27,7 @@ const Attendance = () => {
     attendance_data,
     is_loading: is_loading_1,
     is_error: is_error_1,
-  } = useAttendance(current_group, current_grade, current_class, start_date, end_date)
+  } = useAttendanceAll(current_group, current_grade, current_class, start_date, end_date)
   const {
     statistics_array,
     is_loading: is_loading_2,
