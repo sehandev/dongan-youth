@@ -1,50 +1,20 @@
 version: '3.9'
 
-volumes:
-  oracle_volume:
-  oracle_product:
-
 services:
-  oracle:
-    image: sehandev/oracle_db:19.3.0
-    volumes:
-      - oracle_volume:/opt/oracle/oradata
-      - oracle_product:/opt/oracle/product
-    environment:
-      - TZ=Asis/Seoul
-      - ORACLE_SID=dongan
-      - ORACLE_PDB=donganpdb
-      - ORACLE_PWD=!Cute-cat-1004!
-    restart: always
-    network_mode: 'host'
   dev:
-    image: sehandev/dongan-youth
+    image: sehandev/dongan-youth:arm
     volumes:
       - .:/workspace
-      - oracle_volume:/opt/oracle/oradata
+      - /opt/oracle/instantclient_19_10/network/admin:/opt/oracle/admin
     working_dir: /workspace
-    command: sh -c "
-      yarn set version stable &&
-      yarn &&
-      yarn dev"
-    environment:
-      - TNS_ADMIN=/opt/oracle/product/19c/dbhome_1/network/admin
-      - NODE_PATH=`npm root -g`
-    restart: always
+    command: sh -c "yarn && yarn dev"
     network_mode: 'host'
   prod:
-    image: sehandev/dongan-youth
+    image: sehandev/dongan-youth:arm
     volumes:
       - .:/workspace
-      - oracle_volume:/opt/oracle/oradata
+      - /opt/oracle/instantclient_19_10/network/admin:/opt/oracle/admin
     working_dir: /workspace
-    command: sh -c "
-      yarn set version stable &&
-      yarn &&
-      yarn build &&
-      yarn start"
-    environment:
-      - TNS_ADMIN=/opt/oracle/product/19c/dbhome_1/network/admin
-      - NODE_PATH=`npm root -g`
+    command: sh -c "yarn && yarn build && yarn start"
     restart: always
     network_mode: 'host'
