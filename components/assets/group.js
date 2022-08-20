@@ -6,5 +6,8 @@ const name_object = {
 }
 
 export const get_group_name = (group_id) => {
+  if (!name_object.hasOwnProperty(group_id)) {
+    return '부서 오류'
+  }
   return name_object[group_id]
 }

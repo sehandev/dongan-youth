@@ -12,7 +12,7 @@ const Container = ({ children }) => {
   const dispatch = useDispatch()
   const router = useRouter()
   useEffect(() => {
-    if (!cookie_group) {
+    if (!cookie_group || cookie_group < 0) {
       router.push('/group')
     } else {
       dispatch(
