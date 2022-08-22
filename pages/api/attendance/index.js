@@ -1,6 +1,9 @@
 import db from '../../../utils/firestore'
 
 export default async (req, res) => {
+  if (req.method !== 'POST') {
+    res.status(400).end()
+  }
   try {
     const attendance = await db
       .collection('attendance')
