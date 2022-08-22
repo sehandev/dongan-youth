@@ -3,7 +3,7 @@ import Container from '../../../components/container'
 import Header from '../../../components/header'
 import Members from '../../../components/members'
 
-export default function RegisterPage() {
+export default function MembersPage() {
   return (
     <Container>
       <Sidebar />

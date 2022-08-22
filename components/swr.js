@@ -96,3 +96,13 @@ export function useMembers(group) {
     is_error: error,
   }
 }
+
+export function useMember(id) {
+  const { data, error } = useSWR(id ? `/api/member/${id}` : null, fetcher)
+
+  return {
+    member: data,
+    is_loading: !error && !data,
+    is_error: error,
+  }
+}
