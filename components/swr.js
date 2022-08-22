@@ -106,3 +106,13 @@ export function useMember(id) {
     is_error: error,
   }
 }
+
+export function useAttendanceByDate(date) {
+  const { data, error } = useSWR(`/api/attendance/${date}`, fetcher)
+
+  return {
+    member_id_array: data,
+    is_loading: !error && !data,
+    is_error: error,
+  }
+}
