@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
@@ -6,24 +7,47 @@ import { Headline, Description } from './common'
 
 const Register = () => {
   const current_group = useSelector((state) => state.class_checker.group)
-  const [user_info, set_user_info] = useState({
-    id: null,
+  const [member_info, set_member_info] = useState({
     name: '',
     sex: null,
-    grade: null,
-    class: null,
+    grade: '0',
+    class: '0',
   })
 
   const submit_register = async () => {
-    const response = await fetch(`/api/register`, {
-      method: 'POST',
-      body: JSON.stringify({ ...user_info, group: current_group }),
-      headers: {
-        'Content-Type': 'application/json',
-      },
+    // Empty check
+    if (member_info.name.length === 0) {
+      alert('이름을 입력해주세요.')
+      return
+    }
+    if (member_info.sex === null) {
+      alert('성별을 선택해주세요.')
+      return
+    }
+    if (member_info.grade === '') {
+      alert('학년을 입력해주세요.\n교사는 0학년 0반입니다.')
+      return
+    }
+    if (member_info.class === '') {
+      alert('반을 입력해주세요.\n교사는 0학년 0반입니다.')
+      return
+    }
+
+    // Init
+    set_member_info({
+      name: '',
+      sex: null,
+      grade: '0',
+      class: '0',
     })
-    const data = await response.json()
-    console.log(data)
+
+    // POST member
+    try {
+      await axios.post('/api/member', { ...member_info, group: current_group })
+      alert(`[${member_info.name}] 추가했습니다.`)
+    } catch (err) {
+      alert(`[${member_info.name}] 추가하지 못했습니다.`)
+    }
   }
 
   return (
@@ -32,31 +56,15 @@ const Register = () => {
       <Description></Description>
       <form autoComplete='off' onSubmit={(e) => e.preventDefault()}>
         <div className='flex mb-4'>
-          <label className='mr-4 w-24 py-4 leading-6 text-center'>ID</label>
-          <input
-            type='number'
-            name='id'
-            className='border p-4 w-64 leading-6'
-            placeholder='10000 ~ 99999'
-            value={user_info.id}
-            onChange={(e) => {
-              set_user_info((prev_info) => ({
-                ...prev_info,
-                id: e.target.value,
-              }))
-            }}
-          />
-        </div>
-        <div className='flex mb-4'>
           <label className='mr-4 w-24 py-4 leading-6 text-center'>이름</label>
           <input
             type='text'
             name='name'
             className='border p-4 w-64 leading-6'
             placeholder='이름'
-            value={user_info.name}
+            value={member_info.name}
             onChange={(e) => {
-              set_user_info((prev_info) => ({
+              set_member_info((prev_info) => ({
                 ...prev_info,
                 name: e.target.value,
               }))
@@ -67,12 +75,9 @@ const Register = () => {
           <label className='mr-4 w-24 py-4 leading-6 text-center'>성별</label>
           <div className='grid grid-cols-2 gap-4'>
             <button
-              className={
-                'border p-4 w-20 hover:bg-purple-100 leading-6 ' +
-                (user_info.sex === 'M' ? 'bg-purple-200' : '')
-              }
+              className={'border p-4 w-20 hover:bg-purple-100 leading-6 ' + (member_info.sex === 'M' ? 'bg-purple-200' : '')}
               onClick={() =>
-                set_user_info((prev_info) => ({
+                set_member_info((prev_info) => ({
                   ...prev_info,
                   sex: 'M',
                 }))
@@ -81,12 +86,9 @@ const Register = () => {
               남
             </button>
             <button
-              className={
-                'border p-4 w-20 hover:bg-purple-100 leading-6 ' +
-                (user_info.sex === 'F' ? 'bg-purple-200' : '')
-              }
+              className={'border p-4 w-20 hover:bg-purple-100 leading-6 ' + (member_info.sex === 'F' ? 'bg-purple-200' : '')}
               onClick={() =>
-                set_user_info((prev_info) => ({
+                set_member_info((prev_info) => ({
                   ...prev_info,
                   sex: 'F',
                 }))
@@ -103,9 +105,9 @@ const Register = () => {
             name='grade'
             className='border p-4 w-20 leading-6 text-center'
             placeholder='0'
-            value={user_info.grade}
+            value={member_info.grade}
             onChange={(e) => {
-              set_user_info((prev_info) => ({
+              set_member_info((prev_info) => ({
                 ...prev_info,
                 grade: e.target.value,
               }))
@@ -119,9 +121,9 @@ const Register = () => {
             name='class'
             className='border p-4 w-20 leading-6 text-center'
             placeholder='0'
-            value={user_info.class}
+            value={member_info.class}
             onChange={(e) => {
-              set_user_info((prev_info) => ({
+              set_member_info((prev_info) => ({
                 ...prev_info,
                 class: e.target.value,
               }))

@@ -1,11 +1,11 @@
+import axios from 'axios'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 
 import { Headline, SubHeadline, Description, Checkbox } from './common'
-import { useAttendanceAll, useStatistics } from './swr'
 import { DateSelectBox } from './date_select'
+import { useAttendanceByDate, useMembers } from './swr'
 
 const Column = styled.th`
   width: 80px;
@@ -18,118 +18,39 @@ const LongColumn = styled.th`
 `
 
 const Attendance = () => {
-  const start_date = useSelector((state) => state.date_checker.start_date)
-  const end_date = useSelector((state) => state.date_checker.end_date)
+  const date = useSelector((state) => state.date_checker.start_date)
   const current_group = useSelector((state) => state.class_checker.group)
   const current_grade = useSelector((state) => state.class_checker.grade)
   const current_class = useSelector((state) => state.class_checker.class)
-  const {
-    attendance_data,
-    is_loading: is_loading_1,
-    is_error: is_error_1,
-  } = useAttendanceAll(current_group, current_grade, current_class, start_date, end_date)
-  const {
-    statistics_array,
-    is_loading: is_loading_2,
-    is_error: is_error_2,
-  } = useStatistics(current_group, start_date, end_date)
+  const { attendance_array, is_loading: is_loading_1, is_error: is_error_1, mutate } = useAttendanceByDate(date)
+  const { member_array, is_loading: is_loading_2, is_error: is_error_2 } = useMembers(current_group)
 
-  const [toggle, set_toggle] = useState(true)
-  const [user_info_array, set_user_info_array] = useState([])
-  useEffect(() => {}, [toggle])
+  const check_attendance = (member_id) => {
+    const is_attended = attendance_array.includes(member_id)
 
-  useEffect(() => {
-    if (attendance_data) {
-      const new_user_info_array = Array.from(attendance_data, (row) => {
-        return Object({
-          id: row[0].trim(),
-          name: row[1].trim(),
-          sex: row[2] == 'F' ? '여' : '남',
-          is_attended: row[3] == 1,
+    if (is_attended) {
+      axios
+        .delete('/api/attendance', {
+          data: {
+            date,
+            member_id,
+          },
         })
-      })
-      new_user_info_array.sort((a, b) => a.name.localeCompare(b.name))
-      set_user_info_array(new_user_info_array)
-    }
-  }, [attendance_data])
-
-  const check_attendance = (index) => {
-    const user_info = user_info_array[index]
-
-    if (user_info.is_attended) {
-      fetch(`/api/update_attendance/${user_info.id}/${start_date}`, {
-        method: 'DELETE',
-      }).then((response) => console.log(response))
+        .then((response) => {
+          console.log(response)
+          mutate(attendance_array.filter((id) => id != member_id))
+        })
     } else {
-      fetch(`/api/update_attendance/${user_info.id}/${start_date}`, {
-        method: 'POST',
-      }).then((response) => console.log(response))
+      axios
+        .post('/api/attendance', {
+          date,
+          member_id,
+        })
+        .then((response) => {
+          console.log(response)
+          mutate([...attendance_array, member_id])
+        })
     }
-
-    set_user_info_array((prev_array) => {
-      prev_array[index].is_attended = !prev_array[index].is_attended
-      return prev_array
-    })
-    set_toggle((prev_state) => !prev_state)
-  }
-
-  const Table = () => (
-    <table className='table-fixed border-collapse border'>
-      <thead className='bg-gray-50'>
-        <tr className='h-20'>
-          <Column className='border'>
-            <SubHeadline>ID</SubHeadline>
-          </Column>
-          <LongColumn className='border'>
-            <SubHeadline>이름</SubHeadline>
-          </LongColumn>
-          <Column className='border'>
-            <SubHeadline>성별</SubHeadline>
-          </Column>
-          <LongColumn className='border'>
-            <SubHeadline>예배 출석</SubHeadline>
-          </LongColumn>
-        </tr>
-      </thead>
-      <tbody className='text-center'>
-        {user_info_array.map((user_info, index) => (
-          <tr key={index} className='h-20'>
-            <td className='border'>{user_info.id}</td>
-            <Link href={`/student/${user_info.id}`}>
-              <td className='border hover:bg-violet-200 cursor-pointer'>
-                {user_info.name}
-              </td>
-            </Link>
-            <td className='border'>{user_info.sex}</td>
-            <td
-              className='border hover:bg-violet-50 cursor-pointer'
-              onClick={() => check_attendance(index)}
-            >
-              <Checkbox check={user_info.is_attended} />
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-  )
-
-  const StatisticsTable = () => {
-    return (
-      <table className='mt-8 table-fixed border-collapse border'>
-        <tbody className='text-center'>
-          <tr className='h-12'>
-            <Column className='border'>남</Column>
-            <LongColumn className='border'>
-              {statistics_array[2][current_grade][current_class]['M']}
-            </LongColumn>
-            <Column className='border'>여</Column>
-            <LongColumn className='border'>
-              {statistics_array[2][current_grade][current_class]['F']}
-            </LongColumn>
-          </tr>
-        </tbody>
-      </table>
-    )
   }
 
   if (current_grade == -1 || current_class == -1) {
@@ -155,6 +76,66 @@ const Attendance = () => {
       </>
     )
   }
+
+  const class_member_array = member_array.filter((member) => member.grade == current_grade && member.class == current_class)
+
+  const StatisticsTable = () => {
+    const male_id_array = class_member_array.filter((member) => member.sex === 'M').map((member) => member.id)
+    const female_id_array = class_member_array.filter((member) => member.sex === 'F').map((member) => member.id)
+    const statistics = {
+      M: attendance_array.filter((member_id) => male_id_array.includes(member_id)).length,
+      F: attendance_array.filter((member_id) => female_id_array.includes(member_id)).length,
+    }
+    return (
+      <table className='mt-8 mb-4 table-fixed border-collapse border'>
+        <tbody className='text-center'>
+          <tr className='h-12'>
+            <Column className='border'>남</Column>
+            <Column className='border'>{statistics.M}</Column>
+            <Column className='border'>여</Column>
+            <Column className='border'>{statistics.F}</Column>
+          </tr>
+        </tbody>
+      </table>
+    )
+  }
+
+  const Table = () => (
+    <table className='table-fixed border-collapse border'>
+      <thead className='bg-gray-50'>
+        <tr className='h-20'>
+          <LongColumn className='border'>
+            <SubHeadline>이름</SubHeadline>
+          </LongColumn>
+          <Column className='border'>
+            <SubHeadline>성별</SubHeadline>
+          </Column>
+          <LongColumn className='border'>
+            <SubHeadline>예배 출석</SubHeadline>
+          </LongColumn>
+        </tr>
+      </thead>
+      <tbody className='text-center'>
+        {class_member_array.map((member, index) => (
+          <tr
+            key={index}
+            className='h-20'
+          >
+            <Link href={`/admin/members/id/${member.id}`}>
+              <td className='border hover:bg-violet-200 cursor-pointer'>{member.name}</td>
+            </Link>
+            <td className='border'>{member.sex}</td>
+            <td
+              className='border hover:bg-violet-50 cursor-pointer'
+              onMouseDown={() => check_attendance(member.id)}
+            >
+              <Checkbox check={attendance_array.includes(member.id)} />
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  )
 
   return (
     <>

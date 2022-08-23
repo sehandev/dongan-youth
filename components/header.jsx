@@ -25,7 +25,7 @@ const Header = ({ children }) => {
     >
       {!is_opened ? (
         <ul className='h-full'>
-          <Link href='/register'>
+          <Link href='/admin/members/new'>
             <button
               className='px-4 h-full cursor-pointer'
               onClick={() => {

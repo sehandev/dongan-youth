@@ -1,13 +1,15 @@
 {
   "packageManager": "yarn@3.2.2",
   "scripts": {
-    "dev": "next dev -p 53000",
+    "dev": "next dev -p 53001",
     "build": "next build",
     "start": "next start -p 53000"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.7.1",
+    "axios": "^0.27.2",
     "cookie": "^0.5.0",
+    "firebase-admin": "^11.0.1",
     "next": "latest",
     "next-cookie": "^2.8.0",
     "next-redux-wrapper": "^7.0.5",
