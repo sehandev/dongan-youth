@@ -24,7 +24,7 @@ const Attendance = () => {
   const current_class = useSelector((state) => state.class_checker.class)
   const { attendance_array, is_loading: is_loading_1, is_error: is_error_1, mutate } = useAttendanceByDate(date)
   const { member_array, is_loading: is_loading_2, is_error: is_error_2 } = useMembers(current_group)
-
+  
   const check_attendance = (member_id) => {
     const is_attended = attendance_array.includes(member_id)
 
@@ -86,6 +86,7 @@ const Attendance = () => {
       M: attendance_array.filter((member_id) => male_id_array.includes(member_id)).length,
       F: attendance_array.filter((member_id) => female_id_array.includes(member_id)).length,
     }
+
     return (
       <table className='mt-8 mb-4 table-fixed border-collapse border'>
         <tbody className='text-center'>
@@ -100,38 +101,55 @@ const Attendance = () => {
     )
   }
 
-  const Table = () => (
-    <table className='table-fixed border-collapse border'>
-      <thead className='bg-gray-50'>
-        <tr className='h-20'>
-          <LongColumn className='border'>
-            <SubHeadline>이름</SubHeadline>
-          </LongColumn>
-          <Column className='border'>
-            <SubHeadline>성별</SubHeadline>
-          </Column>
-          <LongColumn className='border'>
-            <SubHeadline>예배 출석</SubHeadline>
-          </LongColumn>
-        </tr>
-      </thead>
-      <tbody className='text-center'>
-        {[...class_member_array]
-          .sort((a, b) => (a.name > b.name ? 1 : -1))
-          .map((member, index) => (
-            <tr key={index} className='h-20'>
-              <Link href={`/admin/members/id/${member.id}`}>
-                <td className='border hover:bg-violet-200 cursor-pointer'>{member.name}</td>
-              </Link>
-              <td className='border'>{member.sex}</td>
-              <td className='border hover:bg-violet-50 cursor-pointer' onMouseDown={() => check_attendance(member.id)}>
-                <Checkbox check={attendance_array.includes(member.id)} />
-              </td>
-            </tr>
-          ))}
-      </tbody>
-    </table>
-  )
+  const Table = () => {
+    /**
+     *
+     * @param {string} sex - 'M' or 'F'
+     * @returns string
+     */
+    const sex_to_string = (sex) => {
+      if (sex === 'M') {
+        return '남'
+      }
+      if (sex === 'F') {
+        return '여'
+      }
+      return '성별오류'
+    }
+
+    return (
+      <table className='table-fixed border-collapse border'>
+        <thead className='bg-gray-50'>
+          <tr className='h-20'>
+            <LongColumn className='border'>
+              <SubHeadline>이름</SubHeadline>
+            </LongColumn>
+            <Column className='border'>
+              <SubHeadline>성별</SubHeadline>
+            </Column>
+            <LongColumn className='border'>
+              <SubHeadline>예배 출석</SubHeadline>
+            </LongColumn>
+          </tr>
+        </thead>
+        <tbody className='text-center'>
+          {[...class_member_array]
+            .sort((a, b) => (a.name > b.name ? 1 : -1))
+            .map((member, index) => (
+              <tr key={index} className='h-20'>
+                <Link href={`/admin/members/id/${member.id}`}>
+                  <td className='border hover:bg-violet-200 cursor-pointer'>{member.name}</td>
+                </Link>
+                <td className='border'>{sex_to_string(member.sex)}</td>
+                <td className='border hover:bg-violet-50 cursor-pointer' onMouseDown={() => check_attendance(member.id)}>
+                  <Checkbox check={attendance_array.includes(member.id)} />
+                </td>
+              </tr>
+            ))}
+        </tbody>
+      </table>
+    )
+  }
 
   return (
     <>
