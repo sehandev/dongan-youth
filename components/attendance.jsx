@@ -116,23 +116,19 @@ const Attendance = () => {
         </tr>
       </thead>
       <tbody className='text-center'>
-        {class_member_array.map((member, index) => (
-          <tr
-            key={index}
-            className='h-20'
-          >
-            <Link href={`/admin/members/id/${member.id}`}>
-              <td className='border hover:bg-violet-200 cursor-pointer'>{member.name}</td>
-            </Link>
-            <td className='border'>{member.sex}</td>
-            <td
-              className='border hover:bg-violet-50 cursor-pointer'
-              onMouseDown={() => check_attendance(member.id)}
-            >
-              <Checkbox check={attendance_array.includes(member.id)} />
-            </td>
-          </tr>
-        ))}
+        {[...class_member_array]
+          .sort((a, b) => (a.name > b.name ? 1 : -1))
+          .map((member, index) => (
+            <tr key={index} className='h-20'>
+              <Link href={`/admin/members/id/${member.id}`}>
+                <td className='border hover:bg-violet-200 cursor-pointer'>{member.name}</td>
+              </Link>
+              <td className='border'>{member.sex}</td>
+              <td className='border hover:bg-violet-50 cursor-pointer' onMouseDown={() => check_attendance(member.id)}>
+                <Checkbox check={attendance_array.includes(member.id)} />
+              </td>
+            </tr>
+          ))}
       </tbody>
     </table>
   )
