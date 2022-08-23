@@ -2,10 +2,10 @@ import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 
-import { get_group_name } from './assets/group'
-import Logo from './logo'
 import { initialize_class } from '../reducers/class_checker'
 import { close_sidebar, open_sidebar } from '../reducers/sidebar_toggler'
+import { get_group_name } from './assets/group'
+import Logo from './logo'
 
 const HeaderPanel = styled.div`
   height: 60px;
@@ -19,10 +19,7 @@ const Header = ({ children }) => {
   const is_opened = useSelector((state) => state.sidebar_toggler.is_opened)
 
   const NavigationBar = () => (
-    <HeaderPanel
-      className='flex items-center justify-between px-4'
-      style={{ wordBreak: 'keep-all' }}
-    >
+    <HeaderPanel className='flex items-center justify-between px-4' style={{ wordBreak: 'keep-all' }}>
       {!is_opened ? (
         <ul className='h-full'>
           <Link href='/admin/members/new'>
@@ -50,9 +47,7 @@ const Header = ({ children }) => {
         <p />
       )}
       <Link href='/group'>
-        <button className='px-4 h-full cursor-pointer'>
-          {get_group_name(group_id)}
-        </button>
+        <button className='px-4 h-full cursor-pointer'>{get_group_name(group_id)}</button>
       </Link>
     </HeaderPanel>
   )

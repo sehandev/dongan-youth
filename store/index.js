@@ -1,5 +1,6 @@
 import { createWrapper } from 'next-redux-wrapper'
 import { createStore } from 'redux'
+
 import rootReducer from '../reducers'
 
 const configureStore = () => {

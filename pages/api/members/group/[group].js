@@ -3,11 +3,7 @@ import db from '../../../../utils/firestore'
 export default async (req, res) => {
   const { group } = req.query
   try {
-    const members = await db
-      .collection('members')
-      .where('state', '==', true)
-      .where('group', '==', group)
-      .get()
+    const members = await db.collection('members').where('state', '==', true).where('group', '==', group).get()
     const member_array = members.docs.map((member) => ({
       id: member.id,
       ...member.data(),

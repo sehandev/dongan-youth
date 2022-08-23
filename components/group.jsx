@@ -23,15 +23,10 @@ const Group = () => {
 
   const GroupButton = ({ children, group_id }) => (
     <button
-      className={
-        'border p-4 w-24 hover:bg-purple-100 leading-6 ' +
-        (current_group === group_id ? 'bg-purple-200' : '')
-      }
+      className={'border p-4 w-24 hover:bg-purple-100 leading-6 ' + (current_group === group_id ? 'bg-purple-200' : '')}
       onClick={() => {
         dispatch(change_class({ group: group_id, grade: -1, class: -1 }))
-        document.cookie = `group=${group_id}; Max-Age=${
-          60 * 60 * 24 * 365
-        }; path=/;`
+        document.cookie = `group=${group_id}; Max-Age=${60 * 60 * 24 * 365}; path=/;`
       }}
     >
       {children}
@@ -43,13 +38,7 @@ const Group = () => {
       {/* 로고 */}
       <div className='flex mb-4 flex-col items-center'>
         <div className='relative mb-2 w-16 h-16'>
-          <Image
-            src='/img/dongan.png'
-            layout='fill'
-            objectFit='contain'
-            quality={100}
-            priority
-          />
+          <Image src='/img/dongan.png' layout='fill' objectFit='contain' quality={100} priority />
         </div>
         <div className='mb-4 font-black text-xl'>출석하는 동안</div>
       </div>

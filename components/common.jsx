@@ -22,12 +22,7 @@ export const DescriptionStrong = styled.strong`
 
 export const Checkbox = ({ check }) => {
   if (check) {
-    return (
-      <button
-        className='border border-black w-5 h-5'
-        style={{ backgroundColor: '#8756bd' }}
-      />
-    )
+    return <button className='border border-black w-5 h-5' style={{ backgroundColor: '#8756bd' }} />
   }
   return <button className='border border-black w-5 h-5' />
 }

@@ -1,7 +1,7 @@
 import Attendance from '../components/attendance'
 import Container from '../components/container'
-import Sidebar from '../components/sidebar'
 import Header from '../components/header'
+import Sidebar from '../components/sidebar'
 
 export default function IndexPage() {
   return (

@@ -35,10 +35,7 @@ const Members = () => {
       <Headline className='mb-4'>구성원 목록</Headline>
       <ul>
         {member_array.map((member, index) => (
-          <li
-            key={index}
-            className='my-4'
-          >
+          <li key={index} className='my-4'>
             <MemberCard member={member} />
           </li>
         ))}

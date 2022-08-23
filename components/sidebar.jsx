@@ -1,10 +1,10 @@
-import styled from 'styled-components'
-import { useDispatch, useSelector } from 'react-redux'
 import Link from 'next/link'
+import { useDispatch, useSelector } from 'react-redux'
+import styled from 'styled-components'
 
-import Logo from './logo'
 import { change_class, initialize_class } from '../reducers/class_checker'
 import { close_sidebar } from '../reducers/sidebar_toggler'
+import Logo from './logo'
 
 const SidebarPanel = styled.div`
   width: 220px;
@@ -52,19 +52,12 @@ const Sidebar = () => {
             button_grade={button_grade}
             button_class={button_class}
             onClick={() => {
-              dispatch(
-                change_class({ grade: button_grade, class: button_class })
-              )
+              dispatch(change_class({ grade: button_grade, class: button_class }))
               dispatch(close_sidebar())
             }}
           >
-            <img
-              className='inline-block mr-2 w-8 h-8'
-              src='https://img.icons8.com/pastel-glyph/512/ffffff/person-male--v1.png'
-            />
-            <span className='align-middle'>
-              {get_button_name(button_grade, button_class)}
-            </span>
+            <img className='inline-block mr-2 w-8 h-8' src='https://img.icons8.com/pastel-glyph/512/ffffff/person-male--v1.png' />
+            <span className='align-middle'>{get_button_name(button_grade, button_class)}</span>
           </CurrentButton>
         </Link>
       )
@@ -80,13 +73,8 @@ const Sidebar = () => {
           }}
           className='hover:bg-purple-100'
         >
-          <img
-            className='inline-block mr-2 w-8 h-8'
-            src='https://img.icons8.com/pastel-glyph/512/000000/person-male--v1.png'
-          />
-          <span className='align-middle'>
-            {get_button_name(button_grade, button_class)}
-          </span>
+          <img className='inline-block mr-2 w-8 h-8' src='https://img.icons8.com/pastel-glyph/512/000000/person-male--v1.png' />
+          <span className='align-middle'>{get_button_name(button_grade, button_class)}</span>
         </NormalButton>
       </Link>
     )
