@@ -2,20 +2,10 @@ import useSWR from 'swr'
 
 const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
-export function useAttendanceAll(
-  group_id,
-  grade_id,
-  class_id,
-  start_date,
-  end_date
-) {
-  const { data, error } = useSWR(
-    `/api/attendance/all/${group_id}/${grade_id}/${class_id}/${start_date}/${end_date}`,
-    fetcher,
-    {
-      refreshInterval: 3000,
-    }
-  )
+export function useAttendanceAll(group_id, grade_id, class_id, start_date, end_date) {
+  const { data, error } = useSWR(`/api/attendance/all/${group_id}/${grade_id}/${class_id}/${start_date}/${end_date}`, fetcher, {
+    refreshInterval: 3000,
+  })
 
   return {
     attendance_data: data,
@@ -25,13 +15,9 @@ export function useAttendanceAll(
 }
 
 export function useAttendanceByID(student_id) {
-  const { data, error } = useSWR(
-    `/api/attendance/student_id/${student_id}`,
-    fetcher,
-    {
-      refreshInterval: 3000,
-    }
-  )
+  const { data, error } = useSWR(`/api/attendance/student_id/${student_id}`, fetcher, {
+    refreshInterval: 3000,
+  })
 
   return {
     attendance_data: data,
@@ -41,13 +27,9 @@ export function useAttendanceByID(student_id) {
 }
 
 export function useStatistics(group_id, start_date, end_date) {
-  const { data, error } = useSWR(
-    `/api/statistics/${group_id}/${start_date}/${end_date}`,
-    fetcher,
-    {
-      refreshInterval: 3000,
-    }
-  )
+  const { data, error } = useSWR(`/api/statistics/${group_id}/${start_date}/${end_date}`, fetcher, {
+    refreshInterval: 3000,
+  })
 
   return {
     statistics_array: data,
@@ -57,13 +39,9 @@ export function useStatistics(group_id, start_date, end_date) {
 }
 
 export function useStudent(student_id) {
-  const { data, error } = useSWR(
-    student_id ? `/api/students/${student_id}` : null,
-    fetcher,
-    {
-      refreshInterval: 3000,
-    }
-  )
+  const { data, error } = useSWR(student_id ? `/api/students/${student_id}` : null, fetcher, {
+    refreshInterval: 3000,
+  })
 
   return {
     student_info: data,
@@ -73,10 +51,7 @@ export function useStudent(student_id) {
 }
 
 export function useStudentImage(student_id) {
-  const { data, error } = useSWR(
-    student_id ? `/api/student_image/${student_id}` : null,
-    fetcher
-  )
+  const { data, error } = useSWR(student_id ? `/api/student_image/${student_id}` : null, fetcher)
   return {
     image_info: data,
     is_loading: !error && !data,
@@ -85,10 +60,7 @@ export function useStudentImage(student_id) {
 }
 
 export function useMembers(group) {
-  const { data, error } = useSWR(
-    group ? `/api/members/group/${group}` : null,
-    fetcher
-  )
+  const { data, error } = useSWR(group ? `/api/members/group/${group}` : null, fetcher)
 
   return {
     member_array: data,
@@ -111,7 +83,7 @@ export function useAttendanceByDate(date) {
   const { data, error, mutate } = useSWR(`/api/attendance/${date}`, fetcher)
 
   return {
-    member_id_array: data,
+    attendance_array: data,
     is_loading: !error && !data,
     is_error: error,
     mutate,

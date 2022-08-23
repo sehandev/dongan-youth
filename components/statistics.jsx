@@ -5,7 +5,7 @@ import { Headline, SubHeadline, Description } from './common'
 import Container from './container'
 import Sidebar from './sidebar'
 import Header from './header'
-import { useStatistics } from './swr'
+import { useAttendanceByDate, useMembers } from './swr'
 import { DateSelectBox } from './date_select'
 
 const Column = styled.th`
@@ -18,31 +18,31 @@ const LongColumn = styled.th`
 `
 
 const Statistics = () => {
+  const date = useSelector((state) => state.date_checker.start_date)
   const current_group = useSelector((state) => state.class_checker.group)
-  const start_date = useSelector((state) => state.date_checker.start_date)
-  const end_date = useSelector((state) => state.date_checker.end_date)
-  const { statistics_array, is_loading, is_error } = useStatistics(
-    current_group,
-    start_date,
-    end_date
-  )
+  const { attendance_array, is_loading: is_loading_1, is_error: is_error_1 } = useAttendanceByDate(date)
+  const { member_array, is_loading: is_loading_2, is_error: is_error_2 } = useMembers(current_group)
 
   const ClassRow = ({ grade_id, class_id }) => {
-    let class_name = `${grade_id}학년 `
+    const class_member_array = member_array.filter((member) => member.grade == grade_id && member.class == class_id)
+    const male_id_array = class_member_array.filter((member) => member.sex === 'M').map((member) => member.id)
+    const female_id_array = class_member_array.filter((member) => member.sex === 'F').map((member) => member.id)
+    const statistics = {
+      M: attendance_array.filter((member_id) => male_id_array.includes(member_id)).length,
+      F: attendance_array.filter((member_id) => female_id_array.includes(member_id)).length,
+    }
+
+    let class_name = `${grade_id}`
     if (class_id === 0) {
-      class_name += `미배정`
+      class_name += `-미배정`
     } else {
-      class_name += `${class_id}반`
+      class_name += `-${class_id}`
     }
     return (
-      <tr className='h-20' style={{ wordBreak: 'keep-all' }}>
+      <tr className='h-10' style={{ wordBreak: 'keep-all' }}>
         <td className='p-2 border'>{class_name}</td>
-        <td className='p-2 border'>
-          {statistics_array[2][grade_id][class_id]['M']}
-        </td>
-        <td className='p-2 border'>
-          {statistics_array[2][grade_id][class_id]['F']}
-        </td>
+        <td className='p-2 border'>{statistics.M}</td>
+        <td className='p-2 border'>{statistics.F}</td>
       </tr>
     )
   }
@@ -79,41 +79,47 @@ const Statistics = () => {
     </table>
   )
 
-  const GroupTable = () => (
-    <table
-      className='table-fixed border-collapse border h-fit'
-      style={{ wordBreak: 'keep-all' }}
-    >
-      <thead className='bg-gray-50'>
-        <tr className='h-20'>
-          <LongColumn className='p-2 border'>
-            <SubHeadline>전체</SubHeadline>
-          </LongColumn>
-          <Column className='p-2 border'>
-            <SubHeadline>출석</SubHeadline>
-          </Column>
-        </tr>
-      </thead>
-      <tbody className='text-center'>
-        <tr className='h-20'>
-          <td className='p-2 border'>남학생</td>
-          <td className='p-2 border'>{statistics_array[0]}</td>
-        </tr>
-        <tr className='h-20'>
-          <td className='p-2 border'>여학생</td>
-          <td className='p-2 border'>{statistics_array[1]}</td>
-        </tr>
-        <tr className='h-20'>
-          <td className='p-2 border'>교사</td>
-          <td className='p-2 border'>
-            {statistics_array[2][0][0]['M'] + statistics_array[2][0][0]['F']}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  )
+  const GroupTable = () => {
+    const student_member_array = member_array.filter((member) => member.role == 'student')
+    const male_id_array = student_member_array.filter((member) => member.sex === 'M').map((member) => member.id)
+    const female_id_array = student_member_array.filter((member) => member.sex === 'F').map((member) => member.id)
+    const teacher_id_array = member_array.filter((member) => member.role == 'teacher').map((member) => member.id)
+    const statistics = {
+      M: attendance_array.filter((member_id) => male_id_array.includes(member_id)).length,
+      F: attendance_array.filter((member_id) => female_id_array.includes(member_id)).length,
+      T: attendance_array.filter((member_id) => teacher_id_array.includes(member_id)).length,
+    }
+    return (
+      <table className='table-fixed border-collapse border h-fit' style={{ wordBreak: 'keep-all' }}>
+        <thead className='bg-gray-50'>
+          <tr className='h-20'>
+            <LongColumn className='p-2 border'>
+              <SubHeadline>전체</SubHeadline>
+            </LongColumn>
+            <Column className='p-2 border'>
+              <SubHeadline>출석</SubHeadline>
+            </Column>
+          </tr>
+        </thead>
+        <tbody className='text-center'>
+          <tr className='h-10'>
+            <td className='p-2 border'>남학생</td>
+            <td className='p-2 border'>{statistics.M}</td>
+          </tr>
+          <tr className='h-10'>
+            <td className='p-2 border'>여학생</td>
+            <td className='p-2 border'>{statistics.F}</td>
+          </tr>
+          <tr className='h-10'>
+            <td className='p-2 border'>교사</td>
+            <td className='p-2 border'>{statistics.T}</td>
+          </tr>
+        </tbody>
+      </table>
+    )
+  }
 
-  if (is_loading || is_error) {
+  if (is_loading_1 || is_loading_2 || is_error_1 || is_error_2) {
     return (
       <Container>
         <Sidebar />

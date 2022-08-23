@@ -22,20 +22,11 @@ const Attendance = () => {
   const current_group = useSelector((state) => state.class_checker.group)
   const current_grade = useSelector((state) => state.class_checker.grade)
   const current_class = useSelector((state) => state.class_checker.class)
-  const {
-    member_array,
-    is_loading: is_loading_1,
-    is_error: is_error_1,
-  } = useMembers(current_group)
-  const {
-    member_id_array,
-    is_loading: is_loading_2,
-    is_error: is_error_2,
-    mutate,
-  } = useAttendanceByDate(date)
+  const { attendance_array, is_loading: is_loading_1, is_error: is_error_1, mutate } = useAttendanceByDate(date)
+  const { member_array, is_loading: is_loading_2, is_error: is_error_2 } = useMembers(current_group)
 
   const check_attendance = (member_id) => {
-    const is_attended = member_id_array.includes(member_id)
+    const is_attended = attendance_array.includes(member_id)
 
     if (is_attended) {
       axios
@@ -47,7 +38,7 @@ const Attendance = () => {
         })
         .then((response) => {
           console.log(response)
-          mutate(member_id_array.filter((id) => id != member_id))
+          mutate(attendance_array.filter((id) => id != member_id))
         })
     } else {
       axios
@@ -57,7 +48,7 @@ const Attendance = () => {
         })
         .then((response) => {
           console.log(response)
-          mutate([...member_id_array, member_id])
+          mutate([...attendance_array, member_id])
         })
     }
   }
@@ -86,24 +77,14 @@ const Attendance = () => {
     )
   }
 
-  const class_member_array = member_array.filter(
-    (member) => member.grade == current_grade && member.class == current_class
-  )
+  const class_member_array = member_array.filter((member) => member.grade == current_grade && member.class == current_class)
 
   const StatisticsTable = () => {
-    const male_id_array = class_member_array
-      .filter((member) => member.sex === 'M')
-      .map((member) => member.id)
-    const female_id_array = class_member_array
-      .filter((member) => member.sex === 'F')
-      .map((member) => member.id)
+    const male_id_array = class_member_array.filter((member) => member.sex === 'M').map((member) => member.id)
+    const female_id_array = class_member_array.filter((member) => member.sex === 'F').map((member) => member.id)
     const statistics = {
-      M: member_id_array.filter((member_id) =>
-        male_id_array.includes(member_id)
-      ).length,
-      F: member_id_array.filter((member_id) =>
-        female_id_array.includes(member_id)
-      ).length,
+      M: attendance_array.filter((member_id) => male_id_array.includes(member_id)).length,
+      F: attendance_array.filter((member_id) => female_id_array.includes(member_id)).length,
     }
     return (
       <table className='mt-8 mb-4 table-fixed border-collapse border'>
@@ -141,16 +122,14 @@ const Attendance = () => {
             className='h-20'
           >
             <Link href={`/admin/members/id/${member.id}`}>
-              <td className='border hover:bg-violet-200 cursor-pointer'>
-                {member.name}
-              </td>
+              <td className='border hover:bg-violet-200 cursor-pointer'>{member.name}</td>
             </Link>
             <td className='border'>{member.sex}</td>
             <td
               className='border hover:bg-violet-50 cursor-pointer'
               onMouseDown={() => check_attendance(member.id)}
             >
-              <Checkbox check={member_id_array.includes(member.id)} />
+              <Checkbox check={attendance_array.includes(member.id)} />
             </td>
           </tr>
         ))}
