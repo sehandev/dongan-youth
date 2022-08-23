@@ -1,5 +1,0 @@
-# SQL
-
-## Production
-
-## Development
