@@ -108,11 +108,12 @@ export function useMember(id) {
 }
 
 export function useAttendanceByDate(date) {
-  const { data, error } = useSWR(`/api/attendance/${date}`, fetcher)
+  const { data, error, mutate } = useSWR(`/api/attendance/${date}`, fetcher)
 
   return {
     member_id_array: data,
     is_loading: !error && !data,
     is_error: error,
+    mutate,
   }
 }

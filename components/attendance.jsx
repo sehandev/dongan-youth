@@ -2,7 +2,6 @@ import axios from 'axios'
 import Link from 'next/link'
 import { useSelector } from 'react-redux'
 import styled from 'styled-components'
-import { useSWRConfig } from 'swr'
 
 import { Headline, SubHeadline, Description, Checkbox } from './common'
 import { DateSelectBox } from './date_select'
@@ -19,7 +18,6 @@ const LongColumn = styled.th`
 `
 
 const Attendance = () => {
-  const { mutate } = useSWRConfig()
   const date = useSelector((state) => state.date_checker.start_date)
   const current_group = useSelector((state) => state.class_checker.group)
   const current_grade = useSelector((state) => state.class_checker.grade)
@@ -33,6 +31,7 @@ const Attendance = () => {
     member_id_array,
     is_loading: is_loading_2,
     is_error: is_error_2,
+    mutate,
   } = useAttendanceByDate(date)
 
   const check_attendance = (member_id) => {
@@ -47,8 +46,8 @@ const Attendance = () => {
           },
         })
         .then((response) => {
-          mutate(`/api/attendance/${date}`)
           console.log(response)
+          mutate(member_id_array.filter((id) => id != member_id))
         })
     } else {
       axios
@@ -57,8 +56,8 @@ const Attendance = () => {
           member_id,
         })
         .then((response) => {
-          mutate(`/api/attendance/${date}`)
           console.log(response)
+          mutate([...member_id_array, member_id])
         })
     }
   }
