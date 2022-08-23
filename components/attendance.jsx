@@ -17,14 +17,12 @@ const LongColumn = styled.th`
   width: 120px;
 `
 
-const Attendance = () => {
+const Attendance = ({ grade_id, class_id }) => {
   const date = useSelector((state) => state.date_checker.start_date)
-  const current_group = useSelector((state) => state.class_checker.group)
-  const current_grade = useSelector((state) => state.class_checker.grade)
-  const current_class = useSelector((state) => state.class_checker.class)
+  const current_group = useSelector((state) => state.group_manager.group)
   const { attendance_array, is_loading: is_loading_1, is_error: is_error_1, mutate } = useAttendanceByDate(date)
   const { member_array, is_loading: is_loading_2, is_error: is_error_2 } = useMembers(current_group)
-  
+
   const check_attendance = (member_id) => {
     const is_attended = attendance_array.includes(member_id)
 
@@ -53,7 +51,7 @@ const Attendance = () => {
     }
   }
 
-  if (current_grade == -1 || current_class == -1) {
+  if (grade_id == -1 || class_id == -1) {
     return <></>
   }
 
@@ -77,7 +75,7 @@ const Attendance = () => {
     )
   }
 
-  const class_member_array = member_array.filter((member) => member.grade == current_grade && member.class == current_class)
+  const class_member_array = member_array.filter((member) => member.grade == grade_id && member.class == class_id)
 
   const StatisticsTable = () => {
     const male_id_array = class_member_array.filter((member) => member.sex === 'M').map((member) => member.id)

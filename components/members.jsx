@@ -5,7 +5,7 @@ import { Headline } from './common'
 import { useMembers } from './swr'
 
 const Members = () => {
-  const current_group = useSelector((state) => state.class_checker.group)
+  const current_group = useSelector((state) => state.group_manager.group)
   const { member_array, is_loading, is_error } = useMembers(current_group)
 
   if (is_loading || is_error) {

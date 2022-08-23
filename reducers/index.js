@@ -1,7 +1,7 @@
 import { HYDRATE } from 'next-redux-wrapper'
 import { combineReducers } from 'redux'
 
-import class_checker from './class_checker'
+import group_manager from './group_manager'
 import date_checker from './date_checker'
 import sidebar_toggler from './sidebar_toggler'
 
@@ -18,7 +18,7 @@ const rootReducer = combineReducers({
         return state
     }
   },
-  class_checker,
+  group_manager,
   date_checker,
   sidebar_toggler,
 })

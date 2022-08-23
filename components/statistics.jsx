@@ -19,7 +19,7 @@ const LongColumn = styled.th`
 
 const Statistics = () => {
   const date = useSelector((state) => state.date_checker.start_date)
-  const current_group = useSelector((state) => state.class_checker.group)
+  const current_group = useSelector((state) => state.group_manager.group)
   const { attendance_array, is_loading: is_loading_1, is_error: is_error_1 } = useAttendanceByDate(date)
   const { member_array, is_loading: is_loading_2, is_error: is_error_2 } = useMembers(current_group)
 

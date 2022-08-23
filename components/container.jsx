@@ -4,7 +4,7 @@ import { useCookie } from 'next-cookie'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
-import { change_class } from '../reducers/class_checker'
+import { change_group } from '../reducers/group_manager'
 
 const Container = ({ children }) => {
   const cookie = useCookie()
@@ -15,7 +15,7 @@ const Container = ({ children }) => {
     if (!cookie_group || cookie_group < 0) {
       router.push('/group')
     } else {
-      dispatch(change_class({ group: cookie_group, grade: -1, class: -1 }))
+      dispatch(change_group({ group: cookie_group }))
     }
   }, [cookie_group])
 

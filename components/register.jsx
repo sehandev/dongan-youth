@@ -6,7 +6,7 @@ import SecondaryButton from './assets/secondary_button'
 import { Headline, Description } from './common'
 
 const Register = () => {
-  const current_group = useSelector((state) => state.class_checker.group)
+  const current_group = useSelector((state) => state.group_manager.group)
   const [member_info, set_member_info] = useState({
     name: '',
     sex: null,

@@ -2,7 +2,6 @@ import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 
-import { change_class, initialize_class } from '../reducers/class_checker'
 import { close_sidebar } from '../reducers/sidebar_toggler'
 import Logo from './logo'
 
@@ -28,53 +27,49 @@ const CurrentButton = styled.button`
   background-color: #8756bd;
 `
 
-const Sidebar = () => {
+const Sidebar = ({ grade_id, class_id }) => {
   const dispatch = useDispatch()
   const is_opened = useSelector((state) => state.sidebar_toggler.is_opened)
-  const current_grade = useSelector((state) => state.class_checker.grade)
-  const current_class = useSelector((state) => state.class_checker.class)
 
-  const ClassButton = ({ button_grade, button_class }) => {
-    const get_button_name = (button_grade, button_class) => {
-      if (button_grade == 0 && button_class == 0) {
+  const ClassButton = ({ btn_grade, btn_class }) => {
+    const get_btn_name = (btn_grade, btn_class) => {
+      if (btn_grade == 0 && btn_class == 0) {
         return '선생님'
       }
-      if (button_class == 0) {
-        return `${button_grade}학년`
+      if (btn_class == 0) {
+        return `${btn_grade}학년`
       }
-      return `${button_grade}학년 ${button_class}반`
+      return `${btn_grade}학년 ${btn_class}반`
     }
 
-    if (button_grade == current_grade && button_class == current_class) {
+    if (btn_grade == grade_id && btn_class == class_id) {
       return (
-        <Link href='/'>
+        <Link href={`/attendance/${btn_grade}/${btn_class}`}>
           <CurrentButton
-            button_grade={button_grade}
-            button_class={button_class}
+            btn_grade={btn_grade}
+            btn_class={btn_class}
             onClick={() => {
-              dispatch(change_class({ grade: button_grade, class: button_class }))
               dispatch(close_sidebar())
             }}
           >
             <img className='inline-block mr-2 w-8 h-8' src='https://img.icons8.com/pastel-glyph/512/ffffff/person-male--v1.png' />
-            <span className='align-middle'>{get_button_name(button_grade, button_class)}</span>
+            <span className='align-middle'>{get_btn_name(btn_grade, btn_class)}</span>
           </CurrentButton>
         </Link>
       )
     }
     return (
-      <Link href='/'>
+      <Link href={`/attendance/${btn_grade}/${btn_class}`}>
         <NormalButton
-          button_grade={button_grade}
-          button_class={button_class}
+          btn_grade={btn_grade}
+          btn_class={btn_class}
           onClick={() => {
-            dispatch(change_class({ grade: button_grade, class: button_class }))
             dispatch(close_sidebar())
           }}
           className='hover:bg-purple-100'
         >
           <img className='inline-block mr-2 w-8 h-8' src='https://img.icons8.com/pastel-glyph/512/000000/person-male--v1.png' />
-          <span className='align-middle'>{get_button_name(button_grade, button_class)}</span>
+          <span className='align-middle'>{get_btn_name(btn_grade, btn_class)}</span>
         </NormalButton>
       </Link>
     )
@@ -93,24 +88,23 @@ const Sidebar = () => {
         <Logo
           className='px-4'
           onClick={() => {
-            dispatch(initialize_class())
             dispatch(close_sidebar())
           }}
         />
       </div>
-      <ClassButton button_grade={1} button_class={0} />
-      <ClassButton button_grade={1} button_class={1} />
-      <ClassButton button_grade={1} button_class={2} />
-      <ClassButton button_grade={1} button_class={3} />
-      <ClassButton button_grade={2} button_class={0} />
-      <ClassButton button_grade={2} button_class={1} />
-      <ClassButton button_grade={2} button_class={2} />
-      <ClassButton button_grade={2} button_class={3} />
-      <ClassButton button_grade={3} button_class={0} />
-      <ClassButton button_grade={3} button_class={1} />
-      <ClassButton button_grade={3} button_class={2} />
-      <ClassButton button_grade={3} button_class={3} />
-      <ClassButton button_grade={0} button_class={0} />
+      <ClassButton btn_grade={1} btn_class={0} />
+      <ClassButton btn_grade={1} btn_class={1} />
+      <ClassButton btn_grade={1} btn_class={2} />
+      <ClassButton btn_grade={1} btn_class={3} />
+      <ClassButton btn_grade={2} btn_class={0} />
+      <ClassButton btn_grade={2} btn_class={1} />
+      <ClassButton btn_grade={2} btn_class={2} />
+      <ClassButton btn_grade={2} btn_class={3} />
+      <ClassButton btn_grade={3} btn_class={0} />
+      <ClassButton btn_grade={3} btn_class={1} />
+      <ClassButton btn_grade={3} btn_class={2} />
+      <ClassButton btn_grade={3} btn_class={3} />
+      <ClassButton btn_grade={0} btn_class={0} />
     </SidebarPanel>
   )
 }
