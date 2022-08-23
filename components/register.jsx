@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'axios'
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
@@ -33,18 +33,18 @@ const Register = () => {
       return
     }
 
+    // Init
+    set_member_info({
+      name: '',
+      sex: null,
+      grade: '0',
+      class: '0',
+    })
+
     // POST member
     try {
-      await axios.post('/api/member', { ...member_info, group: current_group });
+      await axios.post('/api/member', { ...member_info, group: current_group })
       alert(`[${member_info.name}] 추가했습니다.`)
-
-      // Init
-      set_member_info({
-        name: '',
-        sex: null,
-        grade: '0',
-        class: '0',
-      })
     } catch (err) {
       alert(`[${member_info.name}] 추가하지 못했습니다.`)
     }
@@ -75,10 +75,7 @@ const Register = () => {
           <label className='mr-4 w-24 py-4 leading-6 text-center'>성별</label>
           <div className='grid grid-cols-2 gap-4'>
             <button
-              className={
-                'border p-4 w-20 hover:bg-purple-100 leading-6 ' +
-                (member_info.sex === 'M' ? 'bg-purple-200' : '')
-              }
+              className={'border p-4 w-20 hover:bg-purple-100 leading-6 ' + (member_info.sex === 'M' ? 'bg-purple-200' : '')}
               onClick={() =>
                 set_member_info((prev_info) => ({
                   ...prev_info,
@@ -89,10 +86,7 @@ const Register = () => {
               남
             </button>
             <button
-              className={
-                'border p-4 w-20 hover:bg-purple-100 leading-6 ' +
-                (member_info.sex === 'F' ? 'bg-purple-200' : '')
-              }
+              className={'border p-4 w-20 hover:bg-purple-100 leading-6 ' + (member_info.sex === 'F' ? 'bg-purple-200' : '')}
               onClick={() =>
                 set_member_info((prev_info) => ({
                   ...prev_info,
