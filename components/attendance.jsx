@@ -148,7 +148,7 @@ const Attendance = () => {
             <td className='border'>{member.sex}</td>
             <td
               className='border hover:bg-violet-50 cursor-pointer'
-              onClick={() => check_attendance(member.id)}
+              onMouseDown={() => check_attendance(member.id)}
             >
               <Checkbox check={member_id_array.includes(member.id)} />
             </td>
