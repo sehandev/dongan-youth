@@ -51,10 +51,6 @@ const Attendance = ({ grade_id, class_id }) => {
     }
   }
 
-  if (grade_id == -1 || class_id == -1) {
-    return <></>
-  }
-
   if (is_loading_1 || is_loading_2) {
     return (
       <>
