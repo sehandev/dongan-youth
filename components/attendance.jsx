@@ -27,6 +27,10 @@ const Attendance = ({ grade_id, class_id }) => {
     const is_attended = attendance_array.includes(member_id)
 
     if (is_attended) {
+      mutate(
+        attendance_array.filter((id) => id != member_id),
+        { revalidate: false }
+      )
       axios
         .delete('/api/attendance', {
           data: {
@@ -36,9 +40,9 @@ const Attendance = ({ grade_id, class_id }) => {
         })
         .then((response) => {
           console.log(response)
-          mutate(attendance_array.filter((id) => id != member_id))
         })
     } else {
+      mutate([...attendance_array, member_id], { revalidate: false })
       axios
         .post('/api/attendance', {
           date,
@@ -46,7 +50,6 @@ const Attendance = ({ grade_id, class_id }) => {
         })
         .then((response) => {
           console.log(response)
-          mutate([...attendance_array, member_id])
         })
     }
   }
