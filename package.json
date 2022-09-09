@@ -1,7 +1,7 @@
 {
   "packageManager": "yarn@3.2.2",
   "scripts": {
-    "dev": "next dev -p 53001",
+    "dev": "next dev -p 53000",
     "build": "next build",
     "start": "next start -p 53000"
   },

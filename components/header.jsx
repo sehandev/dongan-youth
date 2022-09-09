@@ -21,24 +21,14 @@ const Header = ({ children }) => {
     <HeaderPanel className='flex items-center justify-between px-4' style={{ wordBreak: 'keep-all' }}>
       {!is_opened ? (
         <ul className='h-full'>
-          <Link href='/admin/members/new'>
+          <Link href='/admin'>
             <button
               className='px-4 h-full cursor-pointer'
               onClick={() => {
                 dispatch(close_sidebar())
               }}
             >
-              신규 등록
-            </button>
-          </Link>
-          <Link href='/statistics'>
-            <button
-              className='px-4 h-full cursor-pointer'
-              onClick={() => {
-                dispatch(close_sidebar())
-              }}
-            >
-              출석 통계
+              관리 페이지
             </button>
           </Link>
         </ul>
