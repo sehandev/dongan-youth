@@ -9,6 +9,7 @@ html {
     system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo',
     'Malgun Gothic', sans-serif;
   font-size: 16px;
+  word-break: keep-all;
 }
 
 html {
