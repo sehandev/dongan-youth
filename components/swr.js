@@ -31,6 +31,7 @@ export function useMembers(group) {
  * @property {Object} member
  * @property {boolean} is_loading
  * @property {boolean} is_error
+ * @property {Function} mutate
  */
 /**
  *
@@ -38,7 +39,10 @@ export function useMembers(group) {
  * @returns {MemberObject}
  */
 export function useMember(id) {
-  const { data, error } = useSWR(id ? `/api/member/${id}` : null, fetcher)
+  const { data, error, mutate } = useSWR(
+    id ? `/api/member/${id}` : null,
+    fetcher
+  )
 
   const member = {
     photo: 'member_default.png',
@@ -59,6 +63,7 @@ export function useMember(id) {
     member: member,
     is_loading: !error && !data,
     is_error: error,
+    mutate,
   }
 }
 
@@ -79,6 +84,78 @@ export function useAttendanceByDate(date) {
 
   return {
     attendance_array: data,
+    is_loading: !error && !data,
+    is_error: error,
+    mutate,
+  }
+}
+
+/**
+ * @typedef {Object} TrainingsByNameDateObject
+ * @property {Object} members
+ * @property {boolean} is_loading
+ * @property {boolean} is_error
+ * @property {Function} mutate
+ */
+/**
+ *
+ * @param {string} name
+ * @param {string} date
+ * @returns {TrainingsByNameDateObject}
+ */
+export function useTrainingsByNameDate(name, date) {
+  const { data, error } = useSWR(
+    name && date ? `/api/trainings/members/${name}/${date}` : null,
+    fetcher
+  )
+
+  return {
+    members: data,
+    is_loading: !error && !data,
+    is_error: error,
+  }
+}
+
+/**
+ * @typedef {Object} TrainingsByMemberIdObject
+ * @property {Object} trainings
+ * @property {boolean} is_loading
+ * @property {boolean} is_error
+ */
+/**
+ *
+ * @param {string} member_id
+ * @returns {TrainingsByMemberIdObject}
+ */
+export function useTrainingsByMemberId(member_id) {
+  const { data, error } = useSWR(
+    member_id ? `/api/trainings/member_id/${member_id}` : null,
+    fetcher
+  )
+
+  return {
+    trainings: data,
+    is_loading: !error && !data,
+    is_error: error,
+  }
+}
+
+/**
+ * @typedef {Object} TrainingsInfoObject
+ * @property {Object} trainings_info
+ * @property {boolean} is_loading
+ * @property {boolean} is_error
+ * @property {Function} mutate
+ */
+/**
+ *
+ * @returns {TrainingsInfoObject}
+ */
+export function useTrainingsInfo() {
+  const { data, error, mutate } = useSWR('/api/trainings/info', fetcher)
+
+  return {
+    trainings_info_array: data,
     is_loading: !error && !data,
     is_error: error,
     mutate,
