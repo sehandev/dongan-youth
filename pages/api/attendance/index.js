@@ -1,4 +1,4 @@
-import { collection, query, where, addDoc, deleteDoc } from 'firebase/firestore'
+import { collection, doc, query, where, addDoc, getDocs, deleteDoc } from 'firebase/firestore'
 
 import { db } from '../../../utils/firestore'
 
@@ -24,7 +24,7 @@ export default async (req, res) => {
       if (attendance.docs.length === 0) {
         res.status(404).end()
       } else {
-        await deleteDoc(doc(db, 'attendance', attendance[0].id))
+        await deleteDoc(doc(db, 'attendance', attendance.docs[0].id))
         res.status(200).end()
       }
     }

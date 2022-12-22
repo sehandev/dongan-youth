@@ -1,14 +1,14 @@
 import axios from 'axios'
 import Link from 'next/link'
 import { useState } from 'react'
-import { useSelector } from 'react-redux'
 
+import { useBoundStore } from '@/store'
 import { is_future } from '../utils/common'
 import { Headline } from './common'
 import { useMembers, useTrainingsByNameDate, useTrainingsInfo } from './swr'
 
 const Trainings = () => {
-  const current_group = useSelector((state) => state.group_manager.group)
+  const current_group = useBoundStore((state) => state.group)
   const { member_array } = useMembers(current_group)
   const { trainings_info_array, is_loading, is_error, mutate } = useTrainingsInfo()
   const [name_index, set_name_index] = useState(-1)

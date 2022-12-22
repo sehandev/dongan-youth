@@ -1,8 +1,8 @@
 import axios from 'axios'
 import Link from 'next/link'
-import { useSelector } from 'react-redux'
 import styled from 'styled-components'
 
+import { useBoundStore } from '@/store'
 import { Headline, SubHeadline, Description, Checkbox } from './common'
 import { DateSelectBox } from './date_select'
 import { useAttendanceByDate, useMembers } from './swr'
@@ -18,8 +18,8 @@ const LongColumn = styled.th`
 `
 
 const Attendance = ({ grade_id, class_id }) => {
-  const date = useSelector((state) => state.date_checker.start_date)
-  const current_group = useSelector((state) => state.group_manager.group)
+  const date = useBoundStore((state) => state.start_date)
+  const current_group = useBoundStore((state) => state.group)
   const { attendance_array, is_loading: is_loading_1, is_error: is_error_1, mutate } = useAttendanceByDate(date)
   const { member_array, is_loading: is_loading_2, is_error: is_error_2 } = useMembers(current_group)
 

@@ -1,15 +1,16 @@
-import { createWrapper } from 'next-redux-wrapper'
-import { createStore } from 'redux'
+import create from 'zustand'
+import { create_date_slice } from './date'
+import { create_group_slice } from './group'
+import { create_sidebar_slice } from './sidebar'
+import { persist } from 'zustand/middleware'
 
-import rootReducer from '../reducers'
-
-const configureStore = () => {
-  const store = createStore(rootReducer)
-  return store
-}
-
-const wrapper = createWrapper(configureStore, {
-  debug: process.env.NODE_ENV === 'development',
-})
-
-export default wrapper
+export const useBoundStore = create(
+  persist(
+    (...a) => ({
+      ...create_date_slice(...a),
+      ...create_group_slice(...a),
+      ...create_sidebar_slice(...a),
+    }),
+    { name: 'bound-store' },
+  ),
+)

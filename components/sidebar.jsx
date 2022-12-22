@@ -1,8 +1,7 @@
 import Link from 'next/link'
-import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 
-import { close_sidebar } from '../reducers/sidebar_toggler'
+import { useBoundStore } from '@/store'
 import Logo from './logo'
 
 const SidebarPanel = styled.div`
@@ -28,8 +27,8 @@ const CurrentButton = styled.button`
 `
 
 const Sidebar = ({ grade_id, class_id }) => {
-  const dispatch = useDispatch()
-  const is_opened = useSelector((state) => state.sidebar_toggler.is_opened)
+  const is_opened = useBoundStore((state) => state.is_sidebar_open)
+  const close_sidebar = useBoundStore((state) => state.close_sidebar)
 
   const ClassButton = ({ btn_grade, btn_class }) => {
     const get_btn_name = (btn_grade, btn_class) => {
@@ -45,13 +44,7 @@ const Sidebar = ({ grade_id, class_id }) => {
     if (btn_grade == grade_id && btn_class == class_id) {
       return (
         <Link href={`/attendance/${btn_grade}/${btn_class}`}>
-          <CurrentButton
-            btn_grade={btn_grade}
-            btn_class={btn_class}
-            onClick={() => {
-              dispatch(close_sidebar())
-            }}
-          >
+          <CurrentButton btn_grade={btn_grade} btn_class={btn_class} onClick={close_sidebar()}>
             <img
               className="inline-block mr-2 w-8 h-8"
               src="https://img.icons8.com/pastel-glyph/512/ffffff/person-male--v1.png"
@@ -66,9 +59,7 @@ const Sidebar = ({ grade_id, class_id }) => {
         <NormalButton
           btn_grade={btn_grade}
           btn_class={btn_class}
-          onClick={() => {
-            dispatch(close_sidebar())
-          }}
+          onClick={close_sidebar}
           className="hover:bg-purple-100"
         >
           <img
@@ -91,12 +82,7 @@ const Sidebar = ({ grade_id, class_id }) => {
   return (
     <SidebarPanel className={`${get_mobile_class()} md:flex flex-col`}>
       <div className="flex" style={{ height: '60px' }}>
-        <Logo
-          className="px-4"
-          onClick={() => {
-            dispatch(close_sidebar())
-          }}
-        />
+        <Logo className="px-4" onClick={close_sidebar} />
       </div>
       <ClassButton btn_grade={1} btn_class={0} />
       <ClassButton btn_grade={1} btn_class={1} />
