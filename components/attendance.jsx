@@ -134,7 +134,7 @@ const Attendance = ({ grade_id, class_id }) => {
             .sort((a, b) => (a.name > b.name ? 1 : -1))
             .map((member, index) => (
               <tr key={index} className="h-20">
-                <Link href={`/admin/members/id/${member.id}`}>
+                <Link href={`/admin/members/id/${member.id}`} legacyBehavior>
                   <td className="border hover:bg-violet-200 cursor-pointer">{member.name}</td>
                 </Link>
                 <td className="border">{sex_to_string(member.sex)}</td>
