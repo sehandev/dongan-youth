@@ -21,7 +21,8 @@
     "redux": "^4.1.2",
     "sharp": "^0.30.7",
     "styled-components": "^5.3.3",
-    "swr": "^1.1.2"
+    "swr": "^1.1.2",
+    "zustand": "^4.1.5"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.0",
