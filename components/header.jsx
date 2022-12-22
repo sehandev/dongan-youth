@@ -1,8 +1,7 @@
 import Link from 'next/link'
-import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 
-import { close_sidebar, open_sidebar } from '../reducers/sidebar_toggler'
+import { useBoundStore } from '@/store'
 import { get_group_name } from './assets/group'
 import Logo from './logo'
 
@@ -13,21 +12,17 @@ const HeaderPanel = styled.div`
 `
 
 const Header = ({ children }) => {
-  const dispatch = useDispatch()
-  const current_group = useSelector((state) => state.group_manager.group)
-  const is_opened = useSelector((state) => state.sidebar_toggler.is_opened)
+  const current_group = useBoundStore((state) => state.group)
+  const is_opened = useBoundStore((state) => state.is_sidebar_open)
+  const close_sidebar = useBoundStore((state) => state.close_sidebar)
+  const open_sidebar = useBoundStore((state) => state.open_sidebar)
 
   const NavigationBar = () => (
     <HeaderPanel className="flex items-center justify-between px-4" style={{ wordBreak: 'keep-all' }}>
       {!is_opened ? (
         <ul className="h-full">
           <Link href="/admin">
-            <button
-              className="px-4 h-full cursor-pointer"
-              onClick={() => {
-                dispatch(close_sidebar())
-              }}
-            >
+            <button className="px-4 h-full cursor-pointer" onClick={close_sidebar}>
               관리 페이지
             </button>
           </Link>
@@ -44,15 +39,8 @@ const Header = ({ children }) => {
   const CloseHeader = () => (
     <HeaderPanel className="flex md:hidden items-center justify-between px-4">
       <Logo />
-      <Link href="/">
-        <button
-          className="border border-purple-400 w-10 h-10 text-2xl font-bold"
-          onClick={() => {
-            dispatch(open_sidebar())
-          }}
-        >
-          &equiv;
-        </button>
+      <Link href="/" onClick={() => open_sidebar()}>
+        <button className="border border-purple-400 w-10 h-10 text-2xl font-bold">&equiv;</button>
       </Link>
     </HeaderPanel>
   )

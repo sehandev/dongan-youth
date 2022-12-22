@@ -1,29 +1,23 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import { useCookie } from 'next-cookie'
 import { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
 
-import { change_group } from '../reducers/group_manager'
+import { useBoundStore } from '@/store'
 
 const Container = ({ children }) => {
-  const cookie = useCookie()
-  const cookie_group = cookie.get('group')
-  const dispatch = useDispatch()
   const router = useRouter()
+  const group = useBoundStore((state) => state.group)
   useEffect(() => {
-    if (!cookie_group || cookie_group < 0) {
+    if (group < 0) {
       router.push('/group')
-    } else {
-      dispatch(change_group({ group: cookie_group }))
     }
-  }, [cookie_group])
+  }, [group])
 
   return (
     <div className="flex flex-col items-center justify-center select-none">
       <Head>
         <title>출석하는동안</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/img/dongan.png" />
         <meta property="og:title" content="출석하는 동안" />
         <meta property="og:image" content="http://dongan.sehandev.com/img/dongan.png" />
         <meta property="og:description" content="동안교회 청소년부 출석부" />

@@ -1,5 +1,4 @@
-import { useSelector } from 'react-redux'
-
+import { useBoundStore } from '@/store'
 import { Headline } from '../common'
 import { DateSelectBox } from '../date_select'
 import { useAttendanceByDate, useMembers } from '../swr'
@@ -9,8 +8,8 @@ import StatisticsCard from './statistics'
 import TrainingsCard from './trainings'
 
 const Admin = () => {
-  const date = useSelector((state) => state.date_checker.start_date)
-  const current_group = useSelector((state) => state.group_manager.group)
+  const current_group = useBoundStore((state) => state.group)
+  const date = useBoundStore((state) => state.start_date)
   const { member_array } = useMembers(current_group)
   const { attendance_array } = useAttendanceByDate(date)
 

@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
-import { change_date } from '../reducers/date_checker'
+import { useBoundStore } from '@/store'
 
 export const date_option_array = [
   { value: '2022-12-25' },
@@ -59,13 +58,13 @@ export const date_option_array = [
 ]
 
 export const DateSelectBox = ({}) => {
-  const dispatch = useDispatch()
-  const start_date = useSelector((state) => state.date_checker.start_date)
+  const start_date = useBoundStore((state) => state.start_date)
+  const change_date = useBoundStore((state) => state.change_date)
 
   // Initialize date
   useEffect(() => {
-    if (start_date == '1970-01-01') {
-      dispatch(change_date({ start_date: date_option_array[0].value }))
+    if (start_date === '1970-01-01') {
+      change_date({ start_date: date_option_array[0].value })
     }
   }, [start_date])
 
@@ -73,7 +72,7 @@ export const DateSelectBox = ({}) => {
     <select
       className="focus-visible:outline-none"
       onChange={(e) => {
-        dispatch(change_date({ start_date: e.target.value }))
+        change_date({ start_date: e.target.value })
       }}
       value={start_date}
     >

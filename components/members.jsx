@@ -1,11 +1,11 @@
 import Link from 'next/link'
-import { useSelector } from 'react-redux'
 
+import { useBoundStore } from '@/store'
 import { Headline } from './common'
 import { useMembers } from './swr'
 
 const Members = () => {
-  const current_group = useSelector((state) => state.group_manager.group)
+  const current_group = useBoundStore((state) => state.group)
   const { member_array, is_loading, is_error } = useMembers(current_group)
 
   if (is_loading || is_error) {
