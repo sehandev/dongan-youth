@@ -9,7 +9,7 @@ export default async (req, res) => {
       await setDoc(doc(db, 'training', name), { date_array })
       res.status(200).end()
     } else if (req.method === 'GET') {
-      const q = query(collection(db, 'trainings'))
+      const q = query(collection(db, 'training'))
       const doc_array = await getDocs(q)
       const info_array = []
       doc_array.forEach((doc) => {
