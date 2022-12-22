@@ -52,16 +52,16 @@ const Register = () => {
 
   return (
     <>
-      <Headline className='mb-4'>신규 등록</Headline>
+      <Headline className="mb-4">신규 등록</Headline>
       <Description></Description>
-      <form autoComplete='off' onSubmit={(e) => e.preventDefault()}>
-        <div className='flex mb-4'>
-          <label className='mr-4 w-24 py-4 leading-6 text-center'>이름</label>
+      <form autoComplete="off" onSubmit={(e) => e.preventDefault()}>
+        <div className="flex mb-4">
+          <label className="mr-4 w-24 py-4 leading-6 text-center">이름</label>
           <input
-            type='text'
-            name='name'
-            className='border p-4 w-64 leading-6'
-            placeholder='이름'
+            type="text"
+            name="name"
+            className="border p-4 w-64 leading-6"
+            placeholder="이름"
             value={member_info.name}
             onChange={(e) => {
               set_member_info((prev_info) => ({
@@ -71,11 +71,13 @@ const Register = () => {
             }}
           />
         </div>
-        <div className='flex mb-4'>
-          <label className='mr-4 w-24 py-4 leading-6 text-center'>성별</label>
-          <div className='grid grid-cols-2 gap-4'>
+        <div className="flex mb-4">
+          <label className="mr-4 w-24 py-4 leading-6 text-center">성별</label>
+          <div className="grid grid-cols-2 gap-4">
             <button
-              className={'border p-4 w-20 hover:bg-purple-100 leading-6 ' + (member_info.sex === 'M' ? 'bg-purple-200' : '')}
+              className={
+                'border p-4 w-20 hover:bg-purple-100 leading-6 ' + (member_info.sex === 'M' ? 'bg-purple-200' : '')
+              }
               onClick={() =>
                 set_member_info((prev_info) => ({
                   ...prev_info,
@@ -86,7 +88,9 @@ const Register = () => {
               남
             </button>
             <button
-              className={'border p-4 w-20 hover:bg-purple-100 leading-6 ' + (member_info.sex === 'F' ? 'bg-purple-200' : '')}
+              className={
+                'border p-4 w-20 hover:bg-purple-100 leading-6 ' + (member_info.sex === 'F' ? 'bg-purple-200' : '')
+              }
               onClick={() =>
                 set_member_info((prev_info) => ({
                   ...prev_info,
@@ -98,13 +102,13 @@ const Register = () => {
             </button>
           </div>
         </div>
-        <div className='flex mb-4'>
-          <label className='mr-4 w-24 py-4 leading-6 text-center'>학년</label>
+        <div className="flex mb-4">
+          <label className="mr-4 w-24 py-4 leading-6 text-center">학년</label>
           <input
-            type='tel'
-            name='grade'
-            className='border p-4 w-20 leading-6 text-center'
-            placeholder='0'
+            type="tel"
+            name="grade"
+            className="border p-4 w-20 leading-6 text-center"
+            placeholder="0"
             value={member_info.grade}
             onChange={(e) => {
               set_member_info((prev_info) => ({
@@ -114,13 +118,13 @@ const Register = () => {
             }}
           />
         </div>
-        <div className='flex mb-4'>
-          <label className='mr-4 w-24 py-4 leading-6 text-center'>반</label>
+        <div className="flex mb-4">
+          <label className="mr-4 w-24 py-4 leading-6 text-center">반</label>
           <input
-            type='tel'
-            name='class'
-            className='border p-4 w-20 leading-6 text-center'
-            placeholder='0'
+            type="tel"
+            name="class"
+            className="border p-4 w-20 leading-6 text-center"
+            placeholder="0"
             value={member_info.class}
             onChange={(e) => {
               set_member_info((prev_info) => ({
@@ -131,9 +135,9 @@ const Register = () => {
           />
         </div>
       </form>
-      <div className='w-24 py-4 text-center'>
+      <div className="w-24 py-4 text-center">
         <SecondaryButton
-          className='p-4 leading-6'
+          className="p-4 leading-6"
           onClick={() => {
             submit_register()
           }}

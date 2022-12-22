@@ -52,8 +52,11 @@ const Sidebar = ({ grade_id, class_id }) => {
               dispatch(close_sidebar())
             }}
           >
-            <img className='inline-block mr-2 w-8 h-8' src='https://img.icons8.com/pastel-glyph/512/ffffff/person-male--v1.png' />
-            <span className='align-middle'>{get_btn_name(btn_grade, btn_class)}</span>
+            <img
+              className="inline-block mr-2 w-8 h-8"
+              src="https://img.icons8.com/pastel-glyph/512/ffffff/person-male--v1.png"
+            />
+            <span className="align-middle">{get_btn_name(btn_grade, btn_class)}</span>
           </CurrentButton>
         </Link>
       )
@@ -66,10 +69,13 @@ const Sidebar = ({ grade_id, class_id }) => {
           onClick={() => {
             dispatch(close_sidebar())
           }}
-          className='hover:bg-purple-100'
+          className="hover:bg-purple-100"
         >
-          <img className='inline-block mr-2 w-8 h-8' src='https://img.icons8.com/pastel-glyph/512/000000/person-male--v1.png' />
-          <span className='align-middle'>{get_btn_name(btn_grade, btn_class)}</span>
+          <img
+            className="inline-block mr-2 w-8 h-8"
+            src="https://img.icons8.com/pastel-glyph/512/000000/person-male--v1.png"
+          />
+          <span className="align-middle">{get_btn_name(btn_grade, btn_class)}</span>
         </NormalButton>
       </Link>
     )
@@ -84,9 +90,9 @@ const Sidebar = ({ grade_id, class_id }) => {
 
   return (
     <SidebarPanel className={`${get_mobile_class()} md:flex flex-col`}>
-      <div className='flex' style={{ height: '60px' }}>
+      <div className="flex" style={{ height: '60px' }}>
         <Logo
-          className='px-4'
+          className="px-4"
           onClick={() => {
             dispatch(close_sidebar())
           }}

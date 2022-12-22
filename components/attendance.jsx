@@ -29,7 +29,7 @@ const Attendance = ({ grade_id, class_id }) => {
     if (is_attended) {
       mutate(
         attendance_array.filter((id) => id != member_id),
-        { revalidate: false }
+        { revalidate: false },
       )
       axios
         .delete('/api/attendance', {
@@ -57,7 +57,7 @@ const Attendance = ({ grade_id, class_id }) => {
   if (is_loading_1 || is_loading_2) {
     return (
       <>
-        <Headline className='mb-4'>출석부</Headline>
+        <Headline className="mb-4">출석부</Headline>
         <DateSelectBox />
         <Description>불러오는 중</Description>
       </>
@@ -67,7 +67,7 @@ const Attendance = ({ grade_id, class_id }) => {
   if (is_error_1 || is_error_2) {
     return (
       <>
-        <Headline className='mb-4'>출석부</Headline>
+        <Headline className="mb-4">출석부</Headline>
         <DateSelectBox />
         <Description>오류 발생</Description>
       </>
@@ -85,13 +85,13 @@ const Attendance = ({ grade_id, class_id }) => {
     }
 
     return (
-      <table className='mt-8 mb-4 table-fixed border-collapse border'>
-        <tbody className='text-center'>
-          <tr className='h-12'>
-            <Column className='border'>남</Column>
-            <Column className='border'>{statistics.M}</Column>
-            <Column className='border'>여</Column>
-            <Column className='border'>{statistics.F}</Column>
+      <table className="mt-8 mb-4 table-fixed border-collapse border">
+        <tbody className="text-center">
+          <tr className="h-12">
+            <Column className="border">남</Column>
+            <Column className="border">{statistics.M}</Column>
+            <Column className="border">여</Column>
+            <Column className="border">{statistics.F}</Column>
           </tr>
         </tbody>
       </table>
@@ -115,30 +115,33 @@ const Attendance = ({ grade_id, class_id }) => {
     }
 
     return (
-      <table className='table-fixed border-collapse border'>
-        <thead className='bg-gray-50'>
-          <tr className='h-20'>
-            <LongColumn className='border'>
+      <table className="table-fixed border-collapse border">
+        <thead className="bg-gray-50">
+          <tr className="h-20">
+            <LongColumn className="border">
               <SubHeadline>이름</SubHeadline>
             </LongColumn>
-            <Column className='border'>
+            <Column className="border">
               <SubHeadline>성별</SubHeadline>
             </Column>
-            <LongColumn className='border'>
+            <LongColumn className="border">
               <SubHeadline>예배 출석</SubHeadline>
             </LongColumn>
           </tr>
         </thead>
-        <tbody className='text-center'>
+        <tbody className="text-center">
           {[...class_member_array]
             .sort((a, b) => (a.name > b.name ? 1 : -1))
             .map((member, index) => (
-              <tr key={index} className='h-20'>
+              <tr key={index} className="h-20">
                 <Link href={`/admin/members/id/${member.id}`}>
-                  <td className='border hover:bg-violet-200 cursor-pointer'>{member.name}</td>
+                  <td className="border hover:bg-violet-200 cursor-pointer">{member.name}</td>
                 </Link>
-                <td className='border'>{sex_to_string(member.sex)}</td>
-                <td className='border hover:bg-violet-50 cursor-pointer' onMouseDown={() => check_attendance(member.id)}>
+                <td className="border">{sex_to_string(member.sex)}</td>
+                <td
+                  className="border hover:bg-violet-50 cursor-pointer"
+                  onMouseDown={() => check_attendance(member.id)}
+                >
                   <Checkbox check={attendance_array.includes(member.id)} />
                 </td>
               </tr>
@@ -150,7 +153,7 @@ const Attendance = ({ grade_id, class_id }) => {
 
   return (
     <>
-      <Headline className='mb-4'>출석부</Headline>
+      <Headline className="mb-4">출석부</Headline>
       <DateSelectBox />
       <Description></Description>
       <StatisticsTable />

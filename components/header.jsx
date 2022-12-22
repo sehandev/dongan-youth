@@ -18,12 +18,12 @@ const Header = ({ children }) => {
   const is_opened = useSelector((state) => state.sidebar_toggler.is_opened)
 
   const NavigationBar = () => (
-    <HeaderPanel className='flex items-center justify-between px-4' style={{ wordBreak: 'keep-all' }}>
+    <HeaderPanel className="flex items-center justify-between px-4" style={{ wordBreak: 'keep-all' }}>
       {!is_opened ? (
-        <ul className='h-full'>
-          <Link href='/admin'>
+        <ul className="h-full">
+          <Link href="/admin">
             <button
-              className='px-4 h-full cursor-pointer'
+              className="px-4 h-full cursor-pointer"
               onClick={() => {
                 dispatch(close_sidebar())
               }}
@@ -35,18 +35,18 @@ const Header = ({ children }) => {
       ) : (
         <p />
       )}
-      <Link href='/group'>
-        <button className='px-4 h-full cursor-pointer'>{get_group_name(current_group)}</button>
+      <Link href="/group">
+        <button className="px-4 h-full cursor-pointer">{get_group_name(current_group)}</button>
       </Link>
     </HeaderPanel>
   )
 
   const CloseHeader = () => (
-    <HeaderPanel className='flex md:hidden items-center justify-between px-4'>
+    <HeaderPanel className="flex md:hidden items-center justify-between px-4">
       <Logo />
-      <Link href='/'>
+      <Link href="/">
         <button
-          className='border border-purple-400 w-10 h-10 text-2xl font-bold'
+          className="border border-purple-400 w-10 h-10 text-2xl font-bold"
           onClick={() => {
             dispatch(open_sidebar())
           }}
@@ -58,10 +58,10 @@ const Header = ({ children }) => {
   )
 
   return (
-    <div className='w-full'>
+    <div className="w-full">
       {!is_opened && <CloseHeader />}
       <NavigationBar />
-      <div className='px-8 py-8'>{children}</div>
+      <div className="px-8 py-8">{children}</div>
     </div>
   )
 }

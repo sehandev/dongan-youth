@@ -10,15 +10,12 @@ import { useMembers, useTrainingsByNameDate, useTrainingsInfo } from './swr'
 const Trainings = () => {
   const current_group = useSelector((state) => state.group_manager.group)
   const { member_array } = useMembers(current_group)
-  const { trainings_info_array, is_loading, is_error, mutate } =
-    useTrainingsInfo()
+  const { trainings_info_array, is_loading, is_error, mutate } = useTrainingsInfo()
   const [name_index, set_name_index] = useState(-1)
   const [date_index, set_date_index] = useState(-1)
   const { members } = useTrainingsByNameDate(
     0 <= name_index ? trainings_info_array[name_index].name : '',
-    0 <= name_index && 0 <= date_index
-      ? trainings_info_array[name_index].date_array[date_index]
-      : ''
+    0 <= name_index && 0 <= date_index ? trainings_info_array[name_index].date_array[date_index] : '',
   )
   const [create_target, set_create_target] = useState('')
   const [target_input, set_target_input] = useState('')
@@ -31,9 +28,7 @@ const Trainings = () => {
     return <Headline className="mb-4">교육훈련 목록</Headline>
   }
 
-  const GridTitle = ({ children }) => (
-    <h2 className="pb-4 font-semibold text-lg border-b">{children}</h2>
-  )
+  const GridTitle = ({ children }) => <h2 className="pb-4 font-semibold text-lg border-b">{children}</h2>
 
   const AddButton = ({ target }) => (
     <button
@@ -62,10 +57,7 @@ const Trainings = () => {
           {trainings_info_array.map((training, index) => (
             <div
               key={training.name}
-              className={
-                'py-4 hover:bg-slate-100 cursor-pointer ' +
-                (index === name_index ? 'bg-slate-200' : '')
-              }
+              className={'py-4 hover:bg-slate-100 cursor-pointer ' + (index === name_index ? 'bg-slate-200' : '')}
               onClick={() => {
                 set_name_index(index)
                 set_date_index(-1)
@@ -115,24 +107,19 @@ const Trainings = () => {
         <div className="col-span-1 px-4">
           <GridTitle>날짜</GridTitle>
           {0 <= name_index &&
-            trainings_info_array[name_index].date_array
-              .sort(is_future)
-              .map((date, index) => (
-                <div
-                  key={index}
-                  className={
-                    'py-4 hover:bg-slate-100 cursor-pointer ' +
-                    (index === date_index ? 'bg-slate-200' : '')
-                  }
-                  onClick={() => {
-                    set_date_index(index)
-                    set_create_target('')
-                    set_selected_member_id('')
-                  }}
-                >
-                  {date}
-                </div>
-              ))}
+            trainings_info_array[name_index].date_array.sort(is_future).map((date, index) => (
+              <div
+                key={index}
+                className={'py-4 hover:bg-slate-100 cursor-pointer ' + (index === date_index ? 'bg-slate-200' : '')}
+                onClick={() => {
+                  set_date_index(index)
+                  set_create_target('')
+                  set_selected_member_id('')
+                }}
+              >
+                {date}
+              </div>
+            ))}
           {create_target === 'date' ? (
             <div className="flex p-2 bg-slate-200">
               <input
@@ -146,10 +133,7 @@ const Trainings = () => {
                     axios
                       .put('/api/trainings/info', {
                         name: trainings_info_array[name_index].name,
-                        date_array: [
-                          ...trainings_info_array[name_index].date_array,
-                          target_input,
-                        ],
+                        date_array: [...trainings_info_array[name_index].date_array, target_input],
                       })
                       .then(() => {
                         alert('등록되었습니다.')
@@ -207,9 +191,7 @@ const Trainings = () => {
                         .post('/api/trainings/new', [
                           {
                             name: trainings_info_array[name_index].name,
-                            date: trainings_info_array[name_index].date_array[
-                              date_index
-                            ],
+                            date: trainings_info_array[name_index].date_array[date_index],
                             member_id: selected_member_id,
                           },
                         ])
@@ -237,9 +219,7 @@ const Trainings = () => {
               if (members[key].group === current_group) {
                 return (
                   <Link href={`/admin/members/id/${key}`} key={key}>
-                    <div className="py-4 hover:bg-slate-100 cursor-pointer">
-                      {members[key].name}
-                    </div>
+                    <div className="py-4 hover:bg-slate-100 cursor-pointer">{members[key].name}</div>
                   </Link>
                 )
               }

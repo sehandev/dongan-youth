@@ -78,11 +78,7 @@ const Member = ({ id }) => {
   const TrainingCheck = ({ title, is_completed }) => (
     <div className="text-center">
       <span>{title} - </span>
-      {is_completed ? (
-        <span className="text-green-500">O</span>
-      ) : (
-        <span className="text-red-500">X</span>
-      )}
+      {is_completed ? <span className="text-green-500">O</span> : <span className="text-red-500">X</span>}
     </div>
   )
 
@@ -112,10 +108,7 @@ const Member = ({ id }) => {
     if (window.confirm(`새로운 의견 : "${new_comment}"`)) {
       axios
         .put(`/api/member/${id}`, {
-          teacher_comment_array: [
-            ...member.teacher_comment_array,
-            date_option_array[0].value + ' : ' + new_comment,
-          ],
+          teacher_comment_array: [...member.teacher_comment_array, date_option_array[0].value + ' : ' + new_comment],
         })
         .then((response) => {
           console.log(response)
@@ -133,10 +126,7 @@ const Member = ({ id }) => {
     if (window.confirm(`새로운 의견 : "${new_comment}"`)) {
       axios
         .put(`/api/member/${id}`, {
-          parent_comment_array: [
-            ...member.parent_comment_array,
-            date_option_array[0].value + ' : ' + new_comment,
-          ],
+          parent_comment_array: [...member.parent_comment_array, date_option_array[0].value + ' : ' + new_comment],
         })
         .then((response) => {
           console.log(response)
@@ -275,27 +265,15 @@ const Member = ({ id }) => {
         ) : (
           <ul className="col-span-2 grid grid-cols-1 md:grid-cols-2">
             <div className="col-span-2 flex justify-center">
-              <SecondaryButton
-                className="px-4 py-2"
-                onClick={() => set_is_edit_mode(true)}
-              >
+              <SecondaryButton className="px-4 py-2" onClick={() => set_is_edit_mode(true)}>
                 수정
               </SecondaryButton>
             </div>
             <Info title="부서" content={get_group_name(member.group)} />
-            <Info
-              title="소속"
-              content={
-                member.role === 'student'
-                  ? `${member.grade}학년 ${member.class}반`
-                  : '교사'
-              }
-            />
+            <Info title="소속" content={member.role === 'student' ? `${member.grade}학년 ${member.class}반` : '교사'} />
             <Info
               title="성별"
-              content={`${get_gender_string(member.sex)}${
-                member.role === 'student' ? '학생' : '교사'
-              }`}
+              content={`${get_gender_string(member.sex)}${member.role === 'student' ? '학생' : '교사'}`}
             />
             <Info title="생년월일" content={member.birthday} />
             <Info title="학교" content={member.school} />
@@ -338,9 +316,7 @@ const Member = ({ id }) => {
               value={teacher_comment}
               onChange={(e) => set_teacher_comment(e.target.value)}
             />
-            <button onClick={() => add_teacher_comment(teacher_comment)}>
-              &#x2713;
-            </button>
+            <button onClick={() => add_teacher_comment(teacher_comment)}>&#x2713;</button>
           </div>
         </div>
 
@@ -355,9 +331,7 @@ const Member = ({ id }) => {
               value={parent_comment}
               onChange={(e) => set_parent_comment(e.target.value)}
             />
-            <button onClick={() => add_parent_comment(parent_comment)}>
-              &#x2713;
-            </button>
+            <button onClick={() => add_parent_comment(parent_comment)}>&#x2713;</button>
           </div>
         </div>
       </div>
