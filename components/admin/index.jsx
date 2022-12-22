@@ -6,6 +6,7 @@ import { useAttendanceByDate, useMembers } from '../swr'
 import MembersCard from './members'
 import RegisterCard from './register'
 import StatisticsCard from './statistics'
+import TrainingsCard from './trainings'
 
 const Admin = () => {
   const date = useSelector((state) => state.date_checker.start_date)
@@ -15,12 +16,16 @@ const Admin = () => {
 
   return (
     <>
-      <Headline className='mb-4'>관리 페이지</Headline>
+      <Headline className="mb-4">관리 페이지</Headline>
       <DateSelectBox />
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4'>
-        <StatisticsCard attendance_array={attendance_array} member_array={member_array} />
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <StatisticsCard
+          attendance_array={attendance_array}
+          member_array={member_array}
+        />
         <RegisterCard />
         <MembersCard member_array={member_array} />
+        <TrainingsCard />
       </div>
     </>
   )
