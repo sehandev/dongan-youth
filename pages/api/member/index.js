@@ -1,6 +1,6 @@
-import { FieldValue } from 'firebase-admin/firestore'
+import { collection, addDoc, FieldValue } from 'firebase/firestore'
 
-import db from '../../../utils/firestore'
+import { db } from '../../../utils/firestore'
 
 export default async (req, res) => {
   let role = 'student'
@@ -8,7 +8,7 @@ export default async (req, res) => {
     role = 'teacher'
   }
   try {
-    const { id } = await db.collection('members').add({
+    const { id } = await addDoc(collection(db, 'members'), {
       ...req.body,
       state: true,
       dongan_id: '00000',

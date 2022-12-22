@@ -1,9 +1,12 @@
-import db from '../../../../utils/firestore'
+import { collection, query, where, getDocs } from 'firebase/firestore'
+
+import { db } from '../../../../utils/firestore'
 
 export default async (req, res) => {
   const { group } = req.query
   try {
-    const members = await db.collection('members').where('state', '==', true).where('group', '==', group).get()
+    const q = query(collection(db, 'members'), where('state', '==', true), where('group', '==', group))
+    const members = await getDocs(q)
     const member_array = members.docs.map((member) => ({
       id: member.id,
       ...member.data(),

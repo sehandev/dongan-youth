@@ -1,4 +1,6 @@
-import db from '../../../utils/firestore'
+import { collection, query, where, getDocs } from 'firebase/firestore'
+
+import { db } from '../../../utils/firestore'
 
 export default async (req, res) => {
   const { date } = req.query
@@ -8,7 +10,8 @@ export default async (req, res) => {
   }
 
   try {
-    const attendance_result = await db.collection('attendance').where('date', '==', date).get()
+    const q = query(collection(db, 'attendance'), where('date', '==', date))
+    const attendance_result = await getDocs(q)
     const attendance_array = attendance_result.docs.map((attendance) => attendance.data().member_id)
     res.status(200).json(attendance_array)
   } catch (e) {
