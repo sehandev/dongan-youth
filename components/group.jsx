@@ -34,17 +34,17 @@ const Group = () => {
   )
 
   return (
-    <div className='flex w-full min-h-screen flex-col justify-center items-center'>
+    <div className="flex w-full min-h-screen flex-col justify-center items-center">
       {/* 로고 */}
-      <div className='flex mb-4 flex-col items-center'>
-        <div className='relative mb-2 w-16 h-16'>
-          <Image src='/img/dongan.png' layout='fill' objectFit='contain' quality={100} priority />
+      <div className="flex mb-4 flex-col items-center">
+        <div className="relative mb-2 w-16 h-16">
+          <Image src="/img/dongan.png" layout="fill" objectFit="contain" quality={100} priority />
         </div>
-        <div className='mb-4 font-black text-xl'>출석하는 동안</div>
+        <div className="mb-4 font-black text-xl">출석하는 동안</div>
       </div>
 
       {/* 부서 목록 */}
-      <ul className='grid mb-4 grid-cols-2 md:grid-cols-4 gap-4'>
+      <ul className="grid mb-4 grid-cols-2 md:grid-cols-4 gap-4">
         <li>
           <GroupButton group_id={'1'}>1부</GroupButton>
         </li>
@@ -59,8 +59,8 @@ const Group = () => {
         </li>
       </ul>
       {current_group !== -1 && (
-        <Link href='/'>
-          <SecondaryButton className='px-4 py-2 w-fit'>완료</SecondaryButton>
+        <Link href="/">
+          <SecondaryButton className="px-4 py-2 w-fit">완료</SecondaryButton>
         </Link>
       )}
     </div>

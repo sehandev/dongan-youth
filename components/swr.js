@@ -14,10 +14,7 @@ const fetcher = (...args) => fetch(...args).then((res) => res.json())
  * @returns {MembersObject}
  */
 export function useMembers(group) {
-  const { data, error } = useSWR(
-    group ? `/api/members/group/${group}` : null,
-    fetcher
-  )
+  const { data, error } = useSWR(group ? `/api/members/group/${group}` : null, fetcher)
 
   return {
     member_array: data,
@@ -39,10 +36,7 @@ export function useMembers(group) {
  * @returns {MemberObject}
  */
 export function useMember(id) {
-  const { data, error, mutate } = useSWR(
-    id ? `/api/member/${id}` : null,
-    fetcher
-  )
+  const { data, error, mutate } = useSWR(id ? `/api/member/${id}` : null, fetcher)
 
   const member = {
     photo: 'member_default.png',
@@ -104,10 +98,7 @@ export function useAttendanceByDate(date) {
  * @returns {TrainingsByNameDateObject}
  */
 export function useTrainingsByNameDate(name, date) {
-  const { data, error } = useSWR(
-    name && date ? `/api/trainings/members/${name}/${date}` : null,
-    fetcher
-  )
+  const { data, error } = useSWR(name && date ? `/api/trainings/members/${name}/${date}` : null, fetcher)
 
   return {
     members: data,
@@ -128,10 +119,7 @@ export function useTrainingsByNameDate(name, date) {
  * @returns {TrainingsByMemberIdObject}
  */
 export function useTrainingsByMemberId(member_id) {
-  const { data, error } = useSWR(
-    member_id ? `/api/trainings/member_id/${member_id}` : null,
-    fetcher
-  )
+  const { data, error } = useSWR(member_id ? `/api/trainings/member_id/${member_id}` : null, fetcher)
 
   return {
     trainings: data,

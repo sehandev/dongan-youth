@@ -3,23 +3,64 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { change_date } from '../reducers/date_checker'
 
+export const date_option_array = [
+  { value: '2022-12-25' },
+  { value: '2022-12-18' },
+  { value: '2022-12-11' },
+  { value: '2022-12-04' },
+  { value: '2022-11-27' },
+  { value: '2022-11-20' },
+  { value: '2022-11-13' },
+  { value: '2022-11-06' },
+  { value: '2022-10-30' },
+  { value: '2022-10-23' },
+  { value: '2022-10-16' },
+  { value: '2022-10-09' },
+  { value: '2022-10-02' },
+  { value: '2022-09-25' },
+  { value: '2022-09-18' },
+  { value: '2022-09-11' },
+  { value: '2022-09-04' },
+  { value: '2022-08-28' },
+  { value: '2022-08-21' },
+  { value: '2022-08-14' },
+  { value: '2022-08-07' },
+  { value: '2022-07-31' },
+  { value: '2022-07-24' },
+  { value: '2022-07-17' },
+  { value: '2022-07-10' },
+  { value: '2022-07-03' },
+  { value: '2022-06-26' },
+  { value: '2022-06-19' },
+  { value: '2022-06-12' },
+  { value: '2022-06-05' },
+  { value: '2022-05-29' },
+  { value: '2022-05-22' },
+  { value: '2022-05-15' },
+  { value: '2022-05-08' },
+  // { value: '2022-05-01' },
+  // { value: '2022-04-24' },
+  // { value: '2022-04-17' },
+  // { value: '2022-04-10' },
+  // { value: '2022-04-03' },
+  // { value: '2022-03-27' },
+  // { value: '2022-03-20' },
+  // { value: '2022-03-13' },
+  // { value: '2022-03-06' },
+  // { value: '2022-02-27' },
+  // { value: '2022-02-20' },
+  // { value: '2022-02-13' },
+  // { value: '2022-02-06' },
+  // { value: '2022-01-30' },
+  // { value: '2022-01-23' },
+  // { value: '2022-01-16' },
+  // { value: '2022-01-09' },
+  // { value: '2022-01-02' },
+]
+
 export const DateSelectBox = ({}) => {
   const dispatch = useDispatch()
   const start_date = useSelector((state) => state.date_checker.start_date)
-
-  const date_option_array = [
-    { value: '2022-03-13' },
-    { value: '2022-03-06' },
-    { value: '2022-02-27' },
-    { value: '2022-02-20' },
-    { value: '2022-02-13' },
-    { value: '2022-02-06' },
-    { value: '2022-01-30' },
-    { value: '2022-01-23' },
-    { value: '2022-01-16' },
-    { value: '2022-01-09' },
-    { value: '2022-01-02' },
-  ]
 
   // Initialize date
   useEffect(() => {
@@ -30,7 +71,7 @@ export const DateSelectBox = ({}) => {
 
   return (
     <select
-      className='focus-visible:outline-none'
+      className="focus-visible:outline-none"
       onChange={(e) => {
         dispatch(change_date({ start_date: e.target.value }))
       }}

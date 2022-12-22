@@ -39,30 +39,30 @@ const Statistics = () => {
       class_name += `-${class_id}`
     }
     return (
-      <tr className='h-10' style={{ wordBreak: 'keep-all' }}>
-        <td className='p-2 border'>{class_name}</td>
-        <td className='p-2 border'>{statistics.M}</td>
-        <td className='p-2 border'>{statistics.F}</td>
+      <tr className="h-10" style={{ wordBreak: 'keep-all' }}>
+        <td className="p-2 border">{class_name}</td>
+        <td className="p-2 border">{statistics.M}</td>
+        <td className="p-2 border">{statistics.F}</td>
       </tr>
     )
   }
 
   const ClassTable = () => (
-    <table className='mr-8 table-fixed border-collapse border'>
-      <thead className='bg-gray-50'>
-        <tr className='h-20'>
-          <LongColumn className='p-2 border'>
+    <table className="mr-8 table-fixed border-collapse border">
+      <thead className="bg-gray-50">
+        <tr className="h-20">
+          <LongColumn className="p-2 border">
             <SubHeadline>반</SubHeadline>
           </LongColumn>
-          <Column className='p-2 border'>
+          <Column className="p-2 border">
             <SubHeadline>남</SubHeadline>
           </Column>
-          <Column className='p-2 border'>
+          <Column className="p-2 border">
             <SubHeadline>여</SubHeadline>
           </Column>
         </tr>
       </thead>
-      <tbody className='text-center'>
+      <tbody className="text-center">
         <ClassRow grade_id={1} class_id={0} />
         <ClassRow grade_id={1} class_id={1} />
         <ClassRow grade_id={1} class_id={2} />
@@ -90,29 +90,29 @@ const Statistics = () => {
       T: attendance_array.filter((member_id) => teacher_id_array.includes(member_id)).length,
     }
     return (
-      <table className='table-fixed border-collapse border h-fit' style={{ wordBreak: 'keep-all' }}>
-        <thead className='bg-gray-50'>
-          <tr className='h-20'>
-            <LongColumn className='p-2 border'>
+      <table className="table-fixed border-collapse border h-fit" style={{ wordBreak: 'keep-all' }}>
+        <thead className="bg-gray-50">
+          <tr className="h-20">
+            <LongColumn className="p-2 border">
               <SubHeadline>전체</SubHeadline>
             </LongColumn>
-            <Column className='p-2 border'>
+            <Column className="p-2 border">
               <SubHeadline>출석</SubHeadline>
             </Column>
           </tr>
         </thead>
-        <tbody className='text-center'>
-          <tr className='h-10'>
-            <td className='p-2 border'>남학생</td>
-            <td className='p-2 border'>{statistics.M}</td>
+        <tbody className="text-center">
+          <tr className="h-10">
+            <td className="p-2 border">남학생</td>
+            <td className="p-2 border">{statistics.M}</td>
           </tr>
-          <tr className='h-10'>
-            <td className='p-2 border'>여학생</td>
-            <td className='p-2 border'>{statistics.F}</td>
+          <tr className="h-10">
+            <td className="p-2 border">여학생</td>
+            <td className="p-2 border">{statistics.F}</td>
           </tr>
-          <tr className='h-10'>
-            <td className='p-2 border'>교사</td>
-            <td className='p-2 border'>{statistics.T}</td>
+          <tr className="h-10">
+            <td className="p-2 border">교사</td>
+            <td className="p-2 border">{statistics.T}</td>
           </tr>
         </tbody>
       </table>
@@ -124,10 +124,10 @@ const Statistics = () => {
       <Container>
         <Sidebar />
         <Header>
-          <Headline className='mb-4'>이번 주 통계</Headline>
+          <Headline className="mb-4">이번 주 통계</Headline>
           <DateSelectBox />
           <Description></Description>
-          <div className='flex mt-4'></div>
+          <div className="flex mt-4"></div>
         </Header>
       </Container>
     )
@@ -137,10 +137,10 @@ const Statistics = () => {
     <Container>
       <Sidebar />
       <Header>
-        <Headline className='mb-4'>이번 주 통계</Headline>
+        <Headline className="mb-4">이번 주 통계</Headline>
         <DateSelectBox />
         <Description></Description>
-        <div className='flex mt-4'>
+        <div className="flex mt-4">
           <ClassTable />
           <GroupTable />
         </div>

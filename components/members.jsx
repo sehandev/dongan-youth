@@ -9,13 +9,13 @@ const Members = () => {
   const { member_array, is_loading, is_error } = useMembers(current_group)
 
   if (is_loading || is_error) {
-    return <Headline className='mb-4'>구성원 목록</Headline>
+    return <Headline className="mb-4">구성원 목록</Headline>
   }
 
   const MemberCard = ({ member }) => {
     return (
       <Link href={`/admin/members/id/${member.id}`}>
-        <div className='border hover:bg-violet-200 cursor-pointer px-4 py-4'>
+        <div className="border hover:bg-violet-200 cursor-pointer px-4 py-4">
           <div>{member.name}</div>
           {member.role === 'student' ? (
             <div>
@@ -32,10 +32,10 @@ const Members = () => {
 
   return (
     <>
-      <Headline className='mb-4'>구성원 목록</Headline>
+      <Headline className="mb-4">구성원 목록</Headline>
       <ul>
         {member_array.map((member, index) => (
-          <li key={index} className='my-4'>
+          <li key={index} className="my-4">
             <MemberCard member={member} />
           </li>
         ))}

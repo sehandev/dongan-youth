@@ -7,10 +7,7 @@ export default async (req, res) => {
 
   try {
     if (req.method === 'GET') {
-      const trainings_doc_array = await db
-        .collection('trainings')
-        .where('member_id', '==', id)
-        .get()
+      const trainings_doc_array = await db.collection('trainings').where('member_id', '==', id).get()
       const trainings = {}
       trainings_doc_array.forEach((doc) => {
         const { name, date } = doc.data()

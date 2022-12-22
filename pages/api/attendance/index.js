@@ -2,7 +2,11 @@ import db from '../../../utils/firestore'
 
 export default async (req, res) => {
   try {
-    const attendance = await db.collection('attendance').where('date', '==', req.body.date).where('member_id', '==', req.body.member_id).get()
+    const attendance = await db
+      .collection('attendance')
+      .where('date', '==', req.body.date)
+      .where('member_id', '==', req.body.member_id)
+      .get()
     if (req.method == 'POST') {
       if (0 < attendance.docs.length) {
         res.status(404).end()
