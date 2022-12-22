@@ -1,5 +1,5 @@
 {
-  "packageManager": "yarn@3.2.2",
+  "packageManager": "pnpm@7.19.0",
   "scripts": {
     "dev": "next dev -p 53000",
     "build": "next build",
@@ -10,14 +10,12 @@
     "axios": "^0.27.2",
     "cookie": "^0.5.0",
     "firebase": "^9.15.0",
-    "firebase-admin": "^11.0.1",
     "next": "latest",
     "next-cookie": "^2.8.0",
     "next-redux-wrapper": "^7.0.5",
     "node-gyp": "^9.1.0",
-    "oracledb": "https://github.com/oracle/node-oracledb/releases/download/v5.4.0/oracledb-src-5.4.0.tgz",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18",
+    "react-dom": "^18",
     "react-is": "^18.1.0",
     "react-redux": "^7.2.6",
     "redux": "^4.1.2",
