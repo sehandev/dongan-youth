@@ -1,0 +1,71 @@
+{
+  "name": "next-cookie",
+  "version": "2.8.0",
+  "description": "Cookie serializer and deserializer library for next.js.",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "homepage": "https://github.com/tokuda109/next-cookie",
+  "main": "dist/next-cookie.js",
+  "types": "dist/next-cookie.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:tokuda109/next-cookie.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tokuda109/next-cookie/issues"
+  },
+  "author": "Tsuyoshi Tokuda <tokuda109@gmail.com>",
+  "keywords": [
+    "next",
+    "react",
+    "cookie",
+    "isomophic",
+    "universal"
+  ],
+  "scripts": {
+    "build": "rollup -c rollup.config.js",
+    "lint": "eslint --config ./.eslintrc './src/**/*.{ts,tsx}'",
+    "test": "jest --config jest.config.js --runInBand"
+  },
+  "dependencies": {
+    "universal-cookie": "~4.0.4"
+  },
+  "devDependencies": {
+    "@lopatnov/rollup-plugin-uglify": "2.1.1",
+    "@types/cookie": "0.4.1",
+    "@types/enzyme": "3.10.8",
+    "@types/jest": "26.0.23",
+    "@types/jsdom": "16.2.10",
+    "@types/react": "17.0.4",
+    "@types/react-dom": "17.0.3",
+    "@types/universal-cookie": "3.0.0",
+    "@typescript-eslint/eslint-plugin": "4.22.0",
+    "@typescript-eslint/parser": "4.22.0",
+    "@wojtekmaj/enzyme-adapter-react-17": "0.6.3",
+    "browserslist": "4.16.6",
+    "enzyme": "3.11.0",
+    "eslint": "7.25.0",
+    "eslint-plugin-react": "7.23.2",
+    "jest": "^27.2.5",
+    "jsdom": "16.5.3",
+    "jsdom-global": "3.0.2",
+    "lodash": "4.17.21",
+    "next": "11.1.2",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "rollup": "2.46.0",
+    "rollup-plugin-commonjs": "10.1.0",
+    "rollup-plugin-dts": "2.0.1",
+    "rollup-plugin-node-resolve": "5.2.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "0.30.0",
+    "serialize-javascript": "6.0.0",
+    "terser": "^5.9.0",
+    "ts-jest": "^27.0.7",
+    "tslib": "2.2.0",
+    "typescript": "4.2.4"
+  },
+  "peerDependencies": {
+    "next": ">=10"
+  }
+}

@@ -9,11 +9,9 @@ const LogoText = styled.div`
 
 const Logo = ({ className, onClick }) => {
   return (
-    <Link href="/">
-      <a className={`flex items-center ${className}`} onClick={onClick}>
-        <Image src="/img/dongan.png" alt="dongan" width={40} height={40}></Image>
-        <LogoText className="ml-2">출석하는 동안</LogoText>
-      </a>
+    <Link href="/" className={`flex items-center ${className}`} onClick={onClick}>
+      <Image src="/img/dongan.png" alt="dongan" width={40} height={40}></Image>
+      <LogoText className="ml-2">출석하는 동안</LogoText>
     </Link>
   )
 }

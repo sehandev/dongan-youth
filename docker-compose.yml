@@ -5,16 +5,15 @@ services:
     image: sehandev/dongan-youth:arm
     volumes:
       - .:/workspace
-      - /opt/oracle/instantclient_19_10/network/admin:/opt/oracle/admin
     working_dir: /workspace
-    command: sh -c "yarn && yarn dev"
+    command: sh -c "pnpm install && pnpm dev"
+    restart: always
     network_mode: 'host'
   prod:
     image: sehandev/dongan-youth:arm
     volumes:
       - .:/workspace
-      - /opt/oracle/instantclient_19_10/network/admin:/opt/oracle/admin
     working_dir: /workspace
-    command: sh -c "yarn && yarn build && yarn start"
+    command: sh -c "pnpm install && pnpm build && pnpm start"
     restart: always
     network_mode: 'host'
