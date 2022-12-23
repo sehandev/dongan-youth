@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { useBoundStore } from '@/store'
@@ -16,6 +17,10 @@ const Header = ({ children }) => {
   const is_opened = useBoundStore((state) => state.is_sidebar_open)
   const close_sidebar = useBoundStore((state) => state.close_sidebar)
   const open_sidebar = useBoundStore((state) => state.open_sidebar)
+  const [is_hydrated, set_is_hydrated] = useState(false)
+  useEffect(() => {
+    set_is_hydrated(true)
+  }, [])
 
   const NavigationBar = () => (
     <HeaderPanel className="flex items-center justify-between px-4" style={{ wordBreak: 'keep-all' }}>
@@ -31,7 +36,9 @@ const Header = ({ children }) => {
         <p />
       )}
       <Link href="/group">
-        <button className="px-4 h-full cursor-pointer">{get_group_name(current_group)}</button>
+        <button className="px-4 h-full cursor-pointer">
+          {is_hydrated ? get_group_name(current_group) : '불러오는 중'}
+        </button>
       </Link>
     </HeaderPanel>
   )
