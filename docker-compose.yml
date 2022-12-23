@@ -9,6 +9,8 @@ services:
     command: sh -c "pnpm install && pnpm dev"
     restart: always
     network_mode: 'host'
+    environment:
+      - TZ=Asia/Seoul
   prod:
     image: sehandev/dongan-youth:arm
     volumes:
@@ -17,3 +19,5 @@ services:
     command: sh -c "pnpm install && pnpm build && pnpm start"
     restart: always
     network_mode: 'host'
+    environment:
+      - TZ=Asia/Seoul
