@@ -9,7 +9,6 @@
     "axios": "^0.27.2",
     "firebase": "^9.15.0",
     "next": "latest",
-    "next-redux-wrapper": "^7.0.5",
     "node-gyp": "^9.1.0",
     "react": "^18",
     "react-dom": "^18",

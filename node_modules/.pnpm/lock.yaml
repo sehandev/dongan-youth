@@ -8,7 +8,6 @@ specifiers:
   axios: ^0.27.2
   firebase: ^9.15.0
   next: latest
-  next-redux-wrapper: ^7.0.5
   node-gyp: ^9.1.0
   postcss: ^8.4.4
   react: ^18
@@ -24,7 +23,6 @@ dependencies:
   axios: 0.27.2
   firebase: 9.15.0
   next: 13.1.0_biqbaboplfbrettd7655fr4n2y
-  next-redux-wrapper: 7.0.5_next@13.1.0+react@18.2.0
   node-gyp: 9.3.1
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
@@ -1958,17 +1956,6 @@ packages:
   /negotiator/0.6.3:
     resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
     engines: {node: '>= 0.6'}
-    dev: false
-
-  /next-redux-wrapper/7.0.5_next@13.1.0+react@18.2.0:
-    resolution: {integrity: sha512-UFXdAWG5i+GFT8+Hoqpx3GArkPh34fVWF9YoA2VSHlBzsrPtnRd7NWM6FNSYUennpommTpWJ09mu+r/1UxyIkg==}
-    peerDependencies:
-      next: '>=10.0.3'
-      react: '*'
-      react-redux: '*'
-    dependencies:
-      next: 13.1.0_biqbaboplfbrettd7655fr4n2y
-      react: 18.2.0
     dev: false
 
   /next/13.1.0_biqbaboplfbrettd7655fr4n2y:
