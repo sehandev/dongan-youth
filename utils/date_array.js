@@ -1,6 +1,6 @@
 import moment from 'moment'
 
-const START_DATE = '2022-05-08'
+const START_DATE = '2023-01-01'
 
 const find_first_sunday = (start_date) => {
   let first_sunday
