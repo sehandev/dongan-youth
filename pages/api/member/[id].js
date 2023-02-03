@@ -10,7 +10,7 @@ export default async (req, res) => {
     if (req.method === 'PUT') {
       await updateDoc(docRef, {
         ...req.body,
-        updated: FieldValue.serverTimestamp(),
+        // updated: FieldValue.serverTimestamp(),
       })
     } else if (req.method === 'GET') {
       const docSnap = await getDoc(docRef)
@@ -22,7 +22,7 @@ export default async (req, res) => {
     } else if (req.method === 'DELETE') {
       await updateDoc(docRef, {
         state: false,
-        updated: FieldValue.serverTimestamp(),
+        // updated: FieldValue.serverTimestamp(),
       })
     }
     res.status(200).end()

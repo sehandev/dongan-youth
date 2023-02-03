@@ -13,7 +13,7 @@ export default async (req, res) => {
       state: true,
       dongan_id: '00000',
       role,
-      created: FieldValue.serverTimestamp(),
+      // created: FieldValue.serverTimestamp(),
     })
     res.status(200).json({ id })
   } catch (e) {
