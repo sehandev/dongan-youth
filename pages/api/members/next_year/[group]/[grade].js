@@ -15,6 +15,7 @@ export default async (req, res) => {
           // TODO Update group & grade automatically
           // group: group,
           // grade: '2',
+          // class: '0',
         })
       })
     }
