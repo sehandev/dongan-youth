@@ -6,7 +6,7 @@ services:
     volumes:
       - .:/workspace
     working_dir: /workspace
-    command: sh -c "pnpm install && pnpm dev"
+    command: sh -c "corepack prepare pnpm@8.4.0 --activate && pnpm install && pnpm dev"
     restart: always
     network_mode: 'host'
     environment:
@@ -16,7 +16,7 @@ services:
     volumes:
       - .:/workspace
     working_dir: /workspace
-    command: sh -c "pnpm install && pnpm build && pnpm start"
+    command: sh -c "corepack prepare pnpm@8.4.0 --activate && pnpm install && pnpm build && pnpm start"
     restart: always
     network_mode: 'host'
     environment:
