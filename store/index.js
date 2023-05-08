@@ -1,4 +1,4 @@
-import create from 'zustand'
+import { create } from 'zustand'
 import { create_date_slice } from './date'
 import { create_group_slice } from './group'
 import { create_sidebar_slice } from './sidebar'
